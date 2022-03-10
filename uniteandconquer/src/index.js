@@ -1,12 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './assets/index.css';
-import App from './components/App';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './components/Home';
+import Registration from './components/Registration';
+import Chat from './components/Chat';
+import CreatePost from './components/CreatePost';
+import Login from './components/Login';
+import PostDetails from './components/PostDetails';
+import UserProfile from './components/UserProfile';
+import UserSettings from './components/UserSettings';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route path="/registration" element={<Registration />} />
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/create-post" element={<CreatePost />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/post-detail" element={<PostDetails />} />
+        <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/user-settings" element={<UserSettings />} />
+      </Routes>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root'),
 );
