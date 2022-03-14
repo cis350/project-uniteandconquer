@@ -1,0 +1,37 @@
+td,
+th {
+  border: 10px solid #ffd9a0;
+  box-sizing: border-box;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  font-size: 25px;
+}
+
+td {
+  max-width: 700px;
+  padding: 15px;
+}
+
+.post-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.post-content {
+  font-size: 17px;
+}
+
+.user-profile-page {
+  display: grid;
+  grid-template-columns: 0.3fr 0.6fr;
+}
+
+.profile-title {
+  font-size: 25px;
+  text-align: center;
+}
