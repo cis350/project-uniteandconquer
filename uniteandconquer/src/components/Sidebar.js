@@ -5,7 +5,11 @@ import '../assets/Sidebar.css';
 function Sidebar() {
   return (
     <div className="sidebar">
-      <div className="greeting">Hi, Jeremy</div>
+      <div className="greeting">
+        <i className="far fa-user-circle fa-2x" />
+        {' '}
+        Hi, Jeremy
+      </div>
 
       <div className="profile">
         <Link className="link" to="/user-profile">
