@@ -12,6 +12,8 @@ function PostDetails() {
   const myStorage = window.sessionStorage;
   const joinGroup = () => {
     const userID = myStorage.getItem('UserID');
+    const postID = 0;
+    const quantity = 2;
     PostDB.joinGroup(userID, postID, quantity, (success, err) => {
       if (success) {
         navigate(`/post-details${postID}`);
