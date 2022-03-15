@@ -1,10 +1,28 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import '../assets/PostDetails.css';
 
+const PostDB = require('../modules/PostDB');
+
+// In the post details page, one can choose to join the group
+// if successful, redirect the user to the post which the user joins in
 function PostDetails() {
-  const joinGroup = () => {};
-  const back = () => {};
+  const navigate = useNavigate();
+  const myStorage = window.sessionStorage;
+  const joinGroup = () => {
+    const userID = myStorage.getItem('UserID');
+    PostDB.joinGroup(userID, postID, quantity, (success, err) => {
+      if (success) {
+        navigate(`/post-details${postID}`);
+      } else {
+        console.log(err);
+      }
+    });
+  };
+  const back = () => {
+    navigate('/');
+  };
 
   return (
     <div className="post-details-page">

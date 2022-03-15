@@ -1,8 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 import '../assets/App.css';
 import '../assets/Registration.css';
+
+const UserDB = require('../modules/UserDB');
 
 function Registration() {
   const [firstName, setFirstName] = useState('');
@@ -12,8 +15,22 @@ function Registration() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [tags, setTags] = useState([]);
+  const navigate = useNavigate();
 
-  const createUser = () => {};
+  // register the user given the information provided
+  // if the password and confimPassword are not correct, then throw an exception
+  const registerUser = () => {
+    if (password !== confirmPassword) {
+      throw new Error('password and confirmPassword need to be the same');
+    }
+    UserDB.createUser(phone, email, password, firstName, lastName, tags, (success, id, err) => {
+      if (success) {
+        navigate('/login');
+      } else {
+        console.log(err);
+      }
+    });
+  };
 
   return (
     <div className="registration-page">
@@ -62,7 +79,7 @@ function Registration() {
           </div>
           <br />
           <div className="reg-bottom">
-            <button className="submit" type="button" onClick={createUser}>
+            <button className="submit" type="button" onClick={registerUser}>
               Register
             </button>
             <p>
