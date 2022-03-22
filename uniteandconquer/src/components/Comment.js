@@ -11,7 +11,7 @@ function Comment() {
 
   const addComment = () => {
     if (commentInput && commentInput.length > 0) {
-      const newComment = { id: tempID, name: `user${tempID}`, content: commentInput };
+      const newComment = { id: tempID, name: `user${3}`, content: commentInput };
       setComments([...comments, newComment]);
       setTempID(tempID + 1);
       setCommentInput('');
