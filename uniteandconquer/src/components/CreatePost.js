@@ -15,15 +15,15 @@ function CreatePost() {
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState([]);
   const navigate = useNavigate();
-
   const createPost = () => {
     if (!item || !price || !quantity || !link || !description || !tags) {
       throw new Error('You need to fill in all the blank');
     } else {
       PostDB.addPost(
         item,
-        Number(price),
         Number(quantity),
+        Number(quantity),
+        Number(price),
         link,
         description,
         tags,
@@ -44,7 +44,7 @@ function CreatePost() {
 
   return (
     <div className="create-post-page">
-      <Sidebar />
+      {Sidebar()}
       <div className="create-post">
         <div className="post-input">
           <h3>Create a Post</h3>
@@ -53,24 +53,25 @@ function CreatePost() {
             <div className="post-text-fields">
               <div className="post-field">
                 <div className="label">Item Name</div>
-                <input onChange={(e) => setItem(e.target.value)} />
+                <input data-testid="item-name-input" onChange={(e) => setItem(e.target.value)} />
               </div>
               <div className="post-field">
                 <div className="label">Price/Item</div>
-                <input onChange={(e) => setPrice(e.target.value)} />
+                <input data-testid="price-input" onChange={(e) => setPrice(e.target.value)} />
               </div>
               <div className="post-field">
                 <div className="label">Target Quantity</div>
-                <input onChange={(e) => setQuantity(e.target.value)} />
+                <input data-testid="quantity-input" onChange={(e) => setQuantity(e.target.value)} />
               </div>
               <div className="post-field">
                 <div className="label">Item Link</div>
-                <input onChange={(e) => setLink(e.target.value)} />
+                <input data-testid="link-input" onChange={(e) => setLink(e.target.value)} />
               </div>
             </div>
             <div className="description">
               <div className="desc-label">Description</div>
               <textarea
+                data-testid="description-input"
                 className="desc"
                 onChange={(e) => setDescription(e.target.value)}
               />

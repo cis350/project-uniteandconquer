@@ -1,0 +1,237 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot registration 1`] = `
+<div
+  className="registration-page"
+>
+  <div
+    className="registration"
+  >
+    <div
+      className="registration-tags"
+    >
+      <div
+        className="headers"
+      >
+        <h1>
+          Unite and Conquer
+        </h1>
+        <h3>
+          Choose your interests
+        </h3>
+      </div>
+      <div
+        className="tags"
+      >
+        <div
+          className="tag"
+        >
+          Tag1
+        </div>
+        <div
+          className="tag"
+        >
+          Tag2
+        </div>
+        <div
+          className="tag"
+        >
+          Tag3
+        </div>
+        <div
+          className="tag"
+        >
+          Tag4
+        </div>
+        <div
+          className="tag"
+        >
+          Tag5
+        </div>
+        <div
+          className="tag"
+        >
+          Tag6
+        </div>
+      </div>
+    </div>
+    <div
+      className="registration-input"
+    >
+      <h3>
+        Get Started
+      </h3>
+      <div
+        className="input-reqs"
+      >
+        <div>
+          <h2>
+            Password Requires
+          </h2>
+          <div
+            className="rule"
+          >
+            1. at least 8 characters
+          </div>
+          <div
+            className="rule"
+          >
+            2. at least one special character (e.g. ! @ # ? ])
+          </div>
+          <div
+            className="rule"
+          >
+            3. at least one uppercase and one lowercase letter
+          </div>
+          <div
+            className="rule"
+          >
+            4. at least one number
+          </div>
+        </div>
+        <div>
+          <h2>
+            First/Last Name Requires
+          </h2>
+          <div
+            className="rule"
+          >
+            1. 2-15 characters
+          </div>
+          <div
+            className="rule"
+          >
+            2. Alphabetic characters
+          </div>
+        </div>
+      </div>
+      <div
+        className="registration-text-fields"
+      >
+        <div
+          className="registration-field"
+        >
+          <div
+            className="label"
+          >
+            first name
+          </div>
+          <input
+            className="first-name-input"
+            data-testid="first-name-input"
+            onChange={[Function]}
+          />
+          <i
+            className="fas fa-times"
+          />
+        </div>
+        <div
+          className="registration-field"
+        >
+          <div
+            className="label"
+          >
+            last name
+          </div>
+          <input
+            className="last-name-input"
+            data-testid="last-name-input"
+            onChange={[Function]}
+          />
+          <i
+            className="fas fa-times"
+          />
+        </div>
+        <div
+          className="registration-field"
+        >
+          <div
+            className="label"
+          >
+            phone
+          </div>
+          <input
+            className="phone-input"
+            data-testid="phone-input"
+            onChange={[Function]}
+            placeholder="### - ### - ####"
+          />
+          <i
+            className="fas fa-times"
+          />
+        </div>
+        <div
+          className="registration-field"
+        >
+          <div
+            className="label"
+          >
+            email
+          </div>
+          <input
+            className="email-input"
+            data-testid="email-input"
+            onChange={[Function]}
+            placeholder="username@domain.com"
+          />
+          <i
+            className="fas fa-times"
+          />
+        </div>
+        <div
+          className="registration-field"
+        >
+          <div
+            className="label"
+          >
+            password
+          </div>
+          <input
+            className="password-input"
+            data-testid="password-input"
+            onChange={[Function]}
+          />
+          <i
+            className="fas fa-times"
+          />
+        </div>
+        <div
+          className="registration-field"
+        >
+          <div
+            className="label"
+          >
+            confirm password
+          </div>
+          <input
+            className="confirm-password-input"
+            data-testid="confirm-password-input"
+            onChange={[Function]}
+          />
+          <i
+            className="fas fa-times"
+          />
+        </div>
+      </div>
+      <br />
+      <div
+        className="reg-bottom"
+      >
+        <button
+          className="submit"
+          disabled={true}
+          onClick={[Function]}
+          type="button"
+        >
+          Register
+        </button>
+        <p>
+          Already have an account?
+           
+           
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;

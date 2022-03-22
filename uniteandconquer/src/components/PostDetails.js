@@ -31,7 +31,7 @@ function PostDetails() {
 
   return (
     <div className="post-details-page">
-      <Sidebar />
+      {Sidebar()}
       <div className="post-details-container">
         <div className="item-name">
           <h1>Item Name</h1>
@@ -77,7 +77,7 @@ function PostDetails() {
             </div>
           </div>
         </div>
-        <div className="comment-section"><Comment /></div>
+        <div className="comment-section">{Comment()}</div>
         <div className="post-detail-tags">
           <div className="tags-label">Tags</div>
           <div className="tags-container">
@@ -90,7 +90,7 @@ function PostDetails() {
           </div>
         </div>
         <div className="buttons-container">
-          <div className="desired-quantity"><input placeholder="desired quantity" onChange={(e) => setDesiredQuantity(e.target.value)} /></div>
+          <div className="desired-quantity"><input data-testid="quantity-input" placeholder="desired quantity" onChange={(e) => setDesiredQuantity(e.target.value)} /></div>
           <button className="create" type="button" onClick={joinGroup}>
             Join
           </button>

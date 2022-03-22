@@ -5,7 +5,7 @@ function Notifications({ showNotifs, setShowNotifs }) {
   return (
     <div className="notifications-container">
       <div className="toggle-notifs">
-        <button className="notif-button" type="button" onClick={() => setShowNotifs(!showNotifs)}>
+        <button data-testid="notif-button" className="notif-button" type="button" onClick={() => setShowNotifs(!showNotifs)}>
           {' '}
           <i className="fas fa-times" />
         </button>

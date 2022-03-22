@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot comments 1`] = `
+<div
+  className="comments"
+>
+  <div
+    className="comment"
+  >
+    <div
+      className="comment-img"
+    >
+      <i
+        className="far fa-user-circle "
+      />
+    </div>
+    <div
+      className="comment-text"
+    >
+      <div
+        className="comment-name"
+      >
+        user1
+      </div>
+      <div
+        className="comment-content"
+      >
+        I loved using this item
+      </div>
+    </div>
+  </div>
+  <div
+    className="comment"
+  >
+    <div
+      className="comment-img"
+    >
+      <i
+        className="far fa-user-circle "
+      />
+    </div>
+    <div
+      className="comment-text"
+    >
+      <div
+        className="comment-name"
+      >
+        user2
+      </div>
+      <div
+        className="comment-content"
+      >
+        I wonder if I will need this
+      </div>
+    </div>
+  </div>
+  <div
+    className="add-comment"
+  >
+    <i
+      className="far fa-user-circle"
+    />
+    <input
+      className="input-comment"
+      data-testid="comment-input"
+      onChange={[Function]}
+    />
+    <button
+      className="submit-comment"
+      onClick={[Function]}
+      type="button"
+    >
+      <div
+        className="button-text"
+      >
+        Comment
+      </div>
+    </button>
+  </div>
+</div>
+`;

@@ -28,7 +28,7 @@ function Comment() {
       ))}
       <div className="add-comment">
         <i className="far fa-user-circle" />
-        <input className="input-comment" onChange={(e) => setCommentInput(e.target.value)} />
+        <input data-testid="comment-input" className="input-comment" onChange={(e) => setCommentInput(e.target.value)} />
         <button className="submit-comment" type="button" onClick={addComment}><div className="button-text">Comment</div></button>
       </div>
     </div>

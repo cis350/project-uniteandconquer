@@ -54,10 +54,10 @@ function Login() {
       <div className="login">
         <h2>Login to your account</h2>
         <div className="login-field">
-          <input className="field" placeholder="username" onChange={(e) => setUsername(e.target.value)} />
+          <input data-testid="email/phone-input" className="field" placeholder="email/phone #" onChange={(e) => setUsername(e.target.value)} />
         </div>
         <div className="login-field">
-          <input className="field" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
+          <input data-testid="password-input" className="field" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
         </div>
         <br />
         <button className="submit" type="button" onClick={login}>

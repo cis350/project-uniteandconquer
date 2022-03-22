@@ -5,19 +5,18 @@ import '../assets/UserProfile.css';
 
 function UserProfile() {
   const [showNotifs, setShowNotifs] = useState(false);
-
   return (
     <div className="user-profile-page">
-      <SidebarTags />
+      <div>{SidebarTags()}</div>
       <div>
         <div className="profile-title"><h1>My Profile</h1></div>
         <div className="bell-pos">
-          <button className="bell-button" type="button" onClick={() => setShowNotifs(!showNotifs)}>
+          <button data-testid="bell-button" className="bell-button" type="button" onClick={() => setShowNotifs(!showNotifs)}>
             {' '}
             <i className="fas fa-bell fa-2x" />
           </button>
         </div>
-        <div className="notifications-pos">{showNotifs ? <Notifications showNotifs={showNotifs} setShowNotifs={setShowNotifs} /> : ''}</div>
+        <div className="notifications-pos">{showNotifs ? Notifications({ showNotifs, setShowNotifs }) : ''}</div>
         <div>
           <table>
             <tbody>

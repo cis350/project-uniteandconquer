@@ -1,0 +1,224 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot user-profile 1`] = `
+<div
+  className="user-profile-page"
+>
+  <div>
+    <div
+      className="sidebar"
+    >
+      <div
+        className="greeting"
+      >
+        <i
+          className="far fa-user-circle fa-2x"
+        />
+         
+        Hi, Jeremy
+      </div>
+      <div
+        className="home"
+      />
+      <div
+        className="settings"
+      />
+      <div
+        className="preferences"
+      >
+        <div
+          className="preferences-title"
+        >
+          My Preferences
+        </div>
+        <div
+          className="preference-tag"
+        >
+          Tag1
+        </div>
+        <div
+          className="preference-tag"
+        >
+          Tag2
+        </div>
+        <div
+          className="preference-tag"
+        >
+          Tag3
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      className="profile-title"
+    >
+      <h1>
+        My Profile
+      </h1>
+    </div>
+    <div
+      className="bell-pos"
+    >
+      <button
+        className="bell-button"
+        data-testid="bell-button"
+        onClick={[Function]}
+        type="button"
+      >
+         
+        <i
+          className="fas fa-bell fa-2x"
+        />
+      </button>
+    </div>
+    <div
+      className="notifications-pos"
+    >
+      
+    </div>
+    <div>
+      <table>
+        <tbody>
+          <tr>
+            <th>
+              My Active Posts
+            </th>
+            <th>
+              My Wishlist
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <div
+                className="post-title"
+              >
+                Post [ID]: [itemName] - [status]
+              </div>
+              <div
+                className="post-content"
+              >
+                This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for $[pricePerItem]
+                <br />
+                <br />
+                [tags]
+              </div>
+            </td>
+            <td>
+              <div
+                className="post-title"
+              >
+                Post [ID]: [itemName] - [status]
+              </div>
+              <div
+                className="post-content"
+              >
+                This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for $[pricePerItem]
+                <br />
+                <br />
+                [tags]
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div
+                className="post-title"
+              >
+                Post [ID]: [itemName] - [status]
+              </div>
+              <div
+                className="post-content"
+              >
+                This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for $[pricePerItem]
+                <br />
+                <br />
+                [tags]
+              </div>
+            </td>
+            <td>
+              <div
+                className="post-title"
+              >
+                Post [ID]: [itemName] - [status]
+              </div>
+              <div
+                className="post-content"
+              >
+                This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for $[pricePerItem]
+                <br />
+                <br />
+                [tags]
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div
+                className="post-title"
+              >
+                Post [ID]: [itemName] - [status]
+              </div>
+              <div
+                className="post-content"
+              >
+                This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for $[pricePerItem]
+                <br />
+                <br />
+                [tags]
+              </div>
+            </td>
+            <td>
+              <div
+                className="post-title"
+              >
+                Post [ID]: [itemName] - [status]
+              </div>
+              <div
+                className="post-content"
+              >
+                This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for $[pricePerItem]
+                <br />
+                <br />
+                [tags]
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div
+                className="post-title"
+              >
+                Post [ID]: [itemName] - [status]
+              </div>
+              <div
+                className="post-content"
+              >
+                This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for $[pricePerItem]
+                <br />
+                <br />
+                [tags]
+              </div>
+            </td>
+            <td>
+              <div
+                className="post-title"
+              >
+                Post [ID]: [itemName] - [status]
+              </div>
+              <div
+                className="post-content"
+              >
+                This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for $[pricePerItem]
+                <br />
+                <br />
+                [tags]
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
