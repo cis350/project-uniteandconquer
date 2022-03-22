@@ -42,47 +42,57 @@ function Home() {
         <table>
           <tr>
             <td>
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
+              <Link className="link" to="/post-details">
+                <div className="post-title">This is Post</div>
+                <div className="post-content">
+                  This post is led by Jeremy and trades [ITEM] for $[VALUE] with
+                  maturity [DATE]
+                </div>
+              </Link>
             </td>
           </tr>
           <tr>
             <td>
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
+              <Link className="link" to="/post-details">
+                <div className="post-title">This is Post</div>
+                <div className="post-content">
+                  This post is led by Jeremy and trades [ITEM] for $[VALUE] with
+                  maturity [DATE]
+                </div>
+              </Link>
             </td>
           </tr>
           <tr>
             <td>
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
+              <Link className="link" to="/post-details">
+                <div className="post-title">This is Post</div>
+                <div className="post-content">
+                  This post is led by Jeremy and trades [ITEM] for $[VALUE] with
+                  maturity [DATE]
+                </div>
+              </Link>
             </td>
           </tr>
           <tr>
             <td>
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
+              <Link className="link" to="/post-details">
+                <div className="post-title">This is Post</div>
+                <div className="post-content">
+                  This post is led by Jeremy and trades [ITEM] for $[VALUE] with
+                  maturity [DATE]
+                </div>
+              </Link>
             </td>
           </tr>
           <tr>
             <td>
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
+              <Link className="link" to="/post-details">
+                <div className="post-title">This is Post</div>
+                <div className="post-content">
+                  This post is led by Jeremy and trades [ITEM] for $[VALUE] with
+                  maturity [DATE]
+                </div>
+              </Link>
             </td>
           </tr>
         </table>
