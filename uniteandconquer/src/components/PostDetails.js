@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
+import Comment from './Comment';
 import '../assets/PostDetails.css';
 
 const PostDB = require('../modules/PostDB');
@@ -87,6 +88,7 @@ function PostDetails() {
             <div className="tag">Tag6</div>
           </div>
         </div>
+        <div className="comment-section"><Comment /></div>
         <div className="buttons-container">
           <div className="desired-quantity"><input placeholder="desired quantity" onChange={(e) => setDesiredQuantity(e.target.value)} /></div>
           <button className="create" type="button" onClick={joinGroup}>
