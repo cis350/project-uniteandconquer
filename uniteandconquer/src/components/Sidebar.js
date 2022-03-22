@@ -22,7 +22,7 @@ function Sidebar() {
         </Link>
       </div>
       <div className="logout">
-        <Link className="link" to="/logout">
+        <Link className="link" to="/login">
           <div className="text">Logout</div>
         </Link>
       </div>

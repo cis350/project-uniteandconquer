@@ -2,10 +2,15 @@ td,
 th {
   border: 10px solid #ffd9a0;
   box-sizing: border-box;
+  white-space: wrap;
 }
 
 table {
   border-collapse: collapse;
+  position: absolute;
+  max-width: 700px;
+  left: 400px;
+  white-space: wrap;
 }
 
 th {
@@ -13,7 +18,7 @@ th {
 }
 
 td {
-  max-width: 700px;
+  max-width: 500px;
   padding: 15px;
 }
 

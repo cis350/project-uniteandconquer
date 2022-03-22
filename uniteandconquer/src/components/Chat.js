@@ -1,8 +1,24 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
+import SidebarChat from './SidebarChat';
+import '../assets/Chat.css';
 
 function Chat() {
+  const [text, setText] = useState('');
+
+  const updateText = () => {};
   return (
-    <div>Chat</div>
+    <div className="chat">
+      <SidebarChat />
+      <div>
+        <div className="menu-title"><h1>Chat Group 0</h1></div>
+        <div className="chat-bar">
+          <div className="text-field">
+            <input onChange={(e) => setText(e.target.value)} />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
