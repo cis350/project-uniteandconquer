@@ -1,12 +1,21 @@
 .preferences {
   position: absolute;
   width: 302px;
-  height: 437px;
+  height: 300px;
   left: 51px;
   top: 461px;
 
   background: #FFD9A0;
 
+}
+
+.notifications {
+  position: absolute;
+  width: 302px;
+  left: 51px;
+  top: 800px;
+
+  background: #FFD9A0;
 }
 
 .preferences-title {
