@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Comment from './Comment';
@@ -11,6 +11,7 @@ const PostDB = require('../modules/PostDB');
 // if successful, redirect the user to the post which the user joins in
 function PostDetails() {
   const [desiredQuantity, setDesiredQuantity] = useState(0);
+  const [validQuantity, setValidQuantity] = useState(false);
   const navigate = useNavigate();
   const myStorage = window.sessionStorage;
   const joinGroup = () => {
@@ -28,6 +29,24 @@ function PostDetails() {
   const back = () => {
     navigate('/');
   };
+
+  const quantityValidation = () => {
+    const num = /^\d+$/;
+
+    if (desiredQuantity) {
+      if (desiredQuantity.match(num)) {
+        setValidQuantity(true);
+      } else {
+        setValidQuantity(false);
+      }
+    } else {
+      setValidQuantity(false);
+    }
+  };
+
+  useEffect(() => {
+    quantityValidation();
+  });
 
   return (
     <div className="post-details-page">
@@ -91,7 +110,7 @@ function PostDetails() {
         </div>
         <div className="buttons-container">
           <div className="desired-quantity"><input placeholder="desired quantity" onChange={(e) => setDesiredQuantity(e.target.value)} /></div>
-          <button className="create" type="button" onClick={joinGroup}>
+          <button disabled={!validQuantity} className="create" type="button" onClick={joinGroup}>
             Join
           </button>
           <button className="cancel" type="button" onClick={back}>
