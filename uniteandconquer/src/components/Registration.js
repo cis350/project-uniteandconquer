@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 import '../assets/App.css';
 import '../assets/Registration.css';
@@ -22,6 +24,9 @@ function Registration() {
   const [validReqs, setValidReqs] = useState(false);
   const [validConfirmPassword, setValidConfirmPassword] = useState(false);
   const [tags, setTags] = useState([]);
+  const options = [
+    'US (+1)', 'UK (+44)', 'AS (+1684)',
+  ];
   const navigate = useNavigate();
 
   // register the user given the information provided
@@ -71,7 +76,7 @@ function Registration() {
   };
 
   const phoneValidation = () => {
-    const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im;
+    const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4}$/im;
 
     if (phone) {
       if (phone.match(phoneRegex)) {
@@ -178,12 +183,16 @@ function Registration() {
             </div>
             <div className="registration-field">
               <div className="label">phone</div>
-              <input className="phone-input" placeholder="### - ### - ####" onChange={(e) => setPhone(e.target.value)} />
+              <div className="full-phone-input">
+                <Dropdown className="area-code" options={options} value={options[0]} placeholder="Select an option" />
+                <input className="phone-input" onChange={(e) => setPhone(e.target.value)} />
+
+              </div>
               {validPhone ? <i className="fas fa-check" /> : <i className="fas fa-times" />}
             </div>
             <div className="registration-field">
               <div className="label">email</div>
-              <input className="email-input" placeholder="username@domain.com" onChange={(e) => setEmail(e.target.value)} />
+              <input className="email-input" onChange={(e) => setEmail(e.target.value)} />
               {validEmail ? <i className="fas fa-check" /> : <i className="fas fa-times" />}
             </div>
             <div className="registration-field">
