@@ -107,7 +107,7 @@ function Registration() {
   };
 
   const confirmPasswordValidation = () => {
-    if (password === confirmPassword) {
+    if (password && password === confirmPassword) {
       setValidConfirmPassword(true);
     } else {
       setValidConfirmPassword(false);

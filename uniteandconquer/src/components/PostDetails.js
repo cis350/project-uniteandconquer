@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import '../assets/PostDetails.css';
@@ -8,6 +9,7 @@ const PostDB = require('../modules/PostDB');
 // In the post details page, one can choose to join the group
 // if successful, redirect the user to the post which the user joins in
 function PostDetails() {
+  const [desiredQuantity, setDesiredQuantity] = useState(0);
   const navigate = useNavigate();
   const myStorage = window.sessionStorage;
   const joinGroup = () => {
@@ -86,6 +88,7 @@ function PostDetails() {
           </div>
         </div>
         <div className="buttons-container">
+          <div className="desired-quantity"><input placeholder="desired quantity" onChange={(e) => setDesiredQuantity(e.target.value)} /></div>
           <button className="create" type="button" onClick={joinGroup}>
             Join
           </button>
