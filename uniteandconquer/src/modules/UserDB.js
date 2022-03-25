@@ -39,7 +39,7 @@ function getUserDetails(id, callback) {
       id: '507f191e810c19729de860ea', itemName: 'Trash Can', itemNumTarget: 5, itemCurrent: 3, pricePerItem: 2.0, ownerName: 'Yuxi Dai', status: 0, tags: ['Home'],
     },
     {
-      id: '507f191e810c19729deefgrv', itemName: 'Laundry Bags', itemNumTarget: 2, itemCurrent: 3, pricePerItem: 14.99, ownerName: 'Roy Bae', status: 1, tags: ['Home'],
+      id: '507f191e810c19729dccba45', itemName: 'Laundry Bags', itemNumTarget: 2, itemCurrent: 3, pricePerItem: 14.99, ownerName: 'Roy Bae', status: 1, tags: ['Home'],
     }],
   }, null);
 }
