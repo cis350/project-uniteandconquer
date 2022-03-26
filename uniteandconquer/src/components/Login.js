@@ -54,7 +54,7 @@ function Login() {
       <div className="login">
         <h2>Login to your account</h2>
         <div className="login-field">
-          <input className="field" placeholder="username" onChange={(e) => setUsername(e.target.value)} />
+          <input className="field" placeholder="phone or email" onChange={(e) => setUsername(e.target.value)} />
         </div>
         <div className="login-field">
           <input className="field" placeholder="password" onChange={(e) => setPassword(e.target.value)} />

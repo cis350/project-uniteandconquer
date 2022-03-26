@@ -1,99 +1,123 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SidebarTags from './SidebarTags';
+import Notifications from './Notifications';
 import '../assets/UserProfile.css';
 
 function UserProfile() {
+  const [showNotifs, setShowNotifs] = useState(false);
+
   return (
     <div className="user-profile-page">
       <SidebarTags />
       <div>
         <div className="profile-title"><h1>My Profile</h1></div>
-        <table>
-          <tr>
-            <th>My Owned Posts</th>
-            <th>My Joined Posts</th>
-          </tr>
-          <tr>
-            <td>
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
-            </td>
-            <td>
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
-            </td>
-            <td>
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
-            </td>
-            <td>
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
-            </td>
-            <td>
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
-            </td>
-            <td>
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
-            </td>
-          </tr>
-        </table>
+        <div className="bell-pos">
+          <button className="bell-button" type="button" onClick={() => setShowNotifs(!showNotifs)}>
+            {' '}
+            <i className="fas fa-bell fa-2x" />
+          </button>
+        </div>
+        <div className="notifications-pos">{showNotifs ? <Notifications showNotifs={showNotifs} setShowNotifs={setShowNotifs} /> : ''}</div>
+        <div>
+          <table>
+            <tbody>
+              <tr>
+                <th>My Active Posts</th>
+                <th>My Wishlist</th>
+              </tr>
+              <tr>
+                <td>
+                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
+                  <div className="post-content">
+                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
+                    $[pricePerItem]
+                    <br />
+                    <br />
+                    [tags]
+                  </div>
+                </td>
+                <td>
+                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
+                  <div className="post-content">
+                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
+                    $[pricePerItem]
+                    <br />
+                    <br />
+                    [tags]
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
+                  <div className="post-content">
+                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
+                    $[pricePerItem]
+                    <br />
+                    <br />
+                    [tags]
+                  </div>
+                </td>
+                <td>
+                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
+                  <div className="post-content">
+                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
+                    $[pricePerItem]
+                    <br />
+                    <br />
+                    [tags]
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
+                  <div className="post-content">
+                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
+                    $[pricePerItem]
+                    <br />
+                    <br />
+                    [tags]
+                  </div>
+                </td>
+                <td>
+                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
+                  <div className="post-content">
+                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
+                    $[pricePerItem]
+                    <br />
+                    <br />
+                    [tags]
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
+                  <div className="post-content">
+                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
+                    $[pricePerItem]
+                    <br />
+                    <br />
+                    [tags]
+                  </div>
+                </td>
+                <td>
+                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
+                  <div className="post-content">
+                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
+                    $[pricePerItem]
+                    <br />
+                    <br />
+                    [tags]
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+
+        </div>
 
       </div>
     </div>

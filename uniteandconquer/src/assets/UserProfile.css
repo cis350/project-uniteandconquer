@@ -6,6 +6,7 @@ th {
 
 table {
   border-collapse: collapse;
+  margin-left: 50px;
 }
 
 th {
@@ -34,4 +35,26 @@ td {
 .profile-title {
   font-size: 25px;
   text-align: center;
+}
+
+.notifications-pos {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.bell-pos {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 50px;
+}
+
+.bell-button {
+  background: none;
+  border: none;
+}
+
+.bell-button:hover {
+  color: rgb(133, 235, 85);
 }
