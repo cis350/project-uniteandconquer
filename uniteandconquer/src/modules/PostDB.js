@@ -1,5 +1,4 @@
-// Post and comment operations
-
+/* Post and comment operations */
 function addPost(
   itemName,
   itemNumTarget,
@@ -57,11 +56,7 @@ function getAllPosts(callback) {
 }
 
 function getSortedPostsInRange(startIdx, endIdx, callback) {
-  return callback(true, [{
-    id: '5087901e810c109679e860ea', itemName: 'Ramen', pricePerItem: 0.99, createdAt: '2022-03-15T15:14:17.925Z', tags: ['Food'],
-  }, {
-    id: '5087901e810c19729de860ea', itemName: 'AA Batteries', pricePerItem: 0.46, createdAt: '2022-03-14T13:14:14.925Z', tags: ['Home'],
-  }], null);
+  return getAllPosts(callback);
 }
 
 function getSortedPostsByTags(startIdx, endIdx, tags, callback) {
@@ -92,7 +87,6 @@ export {
   addPost,
   addComment,
   getPost,
-  getAllPosts,
   getSortedPostsInRange,
   getSortedPostsByTags,
   getSortedPostsByKeyword,

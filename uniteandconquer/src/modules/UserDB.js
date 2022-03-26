@@ -1,5 +1,4 @@
-// User-related operations
-
+/* User-related operations */
 function createUser(
   countryCode,
   phoneNumber,
