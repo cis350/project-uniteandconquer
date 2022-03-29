@@ -7,6 +7,8 @@ import {
   StyleSheet, View, Text, Button,
 } from 'react-native';
 import UserProfile from './components/UserProfile';
+import PostDetails from './components/PostDetails';
+import CreatePost from './components/CreatePost';
 
 // styling ---------
 
@@ -22,16 +24,20 @@ const styles = StyleSheet.create({
 // app content --------
 
 function HomeScreen({ navigation }) {
-  function handleStart() {
-    navigation.navigate('UserProfile');
-  }
-
   return (
     <View style={styles.container}>
       <Text>Hello</Text>
       <Button
-        title="Start"
-        onPress={(e) => handleStart(e)}
+        title="Profile"
+        onPress={() => navigation.navigate('UserProfile')}
+      />
+      <Button
+        title="Post Details"
+        onPress={() => navigation.navigate('PostDetails')}
+      />
+      <Button
+        title="Create Post"
+        onPress={() => navigation.navigate('CreatePost')}
       />
     </View>
   );
@@ -44,6 +50,8 @@ export default function App() {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="UserProfile" component={UserProfile} />
+        <Stack.Screen name="PostDetails" component={PostDetails} />
+        <Stack.Screen name="CreatePost" component={CreatePost} />
       </Stack.Navigator>
     </NavigationContainer>
   );
