@@ -9,6 +9,7 @@ import {
 import UserProfile from './components/UserProfile';
 import PostDetails from './components/PostDetails';
 import CreatePost from './components/CreatePost';
+import Comment from './components/Comment';
 
 // styling ---------
 
@@ -52,6 +53,7 @@ export default function App() {
         <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Screen name="PostDetails" component={PostDetails} />
         <Stack.Screen name="CreatePost" component={CreatePost} />
+        <Stack.Screen name="Comment" component={Comment} />
       </Stack.Navigator>
     </NavigationContainer>
   );
