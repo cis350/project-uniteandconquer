@@ -1,15 +1,15 @@
 import React from 'react';
 import {
-  StyleSheet, View, Button, Text,
+  StyleSheet, View, Button, Text, ScrollView, TouchableOpacity,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Notification from './Notification';
 
 // styling ---------
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FAE9C7',
-    alignItems: 'center',
-    justifyContent: 'center',
     height: '100%',
     width: '100%',
   },
@@ -17,30 +17,72 @@ const styles = StyleSheet.create({
 
 const userStyles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center',
     margin: 10,
   },
-  button: {
-    padding: 0,
-    backgroundColor: '#FFD9A0',
+  text: {
+    textAlign: 'right',
+  },
+  icon: {
+    alignSelf: 'flex-end',
   },
 });
 
-const postStyles = StyleSheet.create({
-  container: {
+const profileContainer = StyleSheet.create({
+  header: {
+    fontSize: 35,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  buttons: {
+    display: 'flex',
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  leftButton: {
+    backgroundColor: '#FFD9A0',
+    height: 35,
+    width: 150,
+    marginRight: 35,
+  },
+  rightButton: {
+    backgroundColor: '#FFD9A0',
+    height: 35,
+    width: 150,
+    marginLeft: 35,
+  },
+  subtitle: {
+    marginTop: 5,
+    fontSize: 25,
+    textAlign: 'center',
+    fontStyle: 'italic',
+  },
+  post: {
+    marginTop: 10,
     padding: 10,
     backgroundColor: '#FFD9A0',
-    marginBottom: 15,
+    marginBottom: 5,
     width: 380,
   },
-  header: {
+  postHeader: {
     fontSize: 19,
     fontWeight: 'bold',
     marginBottom: 10,
+  },
+  postContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  showButton: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    margin: 10,
   },
 });
 
@@ -50,6 +92,7 @@ const tagStyles = StyleSheet.create({
     backgroundColor: '#FFD9A0',
     marginBottom: 15,
     width: 380,
+    marginTop: 15,
   },
   header: {
     alignItems: 'center',
@@ -74,126 +117,106 @@ const tagStyles = StyleSheet.create({
     borderWidth: 1,
     overflow: 'hidden',
   },
-});
-
-const postsContentStyles = StyleSheet.create({
-  container: {
-    position: 'relative',
-    marginTop: 120,
-  },
-});
-
-const titleStyles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 25,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
   position: {
-    position: 'absolute',
-    top: 50,
-  },
-  subtitle: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 20,
-    fontStyle: 'italic',
-  },
-});
-
-const headerButtonStyles = StyleSheet.create({
-  container: {
-    marginTop: 60,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10,
-    position: 'absolute',
-    top: 25,
-  },
-  left: {
-    backgroundColor: '#FFD9A0',
-    height: 35,
-    width: 150,
-    marginRight: 35,
-  },
-  right: {
-    backgroundColor: '#FFD9A0',
-    height: 35,
-    width: 150,
-    marginLeft: 35,
   },
 });
 
 // app content --------
 
 export default function UserProfile() {
+  const [showNotif, setShowNotif] = React.useState(false);
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      {showNotif && <Notification setShowNotif={setShowNotif} showNotif={showNotif} />}
       <View style={userStyles.container}>
-        <Text>
+        <Icon name="user" size={28} style={userStyles.icon} />
+        <Text style={userStyles.text}>
           Hi, Jeremy
         </Text>
-        <Text>
+        <Text style={userStyles.text}>
           My Chats
         </Text>
-        <Text>
+        <Text style={userStyles.text}>
           Log Out
         </Text>
       </View>
-      <View style={titleStyles.position}>
-        <Text style={titleStyles.container}>My Profile</Text>
+      <View style={profileContainer.showButton}>
+        <TouchableOpacity
+          onPress={() => setShowNotif(!showNotif)}
+        >
+          <Icon
+            name="bell"
+            size={25}
+          />
+        </TouchableOpacity>
       </View>
-      <View style={headerButtonStyles.container}>
-        <View style={headerButtonStyles.left}><Button color="#000" title="Settings" /></View>
-        <View style={headerButtonStyles.right}><Button color="#000" title="Main Page" /></View>
-      </View>
-      <View style={postsContentStyles.container}>
-        <View>
-          <Text style={titleStyles.subtitle}>My Owned Posts</Text>
-          <View style={postStyles.container}>
-            <Text style={postStyles.header}>This is a Post</Text>
-            <Text>
+      <View>
+        <Text style={profileContainer.header}>My Profile</Text>
+        <View style={profileContainer.buttons}>
+          <View style={profileContainer.leftButton}><Button color="#000" title="Settings" /></View>
+          <View style={profileContainer.rightButton}><Button color="#000" title="Main Page" /></View>
+        </View>
+        <Text style={profileContainer.subtitle}>My Owned Posts</Text>
+        <View style={profileContainer.postContainer}>
+          <View style={profileContainer.post}>
+            <Text style={profileContainer.postHeader}>This is a Post</Text>
+            <Text style={profileContainer.postContent}>
               This post is led by Jeremy and trades [ITEM] for $[VALUE] with
               maturity [DATE]
             </Text>
           </View>
-          <View style={postStyles.container}>
-            <Text style={postStyles.header}>This is a Post</Text>
-            <Text>
+          <View style={profileContainer.post}>
+            <Text style={profileContainer.postHeader}>This is a Post</Text>
+            <Text style={profileContainer.postContent}>
+              This post is led by Jeremy and trades [ITEM] for $[VALUE] with
+              maturity [DATE]
+            </Text>
+          </View>
+          <View style={profileContainer.post}>
+            <Text style={profileContainer.postHeader}>This is a Post</Text>
+            <Text style={profileContainer.postContent}>
               This post is led by Jeremy and trades [ITEM] for $[VALUE] with
               maturity [DATE]
             </Text>
           </View>
         </View>
-        <View>
-          <Text style={titleStyles.subtitle}>My Joined Posts</Text>
-          <View style={postStyles.container}>
-            <Text style={postStyles.header}>This is a Post</Text>
-            <Text>
+        <Text style={profileContainer.subtitle}>My Joined Posts</Text>
+        <View style={profileContainer.postContainer}>
+          <View style={profileContainer.post}>
+            <Text style={profileContainer.postHeader}>This is a Post</Text>
+            <Text style={profileContainer.postContent}>
               This post is led by Jeremy and trades [ITEM] for $[VALUE] with
               maturity [DATE]
             </Text>
           </View>
-          <View style={postStyles.container}>
-            <Text style={postStyles.header}>This is a Post</Text>
-            <Text>
+          <View style={profileContainer.post}>
+            <Text style={profileContainer.postHeader}>This is a Post</Text>
+            <Text style={profileContainer.postContent}>
+              This post is led by Jeremy and trades [ITEM] for $[VALUE] with
+              maturity [DATE]
+            </Text>
+          </View>
+          <View style={profileContainer.post}>
+            <Text style={profileContainer.postHeader}>This is a Post</Text>
+            <Text style={profileContainer.postContent}>
               This post is led by Jeremy and trades [ITEM] for $[VALUE] with
               maturity [DATE]
             </Text>
           </View>
         </View>
-      </View>
-      <View style={tagStyles.container}>
-        <Text style={tagStyles.header}>My Interests</Text>
-        <View style={tagStyles.tags}>
-          <Text style={tagStyles.tag}>tag</Text>
-          <Text style={tagStyles.tag}>tag</Text>
+        <View style={tagStyles.position}>
+          <View style={tagStyles.container}>
+            <Text style={tagStyles.header}>My Interests</Text>
+            <View style={tagStyles.tags}>
+              <Text style={tagStyles.tag}>tag</Text>
+              <Text style={tagStyles.tag}>tag</Text>
+            </View>
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }

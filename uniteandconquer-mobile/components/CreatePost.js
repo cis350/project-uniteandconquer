@@ -19,6 +19,7 @@ const userStyles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center',
     margin: 10,
+    zIndex: 1,
   },
   text: {
     textAlign: 'right',
@@ -33,6 +34,7 @@ const createPostStyles = StyleSheet.create({
     borderWidth: 8,
     borderColor: '#FFD9A0',
     height: '90%',
+    zIndex: 0,
   },
   tags: {
     backgroundColor: '#FFCB7D',
@@ -105,12 +107,14 @@ const createPostStyles = StyleSheet.create({
     borderRadius: 6,
     padding: 3,
     marginRight: 5,
+    width: 100,
   },
   RightButton: {
     backgroundColor: '#C6C6C6',
     borderRadius: 6,
     padding: 3,
     marginLeft: 5,
+    width: 100,
   },
   buttons: {
     flexDirection: 'row',
