@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet, View, ScrollView, Text, FlatList, Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { leaveGroup } from '../modules/PostDB';
 
 // styling ---------
 
@@ -125,6 +126,18 @@ const postDetailStyles = StyleSheet.create({
 // app content --------
 
 export default function PostDetails({ navigation }) {
+  // event handlers --------
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const leavePressed = () => {
+    const userId = ''; // dummy, need to get from session once log in routing is set up
+    const postId = ''; // dummy, need to get from current view
+    leaveGroup(userId, postId, (success, err) => {
+      setErrorMessage(err); // trigger re-rendering; will display err if err is not null
+    });
+  };
+
+  // views ---------
   return (
     <ScrollView style={styles.container}>
       <View style={userStyles.container}>
@@ -139,6 +152,9 @@ export default function PostDetails({ navigation }) {
           Log Out
         </Text>
       </View>
+      {errorMessage && (
+        <Text>{errorMessage}</Text>
+      )}
       <Text style={postDetailStyles.upperBox}>Item Name</Text>
       <View style={postDetailStyles.container}>
         <View style={postDetailStyles.upper}>
@@ -215,6 +231,7 @@ export default function PostDetails({ navigation }) {
           <View>
             <View style={postDetailStyles.buttons}>
               <View style={postDetailStyles.LeftButton}><Button color="#000" title="Join" /></View>
+              <View style={postDetailStyles.LeftButton}><Button color="#000" title="Leave" onPress={leavePressed} /></View>
               <View style={postDetailStyles.LeftButton}><Button color="#000" title="Comment" onPress={() => navigation.navigate('Comment')} /></View>
               <View style={postDetailStyles.RightButton}><Button color="#000" title="Back" /></View>
             </View>
