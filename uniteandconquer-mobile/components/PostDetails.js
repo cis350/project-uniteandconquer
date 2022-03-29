@@ -1,8 +1,10 @@
-import React from 'react';
+import { React, useState } from 'react';
 import {
   StyleSheet, View, ScrollView, Text, Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+const PostDB = require('../../uniteandconquer/src/modules/PostDB');
 
 // styling ---------
 
@@ -131,6 +133,20 @@ const postDetailStyles = StyleSheet.create({
 // app content --------
 
 export default function PostDetails() {
+  const [join, setJoin] = useState(false);
+  function handleJoin() {
+    const userID = 'bababababa';
+    const postID = 0;
+    const quantity = 2;
+    PostDB.joinGroup(userID, postID, quantity, (success, err) => {
+      if (success) {
+        setJoin(true);
+        // navigate(`/post-details${postID}`);
+      } else {
+        console.log(err);
+      }
+    });
+  }
   return (
     <ScrollView style={styles.container}>
       <View style={userStyles.container}>
@@ -226,7 +242,7 @@ export default function PostDetails() {
           </View>
           <View>
             <View style={postDetailStyles.buttons}>
-              <View style={postDetailStyles.LeftButton}><Button color="#000" title="Join" /></View>
+              <View style={postDetailStyles.LeftButton}><Button color="#000" title={join ? 'Delete' : 'Join'} onPress={() => handleJoin()} /></View>
               <View style={postDetailStyles.RightButton}><Button color="#000" title="Back" /></View>
             </View>
           </View>
