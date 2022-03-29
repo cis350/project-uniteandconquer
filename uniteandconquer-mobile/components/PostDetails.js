@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, View, ScrollView, Text, FlatList, Button,
+  StyleSheet, View, ScrollView, Text, Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -82,28 +82,34 @@ const postDetailStyles = StyleSheet.create({
     width: '40%',
   },
   groupUserName: {
-    marginTop: 5,
     fontSize: 20,
-    marginBottom: 25,
+    marginTop: 10,
+    marginBottom: 22,
+    marginLeft: 20,
   },
   groupUserQuantity: {
     fontSize: 20,
-    marginBottom: 33,
+    marginTop: 10,
+    marginBottom: 22,
+    marginLeft: 20,
   },
   groupUserIcon: {
     marginBottom: 10,
+    marginRight: 10,
   },
   LeftButton: {
     backgroundColor: '#FFCB7D',
     borderRadius: 6,
     padding: 3,
     marginRight: 5,
+    width: 100,
   },
   RightButton: {
     backgroundColor: '#C6C6C6',
     borderRadius: 6,
     padding: 3,
     marginLeft: 5,
+    width: 100,
   },
   buttons: {
     flexDirection: 'row',
@@ -124,7 +130,7 @@ const postDetailStyles = StyleSheet.create({
 
 // app content --------
 
-export default function PostDetails({ navigation }) {
+export default function PostDetails() {
   return (
     <ScrollView style={styles.container}>
       <View style={userStyles.container}>
@@ -169,53 +175,58 @@ export default function PostDetails({ navigation }) {
           <Text style={postDetailStyles.details}>Group size: 2</Text>
           <View>
             <View style={postDetailStyles.groupUser}>
-              <FlatList
-                scrollEnabled="false"
-                data={[
+              <View style={postDetailStyles.list}>
+                {[
                   { key: 'Alice' },
                   { key: 'Bob' },
                   { key: 'Dan' },
-                ]}
-                renderItem={() => (
-                  <Icon style={postDetailStyles.groupUserIcon} name="user" size={35} />
-                )}
-              />
-              <FlatList
-                scrollEnabled="false"
-                data={[
+                ].map(() => (
+                  <View>
+                    <Icon
+                      style={postDetailStyles.groupUserIcon}
+                      name="user"
+                      size={40}
+                    />
+                  </View>
+                ))}
+              </View>
+              <View>
+                {[
                   { key: 'Alice' },
                   { key: 'Bob' },
                   { key: 'Dan' },
-                ]}
-                renderItem={({ item }) => (
-                  <Text
-                    style={postDetailStyles.groupUserName}
-                  >
-                    {item.key}
-                  </Text>
-                )}
-              />
-              <FlatList
-                scrollEnabled="false"
-                data={[
+                ].map((item) => (
+                  <View>
+                    <Text
+                      style={postDetailStyles.groupUserName}
+                    >
+                      {item.key}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+              <View>
+                {[
                   { key: 5 },
                   { key: 3 },
                   { key: 4 },
-                ]}
-                renderItem={({ item }) => (
-                  <Text
-                    style={postDetailStyles.groupUserName}
-                  >
-                    {item.key}
-                  </Text>
-                )}
-              />
+                ].map((item) => (
+                  <View>
+                    <Text
+                      style={postDetailStyles.groupUserQuantity}
+                    >
+                      Quantity:
+                      {' '}
+                      {item.key}
+                    </Text>
+                  </View>
+                ))}
+              </View>
             </View>
           </View>
           <View>
             <View style={postDetailStyles.buttons}>
               <View style={postDetailStyles.LeftButton}><Button color="#000" title="Join" /></View>
-              <View style={postDetailStyles.LeftButton}><Button color="#000" title="Comment" onPress={() => navigation.navigate('Comment')} /></View>
               <View style={postDetailStyles.RightButton}><Button color="#000" title="Back" /></View>
             </View>
           </View>

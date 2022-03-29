@@ -19,6 +19,7 @@ const userStyles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center',
     margin: 10,
+    zIndex: 1,
   },
   text: {
     textAlign: 'right',
@@ -33,6 +34,7 @@ const createPostStyles = StyleSheet.create({
     borderWidth: 8,
     borderColor: '#FFD9A0',
     height: '90%',
+    zIndex: 0,
   },
   tags: {
     backgroundColor: '#FFCB7D',
@@ -105,36 +107,32 @@ const createPostStyles = StyleSheet.create({
     borderRadius: 6,
     padding: 3,
     marginRight: 5,
+    width: 100,
   },
   RightButton: {
     backgroundColor: '#C6C6C6',
     borderRadius: 6,
     padding: 3,
     marginLeft: 5,
+    width: 100,
   },
   buttons: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    bottom: -45,
+    bottom: -80,
   },
 });
 
 // app content --------
 
-export default function CreatePost({ navigation }) {
+export default function CreatePost() {
   const [itemName, setItemName] = React.useState('');
   const [targetQuantity, setTargetQuantity] = React.useState('');
   const [price, setPrice] = React.useState('');
   const [link, setLink] = React.useState('');
   const [description, setDescription] = React.useState('');
-  const [tags, setTags] = React.useState([]);
-
-  function addTags(tag) {
-    setTags((arr) => [...arr, tag]);
-    console.log('adding tag... and current tags are:', tags);
-  }
 
   return (
     <ScrollView style={styles.container}>
@@ -157,11 +155,11 @@ export default function CreatePost({ navigation }) {
             <View style={createPostStyles.tags}>
               <Text style={createPostStyles.tagsHeader}>Tags</Text>
               <View>
-                <Text style={createPostStyles.tag} onPress={() => addTags('Tag1')}>Tag1</Text>
-                <Text style={createPostStyles.tag} onPress={() => addTags('Tag2')}>Tag2</Text>
-                <Text style={createPostStyles.tag} onPress={() => addTags('Tag3')}>Tag3</Text>
-                <Text style={createPostStyles.tag} onPress={() => addTags('Tag4')}>Tag4</Text>
-                <Text style={createPostStyles.tag} onPress={() => addTags('Tag5')}>Tag5</Text>
+                <Text style={createPostStyles.tag}>Tag1</Text>
+                <Text style={createPostStyles.tag}>Tag2</Text>
+                <Text style={createPostStyles.tag}>Tag3</Text>
+                <Text style={createPostStyles.tag}>Tag3</Text>
+                <Text style={createPostStyles.tag}>Tag3</Text>
               </View>
             </View>
             <View style={{ flexShrink: 1 }}>
@@ -209,19 +207,9 @@ export default function CreatePost({ navigation }) {
             />
           </View>
           <View>
-            <Text style={createPostStyles.fieldName}>Tags</Text>
-            <View style={createPostStyles.description}>
-              <Text>
-                {' '}
-                {tags}
-                {' '}
-              </Text>
-            </View>
-          </View>
-          <View>
             <View style={createPostStyles.buttons}>
-              <View style={createPostStyles.LeftButton}><Button color="#000" title="Post" onPress={() => navigation.navigate('PostDetails')} /></View>
-              <View style={createPostStyles.RightButton}><Button color="#000" title="Cancel" onPress={() => navigation.navigate('Home')} /></View>
+              <View style={createPostStyles.LeftButton}><Button color="#000" title="Post" /></View>
+              <View style={createPostStyles.RightButton}><Button color="#000" title="Cancel" /></View>
             </View>
           </View>
         </View>
