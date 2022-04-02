@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState } from 'react';
 import {
   StyleSheet, View, ScrollView, Text, TextInput, Button,
 } from 'react-native';
@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
     marginTop: '20%',
   },
   subtitle: {
-    marginLeft: '-50%',
+    alignSelf: 'flex-start',
+    marginLeft: '10%',
   },
   textInput: {
     marginBottom: 20,
@@ -49,6 +50,14 @@ const styles = StyleSheet.create({
 });
 
 function UpdatePassword({ navigation }) {
+  const [currentPassword, setCurrentPassword] = useState();
+  const [newPassword, setNewPassword] = useState();
+
+  function handleUpdate() {
+    console.log('current password is: ', currentPassword);
+    console.log('new password is: ', currentPassword);
+  }
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.titleContainer}>
@@ -62,18 +71,28 @@ function UpdatePassword({ navigation }) {
           <Text>Current Password</Text>
         </View>
         <View style={styles.textInput}>
-          <TextInput placeholder="Current Password" />
+          <TextInput
+            placeholder="Current Password"
+            onChangeText={setCurrentPassword}
+            value={currentPassword}
+            secureTextEntry
+          />
         </View>
 
         <View style={styles.subtitle}>
           <Text>New Password</Text>
         </View>
         <View style={styles.textInput}>
-          <TextInput placeholder="New Password" />
+          <TextInput
+            placeholder="New Password"
+            onChangeText={setNewPassword}
+            value={newPassword}
+            secureTextEntry
+          />
         </View>
 
         <View style={styles.updateButton}>
-          <Button title="Update" />
+          <Button title="Update" onPress={() => handleUpdate()} />
         </View>
 
         <View style={styles.backButtonContainer}>
