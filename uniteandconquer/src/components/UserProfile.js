@@ -8,7 +8,7 @@ const UserDB = require('../modules/UserDB');
 function UserProfile() {
   const [showNotifs, setShowNotifs] = useState(false);
   /** used for showing interest in side bar */
-  // const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState([]);
   /** list of posts and whish list that will show on profile page */
   const [posts, setPosts] = useState([]);
   const [whishList, setWishList] = useState([]);
@@ -54,7 +54,7 @@ function UserProfile() {
     const userID = myStorage.getItem('UserID');
     UserDB.getUserDetails(userID, (success, userInfo, err) => {
       if (success) {
-        // setTags(userInfo.interests);
+        setTags(userInfo.interests);
         setPosts(userInfo.posts);
         setWishList(userInfo.wishList);
       } else {
@@ -65,7 +65,7 @@ function UserProfile() {
 
   return (
     <div className="user-profile-page">
-      <SidebarTags />
+      <SidebarTags tags={tags} />
       <div>
         <div className="profile-title"><h1>My Profile</h1></div>
         <div className="bell-pos">
