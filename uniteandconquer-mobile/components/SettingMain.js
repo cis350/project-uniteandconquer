@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
   backButtonContainer: {
     alignItems: 'center',
     marginTop: '90%',
+    width: '100%',
   },
 });
 
@@ -48,13 +49,13 @@ function Setting({ navigation }) {
           <Button title="Item Preference" onPress={() => navigation.navigate('SettingInterests')} />
         </View>
         <View style={styles.button}>
-          <Button title="Password" />
+          <Button title="Password" onPress={() => navigation.navigate('UpdatePassword')} />
         </View>
       </View>
 
       <View style={styles.backButtonContainer}>
         <View style={styles.button}>
-          <Button title="Back to the main page" />
+          <Button title="Back to the main page" onPress={() => navigation.navigate('Home')} />
         </View>
       </View>
     </ScrollView>

@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   backButtonContainer: {
     alignItems: 'center',
     marginTop: '25%',
-    width: '80%',
+    width: '100%',
   },
   button: {
     marginBottom: 20,
