@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState } from 'react';
 import {
   StyleSheet, View, ScrollView, Text, TextInput, Button,
 } from 'react-native';
@@ -21,7 +21,9 @@ const styles = StyleSheet.create({
     marginTop: '10%',
   },
   subtitle: {
-    marginLeft: '-60%',
+    // marginLeft: '-60%',
+    alignSelf: 'flex-start',
+    marginLeft: '10%',
   },
   textInput: {
     marginBottom: 20,
@@ -49,6 +51,18 @@ const styles = StyleSheet.create({
 });
 
 function UpdateInfo({ navigation }) {
+  const [username, setUsername] = useState();
+  const [fullName, setFullName] = useState();
+  const [phone, setPhone] = useState();
+  const [email, setEmail] = useState();
+
+  function handleUpdate() {
+    console.log('The username is ', username);
+    console.log('The fullName is ', fullName);
+    console.log('The phone is ', phone);
+    console.log('The email is ', email);
+  }
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.titleContainer}>
@@ -62,32 +76,48 @@ function UpdateInfo({ navigation }) {
           <Text>Username</Text>
         </View>
         <View style={styles.textInput}>
-          <TextInput placeholder="Username" />
+          <TextInput
+            placeholder="Username"
+            onChangeText={setUsername}
+            value={username}
+          />
         </View>
 
         <View style={styles.subtitle}>
           <Text>Full Name</Text>
         </View>
         <View style={styles.textInput}>
-          <TextInput placeholder="Full Name" />
+          <TextInput
+            placeholder="Full Name"
+            onChangeText={setFullName}
+            value={fullName}
+          />
         </View>
 
         <View style={styles.subtitle}>
           <Text>Phone</Text>
         </View>
         <View style={styles.textInput}>
-          <TextInput placeholder="Phone" />
+          <TextInput
+            placeholder="Phone"
+            onChangeText={setPhone}
+            value={phone}
+          />
         </View>
 
         <View style={styles.subtitle}>
           <Text>Email</Text>
         </View>
         <View style={styles.textInput}>
-          <TextInput placeholder="Email" />
+          <TextInput
+            placeholder="Email"
+            onChangeText={setEmail}
+            value={email}
+          />
         </View>
 
         <View style={styles.updateButton}>
-          <Button title="Update" />
+          <Button title="Update" onPress={() => handleUpdate()} />
         </View>
 
         <View style={styles.backButtonContainer}>
