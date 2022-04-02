@@ -10,6 +10,7 @@ import UserProfile from './components/UserProfile';
 import PostDetails from './components/PostDetails';
 import CreatePost from './components/CreatePost';
 import Comment from './components/Comment';
+import Setting from './components/SettingMain';
 
 // styling ---------
 
@@ -40,6 +41,10 @@ function HomeScreen({ navigation }) {
         title="Create Post"
         onPress={() => navigation.navigate('CreatePost')}
       />
+      <Button
+        title="Setting"
+        onPress={() => navigation.navigate('SettingMain')}
+      />
     </View>
   );
 }
@@ -54,6 +59,7 @@ export default function App() {
         <Stack.Screen name="PostDetails" component={PostDetails} />
         <Stack.Screen name="CreatePost" component={CreatePost} />
         <Stack.Screen name="Comment" component={Comment} />
+        <Stack.Screen name="SettingMain" component={Setting} />
       </Stack.Navigator>
     </NavigationContainer>
   );
