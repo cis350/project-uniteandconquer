@@ -16,34 +16,36 @@ function UserProfile() {
   const myStorage = window.sessionStorage;
   const PostTableGenerator = (postsOrWishList) => {
     const table = postsOrWishList.map((post) => (
-      <td>
-        <div className="post-title">
-          Post [
-          {post.id}
-          ]: [
-          {post.itemName}
-          ] - [
-          {post.status}
-          ]
-        </div>
-        <div className="post-content">
-          This post is led by [
-          {post.ownerName}
-          ] and trades [
-          {post.itemNumTarget}
-          ] of [
-          {post.itemNumCurrent}
-          ] for
-          $[
-          {post.pricePerItem}
-          ]
-          <br />
-          <br />
-          [
-          {post.tags}
-          ]
-        </div>
-      </td>
+      <tr>
+        <td>
+          <div className="post-title">
+            Post [
+            {post.id}
+            ]: [
+            {post.itemName}
+            ] - [
+            {post.status}
+            ]
+          </div>
+          <div className="post-content">
+            This post is led by [
+            {post.ownerName}
+            ] and trades [
+            {post.itemNumTarget}
+            ] of [
+            {post.itemNumCurrent}
+            ] for
+            $[
+            {post.pricePerItem}
+            ]
+            <br />
+            <br />
+            [
+            {post.tags}
+            ]
+          </div>
+        </td>
+      </tr>
     ));
     return table;
   };
@@ -54,7 +56,7 @@ function UserProfile() {
       if (success) {
         // setTags(userInfo.interests);
         setPosts(userInfo.posts);
-        // setWishList(userInfo.wishList);
+        setWishList(userInfo.wishList);
       } else {
         console.log(err);
       }
@@ -75,102 +77,32 @@ function UserProfile() {
         <div className="notifications-pos">{showNotifs ? <Notifications showNotifs={showNotifs} setShowNotifs={setShowNotifs} /> : ''}</div>
         <div>
           <table>
-            <tbody>
-              <tr>
-                <th>My Active Posts</th>
-                <th>My Wishlist</th>
-              </tr>
-              <tr>
-                {/* {PostTableGenerator(posts)} */}
-                <td>
-                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
-                  <div className="post-content">
-                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
-                    $[pricePerItem]
-                    <br />
-                    <br />
-                    [tags]
-                  </div>
-                </td>
-                <td>
-                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
-                  <div className="post-content">
-                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
-                    $[pricePerItem]
-                    <br />
-                    <br />
-                    [tags]
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
-                  <div className="post-content">
-                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
-                    $[pricePerItem]
-                    <br />
-                    <br />
-                    [tags]
-                  </div>
-                </td>
-                <td>
-                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
-                  <div className="post-content">
-                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
-                    $[pricePerItem]
-                    <br />
-                    <br />
-                    [tags]
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
-                  <div className="post-content">
-                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
-                    $[pricePerItem]
-                    <br />
-                    <br />
-                    [tags]
-                  </div>
-                </td>
-                <td>
-                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
-                  <div className="post-content">
-                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
-                    $[pricePerItem]
-                    <br />
-                    <br />
-                    [tags]
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
-                  <div className="post-content">
-                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
-                    $[pricePerItem]
-                    <br />
-                    <br />
-                    [tags]
-                  </div>
-                </td>
-                <td>
-                  <div className="post-title">Post [ID]: [itemName] - [status]</div>
-                  <div className="post-content">
-                    This post is led by [ownerName] and trades [itemNumTarget] of [itemCurrent] for
-                    $[pricePerItem]
-                    <br />
-                    <br />
-                    [tags]
-                  </div>
-                </td>
-              </tr>
-
-            </tbody>
+            <tr>
+              <td>
+                <table>
+                  <thead>
+                    <tr>
+                      <td>My Active Posts</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    { PostTableGenerator(posts)}
+                  </tbody>
+                </table>
+              </td>
+              <td>
+                <table>
+                  <thead>
+                    <tr>
+                      <td>My Wishlist</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {PostTableGenerator(whishList)}
+                  </tbody>
+                </table>
+              </td>
+            </tr>
           </table>
 
         </div>
