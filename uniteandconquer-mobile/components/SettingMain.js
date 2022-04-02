@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function Setting() {
+function Setting({ navigation }) {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.titleContainer}>
@@ -45,7 +45,7 @@ function Setting() {
           <Button title="Personal Information" />
         </View>
         <View style={styles.button}>
-          <Button title="Item Preference" />
+          <Button title="Item Preference" onPress={() => navigation.navigate('SettingInterests')} />
         </View>
         <View style={styles.button}>
           <Button title="Password" />
