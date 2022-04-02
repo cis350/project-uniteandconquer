@@ -12,6 +12,7 @@ import CreatePost from './components/CreatePost';
 import Comment from './components/Comment';
 import Setting from './components/SettingMain';
 import SettingInterests from './components/SettingInterests';
+import UpdateInfo from './components/PersonalInformation';
 
 // styling ---------
 
@@ -62,6 +63,7 @@ export default function App() {
         <Stack.Screen name="Comment" component={Comment} />
         <Stack.Screen name="SettingMain" component={Setting} />
         <Stack.Screen name="SettingInterests" component={SettingInterests} />
+        <Stack.Screen name="UpdateInfo" component={UpdateInfo} />
       </Stack.Navigator>
     </NavigationContainer>
   );

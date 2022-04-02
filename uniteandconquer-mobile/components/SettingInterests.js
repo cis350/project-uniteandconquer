@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, View, ScrollView, Text, TextInput, Button,
+  StyleSheet, View, ScrollView, Text, Button,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function SettingInterests() {
+function SettingInterests({ navigation }) {
   const [tags, setTags] = React.useState([]);
 
   function addTags(tag) {
@@ -103,7 +103,7 @@ function SettingInterests() {
 
       <View style={styles.backButtonContainer}>
         <View style={styles.button}>
-          <Button title="Back to the main page" />
+          <Button title="Back to the main page" onPress={() => navigation.navigate('SettingMain')} />
         </View>
       </View>
     </ScrollView>

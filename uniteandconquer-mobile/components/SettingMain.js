@@ -42,7 +42,7 @@ function Setting({ navigation }) {
 
       <View style={styles.buttonContainer}>
         <View style={styles.button}>
-          <Button title="Personal Information" />
+          <Button title="Personal Information" onPress={() => navigation.navigate('UpdateInfo')} />
         </View>
         <View style={styles.button}>
           <Button title="Item Preference" onPress={() => navigation.navigate('SettingInterests')} />
