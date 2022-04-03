@@ -23,6 +23,9 @@ function loginUserWithEmail(email, password, callback) {
 function modifyUser(id, fieldToChange, newValue, oldPassword, callback) {
   return callback(true, null);
 }
+function getPassword(id, callback) {
+  return callback(true, null);
+}
 
 function getUserDetails(id, callback) {
   return callback(true, {
@@ -47,6 +50,7 @@ export {
   createUser,
   loginUserWithPhone,
   loginUserWithEmail,
+  getPassword,
   modifyUser,
   getUserDetails,
 };
