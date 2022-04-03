@@ -4,6 +4,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+const postDB = require('../modules/PostDB');
+
 // styling ---------
 
 const styles = StyleSheet.create({
@@ -132,8 +134,56 @@ export default function CreatePost({ navigation }) {
   const [tags, setTags] = React.useState([]);
 
   function addTags(tag) {
-    setTags((arr) => [...arr, tag]);
-    console.log('adding tag... and current tags are:', tags);
+    if (tags.includes(tag)) {
+      const newList = tags.filter((item) => item !== tag);
+      setTags(newList);
+    } else {
+      setTags((arr) => [...arr, tag]);
+    }
+  }
+
+  /**
+   * This function is used to check all the input fields are valid.
+   * Return true, if itemName, link, description, price, targetQuality are not null or empty
+   * False otherwise.
+   *
+   * Note that we will allow empty tags array to be added to database.
+   */
+  function checkValidInput() {
+    const isValidItemName = itemName !== null && itemName.trim().length >= 1;
+    const isValidlink = link !== null && link.trim().length >= 1;
+    const isValidDiscription = description !== null && description.trim().length >= 1;
+    const isValidPrice = price !== null && price.trim().length >= 1;
+    const isValidTagetQuantity = targetQuantity !== null && targetQuantity.trim().length >= 1;
+
+    return isValidDiscription
+            && isValidlink
+            && isValidItemName
+            && isValidPrice
+            && isValidTagetQuantity;
+  }
+
+  function handlePost() {
+    if (checkValidInput()) {
+      postDB.addPost(
+        itemName,
+        targetQuantity,
+        price,
+        link,
+        description,
+        tags,
+        (success, id, error) => {
+          if (success) {
+          // should place navigation here
+          } else {
+            console.log(error);
+          }
+        },
+      );
+    }
+    // we need to move the navigation inside the addPost, once it is successfully created, but I was
+    // wondering how to redirect to a certain page?
+    navigation.navigate('PostDetails');
   }
 
   return (
@@ -212,15 +262,13 @@ export default function CreatePost({ navigation }) {
             <Text style={createPostStyles.fieldName}>Tags</Text>
             <View style={createPostStyles.description}>
               <Text>
-                {' '}
-                {tags}
-                {' '}
+                {tags.join(' ')}
               </Text>
             </View>
           </View>
           <View>
             <View style={createPostStyles.buttons}>
-              <View style={createPostStyles.LeftButton}><Button color="#000" title="Post" onPress={() => navigation.navigate('PostDetails')} /></View>
+              <View style={createPostStyles.LeftButton}><Button color="#000" title="Post" onPress={() => handlePost()} /></View>
               <View style={createPostStyles.RightButton}><Button color="#000" title="Cancel" onPress={() => navigation.navigate('Home')} /></View>
             </View>
           </View>
