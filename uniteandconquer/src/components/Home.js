@@ -1,40 +1,96 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.css';
-import Dropdown from 'react-dropdown';
+// import Dropdown from 'react-dropdown';
+import Select from 'react-select';
 // import Button from '@material-ui/core/Button';
 // import ButtonGroup from '@material-ui/core/ButtonGroup';
-import { Button, ButtonGroup } from '@material-ui/core';
+// import { Button, ButtonGroup } from '@material-ui/core';
 import Sidebar from './Sidebar';
 import '../assets/Home.css';
 
-const UserDB = require('../modules/UserDB');
+const PostDB = require('../modules/PostDB');
 
 function Home() {
   /* const [tags, setTags] = useState([]); */
+
   /* make the set ofd posts a list, not a table */
   /* consider a bootstrap dropdown element
      else write it yourself */
   /* roy has a dropdown that works so learn from that */
   // eslint-disable-next-line no-unused-vars
   const [searchString, setSearchString] = useState('');
+  const [posts, setPosts] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const myStorage = window.sessionStorage;
   useEffect(() => {
-    const userID = myStorage.getItem('UserID');
-    UserDB.getUserDetails(userID, (success, userInfo, err) => {
+    PostDB.getSortedPostsInRange(0, 19, (success, postInfo, err) => {
       if (success) {
-        setTags(userInfo.interests);
-        setPosts(userInfo.posts);
-        setWishList(userInfo.wishList);
+        setPosts(postInfo);
       } else {
         console.log(err);
       }
     });
   }, []);
 
-  const filters = ['filter 0', 'filter 1', 'filter 2'];
-  const defaultFilter = filters[0];
-  const search = () => {};
+  const handleSearch = () => {
+    const tagList = selectedTags.map((tag) => (tag.value));
+    PostDB.getSortedPostsBySearch(0, 19, tagList, searchString, (success, postInfo, err) => {
+      if (success) {
+        console.log(tagList, searchString);
+        setPosts(postInfo);
+      } else {
+        console.log(err);
+      }
+    });
+  };
+
+  const postsListGenerator = () => posts.map(
+    (post) => {
+      // const url = `/post-details/${post.id}`;
+      myStorage.setItem('PostID', post.id);
+      return (
+        <li>
+          <Link className="link" to="/post-details">
+            <div className="post-title">This is Post</div>
+            <div className="post-content">
+              This post is led by Jeremy and trades
+              {' '}
+              {post.itemName}
+              {' '}
+              for $
+              {post.pricePerItem}
+              {' '}
+              with
+              maturity
+              {' '}
+              {post.createdAt}
+            </div>
+          </Link>
+        </li>
+      );
+    },
+  );
+
+  // const filters = ['filter 0', 'filter 1', 'filter 2'];
+  const tags = [
+    { value: 'filter0', label: 'filter0' },
+    { value: 'filter1', label: 'filter1' },
+    { value: 'filter2', label: 'filter2' },
+  ];
+  const handleTagFilter = (Selectedtags) => {
+    setSelectedTags(Selectedtags);
+  };
+  const tagFilter = () => (
+    <Select
+      isMulti
+      name="tags"
+      options={tags}
+      className="basic-multi-select"
+      classNamePrefix="select"
+      onChange={handleTagFilter}
+    />
+  );
   return (
     <div className="home-page">
       <Sidebar />
@@ -46,60 +102,16 @@ function Home() {
               <div className="text">New Post</div>
             </Link>
           </div>
-          <Dropdown options={filters} value={defaultFilter} placeholder="Select an option" />
+          {tagFilter()}
           <div className="search-field">
             <input onChange={(e) => setSearchString(e.target.value)} />
           </div>
-          <button className="searchButton" type="button" onClick={search}>
+          <button className="searchButton" type="button" onClick={handleSearch}>
             Search
           </button>
         </div>
         <list>
-          <li>
-            <Link className="link" to="/post-details">
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
-            </Link>
-          </li>
-          <li>
-            <Link className="link" to="/post-details">
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
-            </Link>
-          </li>
-          <li>
-            <Link className="link" to="/post-details">
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
-            </Link>
-          </li>
-          <li>
-            <Link className="link" to="/post-details">
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
-            </Link>
-          </li>
-          <li>
-            <Link className="link" to="/post-details">
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-                maturity [DATE]
-              </div>
-            </Link>
-          </li>
+          {postsListGenerator()}
         </list>
       </div>
     </div>

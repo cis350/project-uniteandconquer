@@ -64,6 +64,11 @@ function getSortedPostsByTags(startIdx, endIdx, tags, callback) {
     id: '5087901e810c19729de860ea', itemName: 'AA Batteries', pricePerItem: 0.46, createdAt: '2022-03-14T13:14:14.925Z', tags: ['Home'],
   }], null);
 }
+function getSortedPostsBySearch(startIdx, endIdx, tags, keywords, callback) {
+  return callback(true, [{
+    id: '5087901e810c19729de860ea', itemName: 'AA Batteries', pricePerItem: 0.46, createdAt: '2022-03-14T13:14:14.925Z', tags: ['Home'],
+  }], null);
+}
 
 function getSortedPostsByKeyword(startIdx, endIdx, keyword, callback) {
   return callback(true, [{
@@ -88,6 +93,7 @@ export {
   addComment,
   getPost,
   getSortedPostsInRange,
+  getSortedPostsBySearch,
   getSortedPostsByTags,
   getSortedPostsByKeyword,
   joinGroup,
