@@ -47,6 +47,14 @@ function UserSettingsPersonalInformation() {
       }
     });
   };
+  const handleInterests = () => {
+    UserDB.modifyUser(userID, 5, tags, '', (success, err) => {
+      if (!success) {
+        console.log(err);
+      }
+    });
+  };
+
 
   return (
     <div className="user-settings-personal-information">
