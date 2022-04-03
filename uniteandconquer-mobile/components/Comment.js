@@ -3,6 +3,8 @@ import {
   StyleSheet, View, ScrollView, Text, TextInput, Button,
 } from 'react-native';
 
+const postDB = require('../modules/PostDB');
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FAE9C7',
@@ -33,11 +35,6 @@ const commentStyles = StyleSheet.create({
     backgroundColor: '#ffd9a0',
     borderRadius: 20,
     padding: 10,
-    // shadowColor: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    // borderRadius: 5,
-    // padding: '5px',
-    // marginTop: '15px',
-    // width: '350px',
   },
 });
 function Comment() {
@@ -48,12 +45,31 @@ function Comment() {
     { id: 2, name: 'user2', content: 'I wonder if I will need this' },
   ]);
 
+  /**
+  * how to retrieve the user id is to be decided.
+  */
+  const userid = 'TBD';
+
+  /**
+  * how to retrieve the user id is to be decided.
+  */
+  const postid = 'TBD';
+
+  /**
+   * add comment to the post db
+   */
   const addComment = () => {
     if (commentInput && commentInput.length > 0) {
-      const newComment = { id: tempID, name: `user${3}`, content: commentInput };
-      setComments([...comments, newComment]);
-      setTempID(tempID + 1);
-      setCommentInput('');
+      postDB.addComment(userid, postid, (success, id, error) => {
+        if (success) {
+          const newComment = { id: tempID, name: `user${3}`, content: commentInput };
+          setComments([...comments, newComment]);
+          setTempID(tempID + 1);
+          setCommentInput('');
+        } else {
+          console.log(error);
+        }
+      });
     }
   };
 
@@ -68,7 +84,7 @@ function Comment() {
 
       <View>
         {comments.map((comment) => (
-          <View style={commentStyles.comment}>
+          <View style={commentStyles.comment} key={comment.name}>
             <View>
               <View><Text style={commentStyles.commentName}>{comment.name}</Text></View>
               <View><Text style={commentStyles.commentContent}>{comment.content}</Text></View>
