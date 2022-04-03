@@ -3,15 +3,50 @@ import React, { useState } from 'react';
 import SidebarSettings from './SidebarSettings';
 import '../assets/UserSettingsPersonalInformation.css';
 
+const UserDB = require('../modules/UserDB');
+
 function UserSettingsPersonalInformation() {
+  /** need to switch username and fullname to first name and last name */
   const [username, setUsername] = useState('');
   const [fullName, setFullName] = useState('');
+  const [firstName, setfirstName] = useState('');
+  const [lastName, setlastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState(0);
   const [email, setEmail] = useState('');
   const [tags, setTags] = useState([]);
+  const myStorage = window.sessionStorage;
+  const userID = myStorage.getItem('UserID');
 
   const updateInformation = () => {};
-  const updateTags = () => {};
+  const updateTags = () => { };
+  const handleFirstName = () => {
+    UserDB.modifyUser(userID, 3, firstName, '', (success, err) => {
+      if (!success) {
+        console.log(err);
+      }
+    });
+  };
+  const handleLastName = () => {
+    UserDB.modifyUser(userID, 4, lastName, '', (success, err) => {
+      if (!success) {
+        console.log(err);
+      }
+    });
+  };
+  const handlePhone = () => {
+    UserDB.modifyUser(userID, 0, phoneNumber, '', (success, err) => {
+      if (!success) {
+        console.log(err);
+      }
+    });
+  };
+  const handleEmail = () => {
+    UserDB.modifyUser(userID, 1, email, '', (success, err) => {
+      if (!success) {
+        console.log(err);
+      }
+    });
+  };
 
   return (
     <div className="user-settings-personal-information">
