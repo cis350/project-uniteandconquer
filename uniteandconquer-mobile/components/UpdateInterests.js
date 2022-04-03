@@ -105,23 +105,23 @@ function SettingInterests({ navigation }) {
         <Text>Choose Your Interests</Text>
         <View style={styles.TagArea}>
           <Text>
-            {tags}
+            {tags.join(' ')}
           </Text>
         </View>
       </View>
 
       <View style={styles.TagsContainer}>
         <View style={styles.tagRow}>
-          <Text style={styles.tag} onPress={() => addTags('Tag1 ')}>Tag1</Text>
-          <Text style={styles.tag} onPress={() => addTags('Tag2 ')}>Tag2</Text>
+          <Text style={styles.tag} onPress={() => addTags('Tag1')}>Tag1</Text>
+          <Text style={styles.tag} onPress={() => addTags('Tag2')}>Tag2</Text>
         </View>
         <View style={styles.tagRow}>
-          <Text style={styles.tag} onPress={() => addTags('Tag3 ')}>Tag3</Text>
-          <Text style={styles.tag} onPress={() => addTags('Tag4 ')}>Tag4</Text>
+          <Text style={styles.tag} onPress={() => addTags('Tag3')}>Tag3</Text>
+          <Text style={styles.tag} onPress={() => addTags('Tag4')}>Tag4</Text>
         </View>
         <View style={styles.tagRow}>
-          <Text style={styles.tag} onPress={() => addTags('Tag5 ')}>Tag5</Text>
-          <Text style={styles.tag} onPress={() => addTags('Tag6 ')}>Tag6</Text>
+          <Text style={styles.tag} onPress={() => addTags('Tag5')}>Tag5</Text>
+          <Text style={styles.tag} onPress={() => addTags('Tag6')}>Tag6</Text>
         </View>
       </View>
 
