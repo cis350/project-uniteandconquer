@@ -3,6 +3,8 @@ import {
   StyleSheet, View, ScrollView, Text, TextInput, Button,
 } from 'react-native';
 
+const userDB = require('../modules/UserDB');
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FAE9C7',
@@ -53,9 +55,31 @@ function UpdatePassword({ navigation }) {
   const [currentPassword, setCurrentPassword] = useState();
   const [newPassword, setNewPassword] = useState();
 
+  /**
+ * how to retrieve the user id is to be decided.
+ */
+  const userid = 'TBD';
+
+  /**
+   *
+   * @param {*} input the input could be one of the user input information
+   * @returns true if the input is not initialized or is empty
+   */
+  function checkValidInput(input) {
+    return (input != null && input.trim().length >= 1);
+  }
+  /**
+   * change the user's password to a new one, only if
+   * the user's old password matches
+   */
   function handleUpdate() {
-    console.log('current password is: ', currentPassword);
-    console.log('new password is: ', currentPassword);
+    if (checkValidInput(newPassword) && checkValidInput(currentPassword)) {
+      userDB.modifyUser(userid, 2, newPassword, currentPassword, (success, error) => {
+        console.log(error);
+      });
+    } else {
+      console.log('Field can not to be empty');
+    }
   }
 
   return (
