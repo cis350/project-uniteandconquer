@@ -56,8 +56,8 @@ function UpdatePassword({ navigation }) {
   const [newPassword, setNewPassword] = useState();
 
   /**
- * how to retrieve the user id is to be decided.
- */
+   * how to retrieve the user id is to be decided.
+   */
   const userid = 'TBD';
 
   /**
