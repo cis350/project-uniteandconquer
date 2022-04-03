@@ -3,6 +3,8 @@ import {
   StyleSheet, View, ScrollView, Text, Button,
 } from 'react-native';
 
+const userDB = require('../modules/UserDB');
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FAE9C7',
@@ -47,13 +49,21 @@ const styles = StyleSheet.create({
   },
   backButtonContainer: {
     alignItems: 'center',
-    marginTop: '35%',
+    marginTop: '15%',
     width: '100%',
   },
   button: {
     marginBottom: 20,
     backgroundColor: '#FFD9A0',
     width: '80%',
+  },
+  updateButton: {
+    backgroundColor: '#FFD9A0',
+    borderRadius: 100,
+    padding: 3,
+    width: '30%',
+    marginLeft: '60%',
+    marginTop: '10%',
   },
 });
 
@@ -66,8 +76,21 @@ function SettingInterests({ navigation }) {
       setTags(newList);
     } else {
       setTags((arr) => [...arr, tag]);
-      console.log('adding tag... and current tags are:', tags);
     }
+  }
+  /**
+  * how to retrieve the user id is to be decided.
+  */
+  const userid = 'TBD';
+
+  /**
+   * update the interests list of the user
+   * I assume that the user can add an empty array to the database.
+   */
+  function handleUpdate() {
+    userDB.modifyUser(userid, 5, tags, null, (success, error) => {
+      console.log(error);
+    });
   }
 
   return (
@@ -100,6 +123,10 @@ function SettingInterests({ navigation }) {
           <Text style={styles.tag} onPress={() => addTags('Tag5 ')}>Tag5</Text>
           <Text style={styles.tag} onPress={() => addTags('Tag6 ')}>Tag6</Text>
         </View>
+      </View>
+
+      <View style={styles.updateButton}>
+        <Button title="Update" onPress={() => handleUpdate()} />
       </View>
 
       <View style={styles.backButtonContainer}>
