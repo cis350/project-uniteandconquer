@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.css';
 import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
 // import Button from '@material-ui/core/Button';
 // import ButtonGroup from '@material-ui/core/ButtonGroup';
+import { Button, ButtonGroup } from '@material-ui/core';
 import Sidebar from './Sidebar';
 import '../assets/Home.css';
+
+const UserDB = require('../modules/UserDB');
 
 function Home() {
   /* const [tags, setTags] = useState([]); */
@@ -16,6 +18,19 @@ function Home() {
   /* roy has a dropdown that works so learn from that */
   // eslint-disable-next-line no-unused-vars
   const [searchString, setSearchString] = useState('');
+  const myStorage = window.sessionStorage;
+  useEffect(() => {
+    const userID = myStorage.getItem('UserID');
+    UserDB.getUserDetails(userID, (success, userInfo, err) => {
+      if (success) {
+        setTags(userInfo.interests);
+        setPosts(userInfo.posts);
+        setWishList(userInfo.wishList);
+      } else {
+        console.log(err);
+      }
+    });
+  }, []);
 
   const filters = ['filter 0', 'filter 1', 'filter 2'];
   const defaultFilter = filters[0];
