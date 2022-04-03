@@ -10,6 +10,7 @@ import Login from './components/Login';
 import PostDetails from './components/PostDetails';
 import UserProfile from './components/UserProfile';
 import UserSettings from './components/UserSettings';
+import UserSettingsPassword from './components/UserSettingsPassword';
 import UserSettingsPersonalInformation from './components/UserSettingsPersonalInformation';
 import reportWebVitals from './reportWebVitals';
 
@@ -25,6 +26,7 @@ ReactDOM.render(
         <Route path="/post-details" element={<PostDetails />} />
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/user-settings" element={<UserSettings />} />
+        <Route path="/user-settings-password" element={<UserSettingsPassword />} />
         <Route path="/user-settings-personal-information" element={<UserSettingsPersonalInformation />} />
       </Routes>
     </Router>

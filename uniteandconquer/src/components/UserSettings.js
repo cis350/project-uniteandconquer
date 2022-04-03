@@ -4,7 +4,7 @@ import '../assets/UserSettings.css';
 
 function UserSettings() {
   return (
-    <div className="userSettings">
+    <div className="user-settings">
       <SidebarSettings />
       <div>
         <div className="menu-title"><h1>Notification</h1></div>

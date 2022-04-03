@@ -1,18 +1,19 @@
-.text-field {
+/* add .chat element */
+.chat-field {
   display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 10px;
   
-    position: relative;
-    max-width: 150px;
+    position: absolute;
+    max-width: 700px;
     height: 50px;
-    min-width: 300px;
-    left: 500px;
+    min-width: 750px;
+    left: 600px;
+    top: 700px;
   
     background: #fae9c7;
-    border: 16px solid #ffd9a0;
     box-sizing: border-box;
     margin: 5px;
 
@@ -40,13 +41,12 @@
     white-space: nowrap;
 }
 
-.chat-bar {
-  display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
+.chat-page {
+  display: grid;
+  grid-template-columns: 0.3fr 0.6fr;
+}
 
-    position: absolute;
-    right: 300 px;
+.chat-title {
+  font-size: 25px;
+  text-align: center;
 }

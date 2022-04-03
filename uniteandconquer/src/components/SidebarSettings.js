@@ -23,7 +23,7 @@ function SidebarSettings() {
       </div>
       <div className="password">
         <Link className="link" to="/user-settings-password">
-          <div className="text-ad">Password</div>
+          <div className="text">Password</div>
         </Link>
       </div>
       <div className="personal-information">
