@@ -2,6 +2,7 @@ import { React, useState } from 'react';
 import {
   StyleSheet, View, ScrollView, Text, TextInput, Button,
 } from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown';
 
 const styles = StyleSheet.create({
   container: {
@@ -48,19 +49,34 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFD9A0',
     width: '80%',
   },
+  dropdownButton: {
+    width: '20%',
+    height: 37,
+    backgroundColor: '#e9967a',
+  },
+  phone: {
+    marginBottom: 20,
+    backgroundColor: '#FFD9A0',
+    width: '58%',
+    marginLeft: '2%',
+    padding: 10,
+  },
 });
 
 function UpdateInfo({ navigation }) {
-  const [username, setUsername] = useState();
-  const [fullName, setFullName] = useState();
-  const [phone, setPhone] = useState();
-  const [email, setEmail] = useState();
+  const [username, setUsername] = useState(null);
+  const [fullName, setFullName] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [countryCode, setCountryCode] = useState(null);
 
+  const countryCodeList = ['+1', '+86'];
   function handleUpdate() {
     console.log('The username is ', username);
     console.log('The fullName is ', fullName);
     console.log('The phone is ', phone);
     console.log('The email is ', email);
+    console.log('The country code is ', countryCode);
   }
 
   return (
@@ -97,12 +113,24 @@ function UpdateInfo({ navigation }) {
         <View style={styles.subtitle}>
           <Text>Phone</Text>
         </View>
-        <View style={styles.textInput}>
-          <TextInput
-            placeholder="Phone"
-            onChangeText={setPhone}
-            value={phone}
+
+        <View style={{ flex: 1, alignContent: 'space-between', flexDirection: 'row' }}>
+          <SelectDropdown
+            data={countryCodeList}
+            defaultButtonText="code"
+            buttonStyle={styles.dropdownButton}
+            buttonTextStyle={{ fontSize: 18 }}
+            onSelect={(selectedItem) => {
+              setCountryCode(selectedItem);
+            }}
           />
+          <View style={styles.phone}>
+            <TextInput
+              placeholder="Phone"
+              onChangeText={setPhone}
+              value={phone}
+            />
+          </View>
         </View>
 
         <View style={styles.subtitle}>
