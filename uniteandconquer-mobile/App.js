@@ -35,9 +35,6 @@ const userStyles = StyleSheet.create({
     textAlign: 'right',
     margin: 3,
   },
-  icon: {
-    alignSelf: 'flex-end',
-  },
 });
 
 const postButton = StyleSheet.create({
@@ -100,6 +97,12 @@ const homePageStyles = StyleSheet.create({
     left: 0,
     margin: 10,
   },
+  iconProfile: {
+    alignSelf: 'flex-end',
+  },
+  posts: {
+    marginBottom: 20,
+  },
 });
 
 // app content --------
@@ -125,7 +128,12 @@ function HomeScreen({ navigation }) {
     <ScrollView style={styles.container}>
       {showNotif && <Notification setShowNotif={setShowNotif} showNotif={showNotif} />}
       <View style={userStyles.container}>
-        <Icon name="user" size={28} style={userStyles.icon} />
+        <TouchableOpacity
+          style={homePageStyles.iconProfile}
+          onPress={() => navigation.navigate('UserProfile')}
+        >
+          <Icon name="user" size={28} style={userStyles.icon} />
+        </TouchableOpacity>
         <Text style={userStyles.text}>
           Hi, Jeremy
         </Text>
@@ -195,29 +203,19 @@ function HomeScreen({ navigation }) {
           />
         </View>
       </View>
-      <View>
+      <View style={homePageStyles.posts}>
         {posts.map((post) => (
-          <View style={homePageStyles.center}>
-            <View style={homePageStyles.postContainer}>
-              <Text style={homePageStyles.postTitle}>{post.item}</Text>
-              <Text>{post.description}</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('PostDetails')}
+          >
+            <View style={homePageStyles.center}>
+              <View style={homePageStyles.postContainer}>
+                <Text style={homePageStyles.postTitle}>{post.item}</Text>
+                <Text>{post.description}</Text>
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
         ))}
-      </View>
-      <View>
-        <Button
-          title="Profile"
-          onPress={() => navigation.navigate('UserProfile')}
-        />
-        <Button
-          title="Post Details"
-          onPress={() => navigation.navigate('PostDetails')}
-        />
-        <Button
-          title="Create Post"
-          onPress={() => navigation.navigate('CreatePost')}
-        />
       </View>
     </ScrollView>
   );
