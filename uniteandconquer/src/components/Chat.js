@@ -9,14 +9,22 @@ function Chat() {
   const [text, setText] = useState('');
   const myStorage = window.sessionStorage;
   const userID = myStorage.getItem('UserID');
-  // list of unread group's id
+  // list of unread group's id. can be used from showing red dot on sidebarChat,
+  // is update every 15 seconds
   const [unreadGroups, setUnreadGroups] = useState([]);
   // group user currently looking at
+  // update when usr click sidebar
   const [currGroup, setCurrentGroup] = useState('');
+  // list of {id:xx,groupName:xx} that user join
+  // update when user get into chat page from other page
   const [groupList, setGroupList] = useState([]);
+  // messages object of current group
+  // 1. update when user switch group through sidebar
+  // 2. update when current group is one of the unread group
   const [messages, setMessages] = useState([]);
 
   const updateText = () => { };
+
   /** create an useInterval hook for looping fetch */
   function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -38,8 +46,10 @@ function Chat() {
       return null;
     }, [delay]);
   }
-  /** loop fetching unread group from database */
-  /** update message of current group */
+
+  /** following two method are used to loop fetching unread group from database */
+
+  /** get unread message of current group from db */
   const getUnreadMessage = () => {
     ChatDB.getUnreadChatMessage(currGroup, (success, newMessage, err) => {
       if (success) {
@@ -67,10 +77,8 @@ function Chat() {
     });
   }, 5000);
 
-  /** get all groups user join */
+  /** get all groups that user join */
   useEffect(() => {
-    // console.log('la');
-    // console.log(currGroup);
     ChatDB.getChatGroup(userID, (success, chatList, err) => {
       if (success) {
         if (chatList.length !== 0) {
@@ -82,16 +90,38 @@ function Chat() {
     });
   }, []);
 
+  const getChatMessages = () => (groupID) => {
+    ChatDB.getChatMessages(groupID, (success, chatMessage, err) => {
+      if (success) {
+        setMessages(chatMessage);
+      } else {
+        console.log(err);
+      }
+    });
+  };
+  /** method pass to child component: SidebarChat
+   * use to update current group when user click the side bar
+  */
   const selectCurrGroup = (groupID) => {
     setCurrentGroup(groupID);
+    getChatMessages(groupID);
     console.log(groupID);
+  };
+  /** used for showing group name on interface */
+  const getGroupName = (groupID) => {
+    console.log(groupList);
+    let groupName = 'please select a group to begin chat';
+    if (groupList !== [] && groupID !== '') {
+      groupName = groupList.find((x) => x.id === groupID).groupName;
+    }
+    return groupName;
   };
 
   return (
     <div className="chat-page">
       <SidebarChat currGroupUpdate={selectCurrGroup} groupList={groupList} />
       <div>
-        <div className="menu-title"><h1>{ currGroup}</h1></div>
+        <div className="menu-title"><h1>{ getGroupName(currGroup)}</h1></div>
         <div className="chat-field">
           <input onChange={(e) => setText(e.target.value)} />
         </div>
