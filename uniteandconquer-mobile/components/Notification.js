@@ -22,7 +22,7 @@ const notificationStyles = StyleSheet.create({
   container: {
     backgroundColor: '#FFD9A0',
     minHeight: 300,
-    width: 175,
+    width: 200,
     position: 'absolute',
     top: 0,
     right: 0,
