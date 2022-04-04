@@ -1,25 +1,25 @@
 td,
 th {
-  border: 10px solid #ffd9a0;
+  border: 8px solid #ffd9a0;
   box-sizing: border-box;
 }
 
 table {
   border-collapse: collapse;
-  margin-left: 50px;
+  margin: 0;
 }
 
 th {
-  font-size: 25px;
+  font-size: 23px;
 }
 
 td {
-  max-width: 700px;
+  width: 800px;
   padding: 15px;
 }
 
 .post-title {
-  font-size: 24px;
+  font-size: 23px;
   margin-bottom: 20px;
 }
 
@@ -57,4 +57,9 @@ td {
 
 .bell-button:hover {
   color: rgb(133, 235, 85);
+}
+
+.table-lists {
+  display: flex;
+  flex-direction: row;
 }

@@ -11,41 +11,48 @@ function UserProfile() {
   const [tags, setTags] = useState([]);
   /** list of posts and whish list that will show on profile page */
   const [posts, setPosts] = useState([]);
-  const [whishList, setWishList] = useState([]);
+  // eslint-disable-next-line no-unused-vars
+  const [wishList, setWishList] = useState([]);
 
   const myStorage = window.sessionStorage;
   const PostTableGenerator = (postsOrWishList) => {
     const table = postsOrWishList.map((post) => (
-      <tr>
-        <td>
-          <div className="post-title">
-            Post [
-            {post.id}
-            ]: [
-            {post.itemName}
-            ] - [
-            {post.status}
-            ]
-          </div>
-          <div className="post-content">
-            This post is led by [
-            {post.ownerName}
-            ] and trades [
-            {post.itemNumTarget}
-            ] of [
-            {post.itemNumCurrent}
-            ] for
-            $[
-            {post.pricePerItem}
-            ]
-            <br />
-            <br />
-            [
-            {post.tags}
-            ]
-          </div>
-        </td>
-      </tr>
+      <div>
+        <tr className="table-post">
+          <td className="table-post-content">
+            <div className="post-title">
+              Post [
+              {post.id}
+              ]:
+              {' '}
+              <br />
+              {' '}
+              [
+              {post.itemName}
+              ] - [
+              {post.status}
+              ]
+            </div>
+            <div className="post-content">
+              This post is led by [
+              {post.ownerName}
+              ] and trades [
+              {post.itemNumTarget}
+              ] of [
+              {post.itemNumCurrent}
+              ] for
+              $[
+              {post.pricePerItem}
+              ]
+              <br />
+              <br />
+              [
+              {post.tags}
+              ]
+            </div>
+          </td>
+        </tr>
+      </div>
     ));
     return table;
   };
@@ -75,38 +82,28 @@ function UserProfile() {
           </button>
         </div>
         <div className="notifications-pos">{showNotifs ? <Notifications showNotifs={showNotifs} setShowNotifs={setShowNotifs} /> : ''}</div>
-        <div>
+        <div className="table-lists">
           <table>
-            <tr>
-              <td>
-                <table>
-                  <thead>
-                    <tr>
-                      <td>My Active Posts</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    { PostTableGenerator(posts)}
-                  </tbody>
-                </table>
-              </td>
-              <td>
-                <table>
-                  <thead>
-                    <tr>
-                      <td>My Wishlist</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {PostTableGenerator(whishList)}
-                  </tbody>
-                </table>
-              </td>
-            </tr>
+            <thead>
+              <tr>
+                <td>My Active Posts</td>
+              </tr>
+            </thead>
+            <tbody>
+              { PostTableGenerator(posts)}
+            </tbody>
           </table>
-
+          <table>
+            <thead>
+              <tr>
+                <td>My Wishlist</td>
+              </tr>
+            </thead>
+            <tbody>
+              { PostTableGenerator(wishList)}
+            </tbody>
+          </table>
         </div>
-
       </div>
     </div>
   );
