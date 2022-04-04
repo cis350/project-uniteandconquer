@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const postDB = require('../modules/PostDB');
+// const postDB = require('../modules/PostDB');
 
 // styling ---------
 
@@ -120,6 +120,10 @@ const createPostStyles = StyleSheet.create({
     justifyContent: 'center',
     position: 'relative',
     bottom: -45,
+    marginBottom: 100,
+  },
+  tagsContainer: {
+    marginTop: 10,
   },
 });
 
@@ -132,6 +136,7 @@ export default function CreatePost({ navigation }) {
   const [link, setLink] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [tags, setTags] = React.useState([]);
+  const [currentQuantity, setCurrentQuantity] = React.useState('');
 
   function addTags(tag) {
     if (tags.includes(tag)) {
@@ -164,23 +169,23 @@ export default function CreatePost({ navigation }) {
   }
 
   function handlePost() {
-    if (checkValidInput()) {
-      postDB.addPost(
-        itemName,
-        targetQuantity,
-        price,
-        link,
-        description,
-        tags,
-        (success, id, error) => {
-          if (success) {
-          // should place navigation here
-          } else {
-            console.log(error);
-          }
-        },
-      );
-    }
+    // if (checkValidInput()) {
+    //   postDB.addPost(
+    //     itemName,
+    //     targetQuantity,
+    //     price,
+    //     link,
+    //     description,
+    //     tags,
+    //     (success, id, error) => {
+    //       if (success) {
+    //       // should place navigation here
+    //       } else {
+    //         console.log(error);
+    //       }
+    //     },
+    //   );
+    // }
     // we need to move the navigation inside the addPost, once it is successfully created, but I was
     // wondering how to redirect to a certain page?
     navigation.navigate('PostDetails');
@@ -244,6 +249,13 @@ export default function CreatePost({ navigation }) {
                   onChangeText={setLink}
                   value={link}
                 />
+                <Text>Current Quantity</Text>
+                <TextInput
+                  style={createPostStyles.field}
+                  placeholder="current quantity"
+                  onChangeText={setCurrentQuantity}
+                  value={currentQuantity}
+                />
               </View>
             </View>
           </View>
@@ -258,7 +270,7 @@ export default function CreatePost({ navigation }) {
               value={description}
             />
           </View>
-          <View>
+          <View style={createPostStyles.tagsContainer}>
             <Text style={createPostStyles.fieldName}>Tags</Text>
             <View style={createPostStyles.description}>
               <Text>

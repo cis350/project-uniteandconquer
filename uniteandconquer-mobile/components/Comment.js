@@ -3,7 +3,7 @@ import {
   StyleSheet, View, ScrollView, Text, TextInput, Button,
 } from 'react-native';
 
-const postDB = require('../modules/PostDB');
+// const postDB = require('../modules/PostDB');
 
 const styles = StyleSheet.create({
   container: {
@@ -59,18 +59,18 @@ function Comment() {
    * add comment to the post db
    */
   const addComment = () => {
-    if (commentInput && commentInput.length > 0) {
-      postDB.addComment(userid, postid, (success, id, error) => {
-        if (success) {
-          const newComment = { id: tempID, name: `user${3}`, content: commentInput };
-          setComments([...comments, newComment]);
-          setTempID(tempID + 1);
-          setCommentInput('');
-        } else {
-          console.log(error);
-        }
-      });
-    }
+    // if (commentInput && commentInput.length > 0) {
+    //   postDB.addComment(userid, postid, (success, id, error) => {
+    //     if (success) {
+    //       const newComment = { id: tempID, name: `user${3}`, content: commentInput };
+    //       setComments([...comments, newComment]);
+    //       setTempID(tempID + 1);
+    //       setCommentInput('');
+    //     } else {
+    //       console.log(error);
+    //     }
+    //   });
+    // }
   };
 
   return (
