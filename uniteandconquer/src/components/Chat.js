@@ -18,12 +18,11 @@ function Chat() {
   // list of {id:xx,groupName:xx} that user join
   // update when user get into chat page from other page
   const [groupList, setGroupList] = useState([]);
-  // messages object of current group
+  // all messages object of current group
+  // used to show message on screen
   // 1. update when user switch group through sidebar
   // 2. update when current group is one of the unread group
   const [messages, setMessages] = useState([]);
-
-  const updateText = () => { };
 
   /** create an useInterval hook for looping fetch */
   function useInterval(callback, delay) {
@@ -117,6 +116,16 @@ function Chat() {
     return groupName;
   };
 
+  const handleSend = () => {
+    ChatDB.createMessage(userID, currGroup, text, (success, chatMessage, err) => {
+      if (success) {
+        // please show the text on screen
+      } else {
+        console.log(err);
+      }
+    });
+  };
+
   return (
     <div className="chat-page">
       <SidebarChat currGroupUpdate={selectCurrGroup} groupList={groupList} />
@@ -124,6 +133,7 @@ function Chat() {
         <div className="menu-title"><h1>{ getGroupName(currGroup)}</h1></div>
         <div className="chat-field">
           <input onChange={(e) => setText(e.target.value)} />
+          <button className="send" type="button" onClick={handleSend}> send </button>
         </div>
       </div>
     </div>
