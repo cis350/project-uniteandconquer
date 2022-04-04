@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import {
-  StyleSheet, View, ScrollView, Text, TextInput, Button,
+  StyleSheet, View, ScrollView, Text, TextInput, Button, Modal,
 } from 'react-native';
 
 const userDB = require('../modules/UserDB');
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   titleContainer: {
-    marginTop: '10%',
+    marginTop: '5%',
     alignItems: 'center',
   },
   titleFont: {
@@ -49,11 +49,43 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFD9A0',
     width: '80%',
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
 });
 
 function UpdatePassword({ navigation }) {
   const [currentPassword, setCurrentPassword] = useState();
   const [newPassword, setNewPassword] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   /**
    * how to retrieve the user id is to be decided.
@@ -75,15 +107,34 @@ function UpdatePassword({ navigation }) {
   function handleUpdate() {
     if (checkValidInput(newPassword) && checkValidInput(currentPassword)) {
       userDB.modifyUser(userid, 2, newPassword, currentPassword, (success, error) => {
-        console.log(error);
+        if (!success) {
+          setErrorMessage(error);
+          setModalVisible(true);
+        }
       });
     } else {
-      console.log('Field can not to be empty');
+      setErrorMessage('Field can not to be empty');
+      setModalVisible(true);
     }
   }
 
   return (
     <ScrollView style={styles.container}>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent
+          visible={modalVisible}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>{errorMessage}</Text>
+              <Button title="CLOSE" onPress={() => setModalVisible(false)} />
+            </View>
+          </View>
+        </Modal>
+      </View>
+
       <View style={styles.titleContainer}>
         <Text style={styles.titleFont}>
           Change Password

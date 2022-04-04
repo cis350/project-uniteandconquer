@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import {
-  StyleSheet, View, ScrollView, Text, Modal, TextInput, Button, Pressable,
+  StyleSheet, View, ScrollView, Text, Modal, TextInput, Button,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   titleContainer: {
-    marginTop: '10%',
+    marginTop: '5%',
     alignItems: 'center',
   },
   titleFont: {
@@ -184,12 +184,13 @@ function UpdateInfo({ navigation }) {
         </Modal>
       </View>
 
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleFont}>
+          Personal Information
+        </Text>
+      </View>
+
       <View style={styles.inputContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleFont}>
-            Personal Information
-          </Text>
-        </View>
 
         {/* <View style={styles.subtitle}>
           <Text>Username</Text>

@@ -1,6 +1,6 @@
-import React from 'react';
+import { React, useState } from 'react';
 import {
-  StyleSheet, View, ScrollView, Text, Button,
+  StyleSheet, View, ScrollView, Text, Button, Modal,
 } from 'react-native';
 
 const userDB = require('../modules/UserDB');
@@ -65,10 +65,42 @@ const styles = StyleSheet.create({
     marginLeft: '60%',
     marginTop: '10%',
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
 });
 
 function SettingInterests({ navigation }) {
-  const [tags, setTags] = React.useState([]);
+  const [tags, setTags] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   function addTags(tag) {
     if (tags.includes(tag)) {
@@ -89,12 +121,34 @@ function SettingInterests({ navigation }) {
    */
   function handleUpdate() {
     userDB.modifyUser(userid, 5, tags, null, (success, error) => {
-      console.log(error);
+      if (!success) {
+        setErrorMessage(error);
+        setModalVisible(true);
+      }
     });
+
+    // Test error message
+    setErrorMessage('error');
+    setModalVisible(true);
   }
 
   return (
     <ScrollView style={styles.container}>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent
+          visible={modalVisible}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>{errorMessage}</Text>
+              <Button title="CLOSE" onPress={() => setModalVisible(false)} />
+            </View>
+          </View>
+        </Modal>
+      </View>
+
       <View style={styles.titleContainer}>
         <Text style={styles.titleFont}>
           Update Interests
