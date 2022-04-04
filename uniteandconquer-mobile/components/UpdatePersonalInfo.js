@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import {
-  StyleSheet, View, ScrollView, Text, TextInput, Button,
+  StyleSheet, View, ScrollView, Text, Modal, TextInput, Button, Pressable,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 
@@ -63,6 +63,36 @@ const styles = StyleSheet.create({
     marginLeft: '2%',
     padding: 10,
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
 });
 
 function UpdateInfo({ navigation }) {
@@ -72,6 +102,8 @@ function UpdateInfo({ navigation }) {
   const [phone, setPhone] = useState(null);
   const [email, setEmail] = useState(null);
   const [countryCode, setCountryCode] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const countryCodeList = ['+1', '+86'];
 
   /**
@@ -94,40 +126,71 @@ function UpdateInfo({ navigation }) {
     // Update first name
     if (checkValidInput(firstName)) {
       userDB.modifyUser(userid, 3, firstName, null, (success, error) => {
-        console.log(error);
+        if (!success) {
+          setErrorMessage(error);
+          setModalVisible(true);
+        }
       });
     }
     // Update last name
     if (checkValidInput(lastName)) {
       userDB.modifyUser(userid, 4, lastName, null, (success, error) => {
-        console.log(error);
+        if (!success) {
+          setErrorMessage(error);
+          setModalVisible(true);
+        }
       });
     }
     // Update phone
     if (checkValidInput(phone) && checkValidInput(countryCode)) {
       const newValue = { countryCode, phone };
       userDB.modifyUser(userid, 0, newValue, null, (success, error) => {
-        console.log(error);
+        if (!success) {
+          setErrorMessage(error);
+          setModalVisible(true);
+        }
       });
     }
 
     // Update phone
     if (checkValidInput(email)) {
       userDB.modifyUser(userid, 1, email, null, (success, error) => {
-        console.log(error);
+        if (!success) {
+          setErrorMessage(error);
+          setModalVisible(true);
+        }
       });
     }
+
+    // test set error message
+    setErrorMessage('ERROR');
+    setModalVisible(true);
   }
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.titleFont}>
-          Personal Information
-        </Text>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent
+          visible={modalVisible}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>{errorMessage}</Text>
+              <Button title="CLOSE" onPress={() => setModalVisible(false)} />
+            </View>
+          </View>
+        </Modal>
       </View>
 
       <View style={styles.inputContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleFont}>
+            Personal Information
+          </Text>
+        </View>
+
         {/* <View style={styles.subtitle}>
           <Text>Username</Text>
         </View>
