@@ -55,7 +55,6 @@ function UserSettingsPersonalInformation() {
     });
   };
 
-
   return (
     <div className="user-settings-personal-information">
       <SidebarSettings />

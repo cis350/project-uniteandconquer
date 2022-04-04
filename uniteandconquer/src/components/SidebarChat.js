@@ -2,7 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/SidebarChat.css';
 
-function SidebarChat() {
+function SidebarChat({ currGroupUpdate, groupList }) {
+  const chatListGenerator = () => groupList.map((group) => (
+    <div
+      className={group.groupName}
+      role="button"
+      tabIndex={0}
+      onClick={() => currGroupUpdate(group.id)}
+      onKeyPress={() => currGroupUpdate(group.id)}
+    >
+      { group.groupName}
+    </div>
+
+  ));
+
   return (
     <div className="sidebar">
       <div className="greeting">
@@ -16,15 +29,7 @@ function SidebarChat() {
           <div className="text">Back to main menu</div>
         </Link>
       </div>
-      <div className="chat">
-        <div className="text">Chat 0</div>
-      </div>
-      <div className="chat1">
-        <div className="text">Chat 1</div>
-      </div>
-      <div className="chat2">
-        <div className="text">Chat 2</div>
-      </div>
+      {chatListGenerator()}
     </div>
   );
 }

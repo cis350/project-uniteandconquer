@@ -49,6 +49,7 @@ function Home() {
     (post) => {
       // const url = `/post-details/${post.id}`;
       myStorage.setItem('PostID', post.id);
+      
       return (
         <li>
           <Link className="link" to="/post-details">
