@@ -1,15 +1,45 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet, View, ScrollView, Text, TextInput, Button,
+  StyleSheet, View, ScrollView, Text, TextInput, Button, Modal,
 } from 'react-native';
 
-// const postDB = require('../modules/PostDB');
+const postDB = require('../modules/PostDB');
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FAE9C7',
     height: '100%',
     width: '100%',
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
   },
 });
 const commentStyles = StyleSheet.create({
@@ -40,6 +70,8 @@ const commentStyles = StyleSheet.create({
 function Comment() {
   const [tempID, setTempID] = useState(3);
   const [commentInput, setCommentInput] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [modalVisible, setModalVisible] = React.useState(false);
   const [comments, setComments] = useState([
     { id: 1, name: 'user1', content: 'I loved using this item' },
     { id: 2, name: 'user2', content: 'I wonder if I will need this' },
@@ -59,22 +91,40 @@ function Comment() {
    * add comment to the post db
    */
   const addComment = () => {
-    // if (commentInput && commentInput.length > 0) {
-    //   postDB.addComment(userid, postid, (success, id, error) => {
-    //     if (success) {
-    //       const newComment = { id: tempID, name: `user${3}`, content: commentInput };
-    //       setComments([...comments, newComment]);
-    //       setTempID(tempID + 1);
-    //       setCommentInput('');
-    //     } else {
-    //       console.log(error);
-    //     }
-    //   });
-    // }
+    if (commentInput && commentInput.length > 0) {
+      postDB.addComment(userid, postid, (success, error) => {
+        if (success) {
+          const newComment = { id: tempID, name: `user${3}`, content: commentInput };
+          setComments([...comments, newComment]);
+          setTempID(tempID + 1);
+          setCommentInput('');
+        } else {
+          setErrorMessage(error);
+          setModalVisible(true);
+        }
+      });
+    }
+    setErrorMessage('input must not be empty');
+    setModalVisible(true);
   };
 
   return (
     <ScrollView style={styles.container}>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent
+          visible={modalVisible}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>{errorMessage}</Text>
+              <Button title="CLOSE" onPress={() => setModalVisible(false)} />
+            </View>
+          </View>
+        </Modal>
+      </View>
+
       <View style={commentStyles.container}>
         <View style={commentStyles.addComment}>
           <TextInput placeholder="Enter your comment" value={commentInput} onChangeText={setCommentInput} />
