@@ -9,6 +9,7 @@ function Chat() {
   const [text, setText] = useState('');
   const myStorage = window.sessionStorage;
   const userID = myStorage.getItem('UserID');
+  const userName = myStorage.getItem('UserName');
   // list of unread group's id. can be used from showing red dot on sidebarChat,
   // is update every 15 seconds
   const [unreadGroups, setUnreadGroups] = useState([]);
@@ -22,6 +23,7 @@ function Chat() {
   // used to show message on screen
   // 1. update when user switch group through sidebar
   // 2. update when current group is one of the unread group
+  // 3. update when user send a chat
   const [messages, setMessages] = useState([]);
 
   /** create an useInterval hook for looping fetch */
@@ -74,7 +76,7 @@ function Chat() {
         console.log(err);
       }
     });
-  }, 5000);
+  }, 15000);
 
   /** get all groups that user join */
   useEffect(() => {
@@ -88,10 +90,10 @@ function Chat() {
       }
     });
   }, []);
-
   const getChatMessages = () => (groupID) => {
     ChatDB.getChatMessages(groupID, (success, chatMessage, err) => {
       if (success) {
+        console.log(chatMessage);
         setMessages(chatMessage);
       } else {
         console.log(err);
@@ -101,14 +103,14 @@ function Chat() {
   /** method pass to child component: SidebarChat
    * use to update current group when user click the side bar
   */
+
   const selectCurrGroup = (groupID) => {
     setCurrentGroup(groupID);
     getChatMessages(groupID);
-    console.log(groupID);
+    console.log(currGroup);
   };
   /** used for showing group name on interface */
   const getGroupName = (groupID) => {
-    console.log(groupList);
     let groupName = 'please select a group to begin chat';
     if (groupList !== [] && groupID !== '') {
       groupName = groupList.find((x) => x.id === groupID).groupName;
@@ -119,18 +121,41 @@ function Chat() {
   const handleSend = () => {
     ChatDB.createMessage(userID, currGroup, text, (success, chatMessage, err) => {
       if (success) {
+        const myDate = new Date().toISOString();
+        const myMessage = { author: userName, content: text, createdAt: myDate };
+        setMessages((message) => [...message, myMessage]);
         // please show the text on screen
       } else {
+        // unable to send
         console.log(err);
       }
     });
+  };
+  const messageWindow = (messageList) => {
+    console.log(messageList);
+    messageList.map((m) => (
+      <div>lalalala</div>
+      // <div>
+      //   {m.author}
+      //   :
+      //   {m.content}
+      // </div>
+    ));
   };
 
   return (
     <div className="chat-page">
       <SidebarChat currGroupUpdate={selectCurrGroup} groupList={groupList} />
       <div>
-        <div className="menu-title"><h1>{ getGroupName(currGroup)}</h1></div>
+        <div className="menu-title"><h1>{getGroupName(currGroup)}</h1></div>
+        {/* {messageWindow(messages)} */}
+        { messages.map((m) => (
+          <div>
+            {m.author}
+            :
+            {m.content}
+          </div>
+        ))}
         <div className="chat-field">
           <input onChange={(e) => setText(e.target.value)} />
           <button className="send" type="button" onClick={handleSend}> send </button>

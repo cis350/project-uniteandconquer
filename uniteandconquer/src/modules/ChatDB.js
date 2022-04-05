@@ -43,9 +43,8 @@ function getChatGroup(userID, callback) {
  * change message status in this method
  */
 function getUnreadChatMessage(groupId, callback) {
-  return callback(true, [{ author: 'Yuying Fan', content: 'Hello guys', createdAt: '2022-03-15T12:59:14.924Z' },
-    { author: 'Dee Xie', content: 'Yo sup', createdAt: '2022-03-15T13:00:34.924Z' },
-    { author: 'Yuxi Dai', content: 'Hi', createdAt: '2022-03-15T13:19:25.924Z' }], null);
+  return callback(true, [{ author: 'Yuying Fan', content: 'new message', createdAt: '2022-03-15T12:59:14.924Z' },
+    { author: 'Dee Xie', content: 'Yo sup', createdAt: '2022-03-15T13:00:34.924Z' }], null);
 }
 /** get all groups which has unread message.
  * note that this method will not change read status: message status is still unread */
