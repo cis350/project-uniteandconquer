@@ -2,11 +2,12 @@ import React from 'react';
 import {
   StyleSheet, View, Text, Button, TextInput,
 } from 'react-native';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import SelectDropdown from 'react-native-select-dropdown';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { showMessage } from 'react-native-flash-message';
 
-import { loginUserWithEmail } from '../modules/UserDB';
+import { loginUserWithPhone, loginUserWithEmail } from '../modules/UserDB';
 
 // styling ---------
 
@@ -16,6 +17,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAE9C7',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  dropdownButton: {
+    width: '20%',
+    height: 40,
+    margin: 12,
+    marginRight: 0,
+    backgroundColor: '#e9967a',
+    padding: 10,
+  },
+  inputPhoneNumber: {
+    width: '60%',
+    height: 40,
+    margin: 12,
+    marginHorizontal: 0,
+    borderWidth: 1,
+    padding: 10,
+    alignSelf: 'stretch',
   },
   input: {
     height: 40,
@@ -29,7 +47,75 @@ const styles = StyleSheet.create({
 
 // app content --------
 
-export default function LogIn({ navigation }) {
+function PhoneLogIn({ navigation }) {
+  const [countryCode, setCountryCode] = React.useState('');
+  const [phoneNumber, setPhoneNumber] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const countryCodeList = ['+1', '+86'];
+
+  const handleLogIn = () => {
+    if (countryCode && phoneNumber && password) {
+      if (phoneNumber.match(/\d+/)) {
+        loginUserWithPhone(countryCode, phoneNumber, password, (success, userId, err) => {
+          if (success) {
+            navigation.navigate('Home', { userId });
+          } else {
+            showMessage({
+              message: err,
+              type: 'danger',
+            });
+          }
+        });
+      } else {
+        showMessage({
+          message: 'Invalid phone number',
+          type: 'danger',
+        });
+      }
+    } else {
+      showMessage({
+        message: 'Phone or password missing',
+        type: 'danger',
+      });
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text>Welcome Back!</Text>
+      <View style={{ alignContent: 'space-between', flexDirection: 'row' }}>
+        <SelectDropdown
+          data={countryCodeList}
+          defaultButtonText="Select"
+          buttonStyle={styles.dropdownButton}
+          buttonTextStyle={{ fontSize: 14 }}
+          onSelect={(selectedItem) => {
+            setCountryCode(selectedItem);
+          }}
+        />
+        <TextInput
+          style={styles.inputPhoneNumber}
+          placeholder="Phone Number"
+          onChangeText={setPhoneNumber}
+          value={phoneNumber}
+        />
+      </View>
+      <TextInput
+        style={styles.input}
+        onChangeText={setPassword}
+        value={password}
+        placeholder="Password"
+      />
+      <Button
+        onPress={handleLogIn}
+        title="Log In"
+      />
+    </View>
+  );
+}
+
+function EmailLogIn({ navigation }) {
   // General email regex (RFC 5322 Official Standard)
   // Adopted from https://mailtrap.io/blog/react-native-email-validation/
   // eslint-disable-next-line no-control-regex
@@ -85,5 +171,38 @@ export default function LogIn({ navigation }) {
         title="Log In"
       />
     </View>
+  );
+}
+
+const Tab = createBottomTabNavigator();
+
+export default function LogIn() {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        // eslint-disable-next-line react/no-unstable-nested-components
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+
+          if (route.name === 'Phone') {
+            iconName = 'call';
+          } else if (route.name === 'Email') {
+            iconName = 'mail';
+          }
+
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: 'tomato',
+        tabBarInactiveTintColor: 'gray',
+        tabBarStyle: {
+          backgroundColor: '#ffe4b5',
+        },
+        headerShown: false,
+      })}
+    >
+      <Tab.Screen name="Phone" component={PhoneLogIn} />
+      <Tab.Screen name="Email" component={EmailLogIn} />
+    </Tab.Navigator>
   );
 }
