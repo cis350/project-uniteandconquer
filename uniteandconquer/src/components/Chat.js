@@ -159,6 +159,8 @@ function Chat() {
             :
             {m.content}
           </div>
+          // you can add a Message.js file to make message beutiful
+          // <Message text={m}/>
         ))}
         <div className="chat-field">
           <input onChange={(e) => setText(e.target.value)} />
