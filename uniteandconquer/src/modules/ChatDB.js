@@ -69,6 +69,7 @@ export {
   createChat,
   joinChat,
   leaveChat,
+  getChatMessages,
   getChatMessagesInRange,
   createMessage,
   getChatGroup,

@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
 import SidebarChat from './SidebarChat';
+import SideChats from './SideChats';
 import '../assets/Chat.css';
 
 const ChatDB = require('../modules/ChatDB');
@@ -90,25 +91,27 @@ function Chat() {
       }
     });
   }, []);
-  const getChatMessages = () => (groupID) => {
-    ChatDB.getChatMessages(groupID, (success, chatMessage, err) => {
+
+  const getCurrChatMessages = (groupID) => {
+    ChatDB.getChatMessages(groupID, (success, chatList, err) => {
       if (success) {
-        console.log(chatMessage);
-        setMessages(chatMessage);
+        if (chatList.length !== 0) {
+          setMessages(chatList);
+        }
       } else {
         console.log(err);
       }
     });
   };
+
+  useEffect(() => {
+    getCurrChatMessages(currGroup);
+  }, [currGroup]);
+
   /** method pass to child component: SidebarChat
    * use to update current group when user click the side bar
   */
 
-  const selectCurrGroup = (groupID) => {
-    setCurrentGroup(groupID);
-    getChatMessages(groupID);
-    console.log(currGroup);
-  };
   /** used for showing group name on interface */
   const getGroupName = (groupID) => {
     let groupName = 'please select a group to begin chat';
@@ -131,21 +134,22 @@ function Chat() {
       }
     });
   };
-  const messageWindow = (messageList) => {
-    console.log(messageList);
-    messageList.map((m) => (
-      <div>lalalala</div>
-      // <div>
-      //   {m.author}
-      //   :
-      //   {m.content}
-      // </div>
-    ));
-  };
 
   return (
     <div className="chat-page">
-      <SidebarChat currGroupUpdate={selectCurrGroup} groupList={groupList} />
+      {groupList.map((group) => (
+        <div
+          className={group.groupName}
+          role="button"
+          tabIndex={0}
+          onClick={() => setCurrentGroup(group.id)}
+          onKeyPress={() => setCurrentGroup(group.id)}
+        >
+          {console.log(currGroup)}
+          <SideChats conversation={group} />
+        </div>
+      ))}
+      {/* <SidebarChat currGroupUpdate={selectCurrGroup} groupList={groupList} /> */}
       <div>
         <div className="menu-title"><h1>{getGroupName(currGroup)}</h1></div>
         {/* {messageWindow(messages)} */}
