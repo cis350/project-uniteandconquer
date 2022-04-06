@@ -140,7 +140,7 @@ function Comment() {
 
       <View>
         {comments.map((comment) => (
-          <View style={commentStyles.comment} key={comment.name}>
+          <View style={commentStyles.comment} key={comment.authorName}>
             <View>
               <View><Text style={commentStyles.commentName}>{comment.authorName}</Text></View>
               <View><Text style={commentStyles.commentContent}>{comment.content}</Text></View>
