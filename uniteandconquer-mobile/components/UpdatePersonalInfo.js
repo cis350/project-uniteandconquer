@@ -104,19 +104,33 @@ function UpdateInfo({ navigation }) {
   const [countryCode, setCountryCode] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const countryCodeList = ['+1', '+86'];
+  const countryCodeList = ['1', '86'];
 
   /**
    * how to retrieve the user id is to be decided.
    */
   const userid = 'TBD';
+
+  /**
+   * Fetch the user information from the user DB and store
+   * the user information into an object - userInfo
+   */
+  let userInfo;
+  userDB.getUserDetails(userid, (success, user) => {
+    if (success) {
+      userInfo = user;
+    }
+  });
+
   /**
    *
    * @param {*} input the input could be one of the user input information
    * @returns true if the input is not initialized or is empty
    */
-  function checkValidInput(input) {
-    return (input != null && input.trim().length >= 1);
+  function checkValidInput(input, currentValue) {
+    const isEmpty = (input != null && input.trim().length >= 1);
+    const isChanged = input !== currentValue;
+    return isEmpty && isChanged;
   }
 
   /**
@@ -124,7 +138,7 @@ function UpdateInfo({ navigation }) {
    */
   function handleUpdate() {
     // Update first name
-    if (checkValidInput(firstName)) {
+    if (checkValidInput(firstName, userInfo.firstName)) {
       userDB.modifyUser(userid, 3, firstName, null, (success, error) => {
         if (!success) {
           setErrorMessage(error);
@@ -133,7 +147,7 @@ function UpdateInfo({ navigation }) {
       });
     }
     // Update last name
-    if (checkValidInput(lastName)) {
+    if (checkValidInput(lastName, userInfo.lastName)) {
       userDB.modifyUser(userid, 4, lastName, null, (success, error) => {
         if (!success) {
           setErrorMessage(error);
@@ -142,7 +156,8 @@ function UpdateInfo({ navigation }) {
       });
     }
     // Update phone
-    if (checkValidInput(phone) && checkValidInput(countryCode)) {
+    if (checkValidInput(phone, userInfo.phone.phoneNumber)
+          && checkValidInput(countryCode, userInfo.phone.countryCode)) {
       const newValue = { countryCode, phone };
       userDB.modifyUser(userid, 0, newValue, null, (success, error) => {
         if (!success) {
@@ -153,7 +168,7 @@ function UpdateInfo({ navigation }) {
     }
 
     // Update phone
-    if (checkValidInput(email)) {
+    if (checkValidInput(email, userInfo.email)) {
       userDB.modifyUser(userid, 1, email, null, (success, error) => {
         if (!success) {
           setErrorMessage(error);
@@ -208,7 +223,7 @@ function UpdateInfo({ navigation }) {
         </View>
         <View style={styles.textInput}>
           <TextInput
-            placeholder="First Name"
+            placeholder={userInfo.firstName}
             onChangeText={setFirstName}
             value={firstName}
           />
@@ -219,7 +234,7 @@ function UpdateInfo({ navigation }) {
         </View>
         <View style={styles.textInput}>
           <TextInput
-            placeholder="Last Name"
+            placeholder={userInfo.lastName}
             onChangeText={setLastName}
             value={lastName}
           />
@@ -232,7 +247,7 @@ function UpdateInfo({ navigation }) {
         <View style={{ flex: 1, alignContent: 'space-between', flexDirection: 'row' }}>
           <SelectDropdown
             data={countryCodeList}
-            defaultButtonText="code"
+            defaultButtonText={userInfo.phone.countryCode}
             buttonStyle={styles.dropdownButton}
             buttonTextStyle={{ fontSize: 18 }}
             onSelect={(selectedItem) => {
@@ -241,7 +256,7 @@ function UpdateInfo({ navigation }) {
           />
           <View style={styles.phone}>
             <TextInput
-              placeholder="Phone"
+              placeholder={userInfo.phone.phoneNumber}
               onChangeText={setPhone}
               value={phone}
             />
@@ -253,7 +268,7 @@ function UpdateInfo({ navigation }) {
         </View>
         <View style={styles.textInput}>
           <TextInput
-            placeholder="Email"
+            placeholder={userInfo.email}
             onChangeText={setEmail}
             value={email}
           />
