@@ -73,8 +73,12 @@ function Comment() {
   const [errorMessage, setErrorMessage] = useState('');
   const [modalVisible, setModalVisible] = React.useState(false);
   const [comments, setComments] = useState([
-    { id: 1, name: 'user1', content: 'I loved using this item' },
-    { id: 2, name: 'user2', content: 'I wonder if I will need this' },
+    {
+      author: 1, authorName: 'user1', content: 'I loved using this item', createdAt: new Date().toLocaleString(),
+    },
+    {
+      author: 2, authorName: 'user2', content: 'I wonder if I will need this', createdAt: new Date().toLocaleString(),
+    },
   ]);
 
   /**
@@ -94,7 +98,9 @@ function Comment() {
     if (commentInput && commentInput.length > 0) {
       postDB.addComment(userid, postid, (success, error) => {
         if (success) {
-          const newComment = { id: tempID, name: `user${3}`, content: commentInput };
+          const newComment = {
+            author: tempID, authorName: `user${3}`, content: commentInput, createdAt: new Date().toLocaleString(),
+          };
           setComments([...comments, newComment]);
           setTempID(tempID + 1);
           setCommentInput('');
@@ -136,7 +142,7 @@ function Comment() {
         {comments.map((comment) => (
           <View style={commentStyles.comment} key={comment.name}>
             <View>
-              <View><Text style={commentStyles.commentName}>{comment.name}</Text></View>
+              <View><Text style={commentStyles.commentName}>{comment.authorName}</Text></View>
               <View><Text style={commentStyles.commentContent}>{comment.content}</Text></View>
             </View>
           </View>
