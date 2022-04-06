@@ -85,7 +85,7 @@ function UpdatePassword({ navigation }) {
   const [currentPassword, setCurrentPassword] = useState();
   const [newPassword, setNewPassword] = useState();
   const [modalVisible, setModalVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [message, setMessage] = useState('');
 
   /**
    * how to retrieve the user id is to be decided.
@@ -108,12 +108,15 @@ function UpdatePassword({ navigation }) {
     if (checkValidInput(newPassword) && checkValidInput(currentPassword)) {
       userDB.modifyUser(userid, 2, newPassword, currentPassword, (success, error) => {
         if (!success) {
-          setErrorMessage(error);
+          setMessage(error);
+          setModalVisible(true);
+        } else {
+          setMessage('updated successfully');
           setModalVisible(true);
         }
       });
     } else {
-      setErrorMessage('Field can not to be empty');
+      setMessage('Field can not to be empty');
       setModalVisible(true);
     }
   }
@@ -128,7 +131,7 @@ function UpdatePassword({ navigation }) {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>{errorMessage}</Text>
+              <Text style={styles.modalText}>{message}</Text>
               <Button title="CLOSE" onPress={() => setModalVisible(false)} />
             </View>
           </View>
