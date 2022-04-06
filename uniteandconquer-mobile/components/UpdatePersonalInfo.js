@@ -143,6 +143,14 @@ function UpdateInfo({ navigation }) {
   }
 
   /**
+   * check whether the phone number contains only digits.
+   */
+
+  function checkPhone() {
+    return /^\d+$/.test(phone);
+  }
+
+  /**
    * update the personal information if the input is valid
    */
   function handleUpdate() {
@@ -165,15 +173,20 @@ function UpdateInfo({ navigation }) {
       });
     }
     // Update phone
-    if (checkValidInput(phone, userInfo.phone.phoneNumber)
-          && checkValidInput(countryCode, userInfo.phone.countryCode)) {
-      const newValue = { countryCode, phone };
-      userDB.modifyUser(userid, 0, newValue, null, (success, error) => {
-        if (!success) {
-          setErrorMessage(error);
-          setModalVisible(true);
-        }
-      });
+    if (checkPhone()) {
+      if (checkValidInput(phone, userInfo.phone.phoneNumber)
+        && checkValidInput(countryCode, userInfo.phone.countryCode)) {
+        const newValue = { countryCode, phone };
+        userDB.modifyUser(userid, 0, newValue, null, (success, error) => {
+          if (!success) {
+            setErrorMessage(error);
+            setModalVisible(true);
+          }
+        });
+      }
+    } else {
+      setErrorMessage('Phone number can only contain digits');
+      setModalVisible(true);
     }
 
     // Update email
@@ -191,9 +204,9 @@ function UpdateInfo({ navigation }) {
       setModalVisible(true);
     }
 
-    // test set error message
-    setErrorMessage('ERROR');
-    setModalVisible(true);
+    // // test set error message
+    // setErrorMessage('ERROR');
+    // setModalVisible(true);
   }
 
   return (
