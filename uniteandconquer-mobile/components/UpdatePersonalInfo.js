@@ -134,6 +134,15 @@ function UpdateInfo({ navigation }) {
   }
 
   /**
+   *
+   * check whether the email has a good format
+   */
+  function checkValidEmail() {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
+  /**
    * update the personal information if the input is valid
    */
   function handleUpdate() {
@@ -167,14 +176,19 @@ function UpdateInfo({ navigation }) {
       });
     }
 
-    // Update phone
-    if (checkValidInput(email, userInfo.email)) {
-      userDB.modifyUser(userid, 1, email, null, (success, error) => {
-        if (!success) {
-          setErrorMessage(error);
-          setModalVisible(true);
-        }
-      });
+    // Update email
+    if (checkValidEmail(email)) {
+      if (checkValidInput(email, userInfo.email)) {
+        userDB.modifyUser(userid, 1, email, null, (success, error) => {
+          if (!success) {
+            setErrorMessage(error);
+            setModalVisible(true);
+          }
+        });
+      }
+    } else {
+      setErrorMessage('Your email address is not valid');
+      setModalVisible(true);
     }
 
     // test set error message
