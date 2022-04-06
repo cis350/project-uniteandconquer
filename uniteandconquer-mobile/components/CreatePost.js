@@ -1,8 +1,10 @@
 import React from 'react';
 import {
-  StyleSheet, View, ScrollView, Text, TextInput, Button,
+  StyleSheet, View, ScrollView, Text, TextInput, Button, Modal,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+const postDB = require('../modules/PostDB');
 
 // styling ---------
 
@@ -11,6 +13,36 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAE9C7',
     height: '100%',
     width: '100%',
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
   },
 });
 
@@ -118,6 +150,10 @@ const createPostStyles = StyleSheet.create({
     justifyContent: 'center',
     position: 'relative',
     bottom: -45,
+    marginBottom: 100,
+  },
+  tagsContainer: {
+    marginTop: 10,
   },
 });
 
@@ -126,18 +162,88 @@ const createPostStyles = StyleSheet.create({
 export default function CreatePost({ navigation }) {
   const [itemName, setItemName] = React.useState('');
   const [targetQuantity, setTargetQuantity] = React.useState('');
+  const [currentQuantity, setCurrentQuantity] = React.useState('');
   const [price, setPrice] = React.useState('');
   const [link, setLink] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [tags, setTags] = React.useState([]);
-
+  const [errorMessage, setErrorMessage] = React.useState('');
+  const [modalVisible, setModalVisible] = React.useState(false);
   function addTags(tag) {
-    setTags((arr) => [...arr, tag]);
-    console.log('adding tag... and current tags are:', tags);
+    if (tags.includes(tag)) {
+      const newList = tags.filter((item) => item !== tag);
+      setTags(newList);
+    } else {
+      setTags((arr) => [...arr, tag]);
+    }
+  }
+
+  /**
+   * This function is used to check all the input fields are valid.
+   * Return true, if itemName, link, description, price, targetQuality are not null or empty
+   * False otherwise.
+   *
+   * Note that we will allow empty tags array to be added to database.
+   */
+  function checkValidInput() {
+    const isValidItemName = itemName !== null && itemName.trim().length >= 1;
+    const isValidlink = link !== null && link.trim().length >= 1;
+    const isValidDiscription = description !== null && description.trim().length >= 1;
+    const isValidPrice = price !== null && price.trim().length >= 1;
+    const isValidTagetQuantity = targetQuantity !== null && targetQuantity.trim().length >= 1;
+    const isValidCurrentQuantity = currentQuantity !== null && currentQuantity.trim().length >= 1;
+    return isValidDiscription
+            && isValidlink
+            && isValidItemName
+            && isValidPrice
+            && isValidTagetQuantity
+            && isValidCurrentQuantity;
+  }
+
+  function handlePost() {
+    if (checkValidInput()) {
+      postDB.addPost(
+        itemName,
+        targetQuantity,
+        currentQuantity,
+        price,
+        link,
+        description,
+        tags,
+        (success, id, error) => {
+          if (success) {
+          // should place navigation here
+          } else {
+            setErrorMessage(error);
+            setModalVisible(true);
+          }
+        },
+      );
+    }
+    // we need to move the navigation inside the addPost, once it is successfully created, but I was
+    // wondering how to redirect to a certain page?
+    navigation.navigate('PostDetails');
+    // setErrorMessage('input must not be empty');
+    // setModalVisible(true);
   }
 
   return (
     <ScrollView style={styles.container}>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent
+          visible={modalVisible}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>{errorMessage}</Text>
+              <Button title="CLOSE" onPress={() => setModalVisible(false)} />
+            </View>
+          </View>
+        </Modal>
+      </View>
+
       <View>
         <View style={userStyles.container}>
           <Icon name="user" size={28} style={userStyles.icon} />
@@ -180,6 +286,7 @@ export default function CreatePost({ navigation }) {
                   onChangeText={setTargetQuantity}
                   value={targetQuantity}
                 />
+
                 <Text>Price/Item</Text>
                 <TextInput
                   style={createPostStyles.field}
@@ -193,6 +300,13 @@ export default function CreatePost({ navigation }) {
                   placeholder="url for item"
                   onChangeText={setLink}
                   value={link}
+                />
+                <Text>Current Quantity</Text>
+                <TextInput
+                  style={createPostStyles.field}
+                  placeholder="current quantity"
+                  onChangeText={setCurrentQuantity}
+                  value={currentQuantity}
                 />
               </View>
             </View>
@@ -208,19 +322,17 @@ export default function CreatePost({ navigation }) {
               value={description}
             />
           </View>
-          <View>
+          <View style={createPostStyles.tagsContainer}>
             <Text style={createPostStyles.fieldName}>Tags</Text>
             <View style={createPostStyles.description}>
               <Text>
-                {' '}
-                {tags}
-                {' '}
+                {tags.join(' ')}
               </Text>
             </View>
           </View>
           <View>
             <View style={createPostStyles.buttons}>
-              <View style={createPostStyles.LeftButton}><Button color="#000" title="Post" onPress={() => navigation.navigate('PostDetails')} /></View>
+              <View style={createPostStyles.LeftButton}><Button color="#000" title="Post" onPress={() => handlePost()} /></View>
               <View style={createPostStyles.RightButton}><Button color="#000" title="Cancel" onPress={() => navigation.navigate('Home')} /></View>
             </View>
           </View>
