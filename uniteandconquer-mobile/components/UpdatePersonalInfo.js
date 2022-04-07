@@ -197,6 +197,7 @@ function UpdateInfo({ navigation }) {
       } else {
         setMessage('Phone number can only contain digits');
         setModalVisible(true);
+        isSuccess = false;
       }
     }
 
@@ -215,6 +216,7 @@ function UpdateInfo({ navigation }) {
       } else {
         setMessage('Your email address is not valid');
         setModalVisible(true);
+        isSuccess = false;
       }
     }
 
