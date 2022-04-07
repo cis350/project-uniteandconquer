@@ -1,7 +1,8 @@
 import { React, useState } from 'react';
 import {
-  StyleSheet, View, ScrollView, Text, TextInput, Button, Modal,
+  StyleSheet, View, ScrollView, Text, TextInput, Button,
 } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 
 const userDB = require('../modules/UserDB');
 
@@ -84,8 +85,6 @@ const styles = StyleSheet.create({
 function UpdatePassword({ navigation }) {
   const [currentPassword, setCurrentPassword] = useState();
   const [newPassword, setNewPassword] = useState();
-  const [modalVisible, setModalVisible] = useState(false);
-  const [message, setMessage] = useState('');
 
   /**
    * how to retrieve the user id is to be decided.
@@ -108,35 +107,27 @@ function UpdatePassword({ navigation }) {
     if (checkValidInput(newPassword) && checkValidInput(currentPassword)) {
       userDB.modifyUser(userid, 2, newPassword, currentPassword, (success, error) => {
         if (!success) {
-          setMessage(error);
-          setModalVisible(true);
+          showMessage({
+            message: error,
+            type: 'danger',
+          });
         } else {
-          setMessage('updated successfully');
-          setModalVisible(true);
+          showMessage({
+            message: 'updated successfully',
+            type: 'success',
+          });
         }
       });
     } else {
-      setMessage('Field can not to be empty');
-      setModalVisible(true);
+      showMessage({
+        message: 'Field can not to be empty',
+        type: 'danger',
+      });
     }
   }
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent
-          visible={modalVisible}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>{message}</Text>
-              <Button title="CLOSE" onPress={() => setModalVisible(false)} />
-            </View>
-          </View>
-        </Modal>
-      </View>
 
       <View style={styles.titleContainer}>
         <Text style={styles.titleFont}>

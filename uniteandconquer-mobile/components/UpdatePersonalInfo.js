@@ -1,8 +1,9 @@
 import { React, useState } from 'react';
 import {
-  StyleSheet, View, ScrollView, Text, Modal, TextInput, Button,
+  StyleSheet, View, ScrollView, Text, TextInput, Button,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
+import { showMessage } from 'react-native-flash-message';
 
 const userDB = require('../modules/UserDB');
 
@@ -102,8 +103,6 @@ function UpdateInfo({ navigation }) {
   const [phone, setPhone] = useState(null);
   const [email, setEmail] = useState(null);
   const [countryCode, setCountryCode] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [message, setMessage] = useState('');
   const countryCodeList = ['1', '86'];
 
   /**
@@ -160,8 +159,10 @@ function UpdateInfo({ navigation }) {
     if (checkValidInput(firstName, userInfo.firstName)) {
       userDB.modifyUser(userid, 3, firstName, null, (success, error) => {
         if (!success) {
-          setMessage(error);
-          setModalVisible(true);
+          showMessage({
+            message: error,
+            type: 'danger',
+          });
           isSuccess = false;
         } else {
           isChanged = true;
@@ -172,8 +173,10 @@ function UpdateInfo({ navigation }) {
     if (checkValidInput(lastName, userInfo.lastName)) {
       userDB.modifyUser(userid, 4, lastName, null, (success, error) => {
         if (!success) {
-          setMessage(error);
-          setModalVisible(true);
+          showMessage({
+            message: error,
+            type: 'danger',
+          });
           isSuccess = false;
         } else {
           isChanged = true;
@@ -187,16 +190,20 @@ function UpdateInfo({ navigation }) {
         const newValue = { countryCode, phone };
         userDB.modifyUser(userid, 0, newValue, null, (success, error) => {
           if (!success) {
-            setMessage(error);
-            setModalVisible(true);
+            showMessage({
+              message: error,
+              type: 'danger',
+            });
             isSuccess = false;
           } else {
             isChanged = true;
           }
         });
       } else {
-        setMessage('Phone number can only contain digits');
-        setModalVisible(true);
+        showMessage({
+          message: 'Phone number can only contain digits',
+          type: 'danger',
+        });
         isSuccess = false;
       }
     }
@@ -206,43 +213,35 @@ function UpdateInfo({ navigation }) {
       if (checkValidEmail()) {
         userDB.modifyUser(userid, 1, email, null, (success, error) => {
           if (!success) {
-            setMessage(error);
-            setModalVisible(true);
+            showMessage({
+              message: error,
+              type: 'danger',
+            });
             isSuccess = false;
           } else {
             isChanged = true;
           }
         });
       } else {
-        setMessage('Your email address is not valid');
-        setModalVisible(true);
+        showMessage({
+          message: 'Your email address is not valid',
+          type: 'danger',
+        });
         isSuccess = false;
       }
     }
 
     // // test set error message
     if (isChanged && isSuccess) {
-      setMessage('updated successfully');
-      setModalVisible(true);
+      showMessage({
+        message: 'updated successfully',
+        type: 'success',
+      });
     }
   }
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent
-          visible={modalVisible}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>{message}</Text>
-              <Button title="CLOSE" onPress={() => setModalVisible(false)} />
-            </View>
-          </View>
-        </Modal>
-      </View>
 
       <View style={styles.titleContainer}>
         <Text style={styles.titleFont}>
