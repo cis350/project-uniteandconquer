@@ -59,25 +59,16 @@ function PhoneLogIn({ navigation }) {
       if (phoneNumber.match(/\d+/)) {
         loginUserWithPhone(countryCode, phoneNumber, password, (success, userId, err) => {
           if (success) {
-            navigation.navigate('Home', { userId });
+            navigation.navigate({ name: 'Home', params: { userId }, merge: true });
           } else {
-            showMessage({
-              message: err,
-              type: 'danger',
-            });
+            showMessage({ message: err, type: 'danger' });
           }
         });
       } else {
-        showMessage({
-          message: 'Invalid phone number',
-          type: 'danger',
-        });
+        showMessage({ message: 'Invalid phone number', type: 'danger' });
       }
     } else {
-      showMessage({
-        message: 'Phone or password missing',
-        type: 'danger',
-      });
+      showMessage({ message: 'Phone or password missing', type: 'danger' });
     }
   };
 
@@ -129,25 +120,16 @@ function EmailLogIn({ navigation }) {
       if (email.match(emailRegex)) {
         loginUserWithEmail(email, password, (success, userId, err) => {
           if (success) {
-            navigation.navigate('Home', { userId });
+            navigation.navigate({ name: 'Home', params: { userId }, merge: true });
           } else {
-            showMessage({
-              message: err,
-              type: 'danger',
-            });
+            showMessage({ message: err, type: 'danger' });
           }
         });
       } else {
-        showMessage({
-          message: 'Invalid email format',
-          type: 'danger',
-        });
+        showMessage({ message: 'Invalid email format', type: 'danger' });
       }
     } else {
-      showMessage({
-        message: 'Email or password missing',
-        type: 'danger',
-      });
+      showMessage({ message: 'Email or password missing', type: 'danger' });
     }
   };
 
