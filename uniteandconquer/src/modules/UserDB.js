@@ -69,7 +69,5 @@ export {
   modifyUser,
   getUserDetails,
   getPassword,
-  modifyUser,
-  getUserDetails,
   getChats,
 };
