@@ -1,7 +1,8 @@
 import { React, useState } from 'react';
 import {
-  StyleSheet, View, ScrollView, Text, Button, Modal,
+  StyleSheet, View, ScrollView, Text, Button,
 } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 
 const userDB = require('../modules/UserDB');
 
@@ -99,8 +100,6 @@ const styles = StyleSheet.create({
 
 function SettingInterests({ navigation }) {
   const [tags, setTags] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [message, setMessage] = useState('');
 
   function addTags(tag) {
     if (tags.includes(tag)) {
@@ -122,36 +121,27 @@ function SettingInterests({ navigation }) {
   function handleUpdate() {
     userDB.modifyUser(userid, 5, tags, null, (success, error) => {
       if (!success) {
-        setMessage(error);
-        setModalVisible(true);
+        showMessage({
+          message: error,
+          type: 'danger',
+        });
       } else {
-        setMessage('updated successfully');
-        setModalVisible(true);
+        showMessage({
+          message: 'updated successfully',
+          type: 'success',
+        });
       }
     });
 
     // Test error message
-    setMessage('error');
-    setModalVisible(true);
+    showMessage({
+      message: 'updated successfully',
+      type: 'success',
+    });
   }
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent
-          visible={modalVisible}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>{message}</Text>
-              <Button title="CLOSE" onPress={() => setModalVisible(false)} />
-            </View>
-          </View>
-        </Modal>
-      </View>
-
       <View style={styles.titleContainer}>
         <Text style={styles.titleFont}>
           Update Interests
