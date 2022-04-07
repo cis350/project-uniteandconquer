@@ -103,7 +103,7 @@ function UpdateInfo({ navigation }) {
   const [email, setEmail] = useState(null);
   const [countryCode, setCountryCode] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [message, setMessage] = useState('');
   const countryCodeList = ['1', '86'];
 
   /**
@@ -154,12 +154,17 @@ function UpdateInfo({ navigation }) {
    * update the personal information if the input is valid
    */
   function handleUpdate() {
+    let isChanged = false;
+    let isSuccess = true;
     // Update first name
     if (checkValidInput(firstName, userInfo.firstName)) {
       userDB.modifyUser(userid, 3, firstName, null, (success, error) => {
         if (!success) {
-          setErrorMessage(error);
+          setMessage(error);
           setModalVisible(true);
+          isSuccess = false;
+        } else {
+          isChanged = true;
         }
       });
     }
@@ -167,46 +172,57 @@ function UpdateInfo({ navigation }) {
     if (checkValidInput(lastName, userInfo.lastName)) {
       userDB.modifyUser(userid, 4, lastName, null, (success, error) => {
         if (!success) {
-          setErrorMessage(error);
+          setMessage(error);
           setModalVisible(true);
+          isSuccess = false;
+        } else {
+          isChanged = true;
         }
       });
     }
     // Update phone
-    if (checkPhone()) {
-      if (checkValidInput(phone, userInfo.phone.phoneNumber)
-        && checkValidInput(countryCode, userInfo.phone.countryCode)) {
+    if (checkValidInput(phone, userInfo.phone.phoneNumber)
+      || checkValidInput(countryCode, userInfo.phone.countryCode)) {
+      if (checkPhone()) {
         const newValue = { countryCode, phone };
         userDB.modifyUser(userid, 0, newValue, null, (success, error) => {
           if (!success) {
-            setErrorMessage(error);
+            setMessage(error);
             setModalVisible(true);
+            isSuccess = false;
+          } else {
+            isChanged = true;
           }
         });
+      } else {
+        setMessage('Phone number can only contain digits');
+        setModalVisible(true);
       }
-    } else {
-      setErrorMessage('Phone number can only contain digits');
-      setModalVisible(true);
     }
 
     // Update email
-    if (checkValidEmail(email)) {
-      if (checkValidInput(email, userInfo.email)) {
+    if (checkValidInput(email, userInfo.email)) {
+      if (checkValidEmail()) {
         userDB.modifyUser(userid, 1, email, null, (success, error) => {
           if (!success) {
-            setErrorMessage(error);
+            setMessage(error);
             setModalVisible(true);
+            isSuccess = false;
+          } else {
+            isChanged = true;
           }
         });
+      } else {
+        setMessage('Your email address is not valid');
+        setModalVisible(true);
       }
-    } else {
-      setErrorMessage('Your email address is not valid');
-      setModalVisible(true);
     }
 
     // // test set error message
-    // setErrorMessage('ERROR');
-    // setModalVisible(true);
+    if (isChanged && isSuccess) {
+      setMessage('updated successfully');
+      setModalVisible(true);
+    }
   }
 
   return (
@@ -219,7 +235,7 @@ function UpdateInfo({ navigation }) {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>{errorMessage}</Text>
+              <Text style={styles.modalText}>{message}</Text>
               <Button title="CLOSE" onPress={() => setModalVisible(false)} />
             </View>
           </View>

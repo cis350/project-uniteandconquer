@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
 function SettingInterests({ navigation }) {
   const [tags, setTags] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [message, setMessage] = useState('');
 
   function addTags(tag) {
     if (tags.includes(tag)) {
@@ -122,13 +122,16 @@ function SettingInterests({ navigation }) {
   function handleUpdate() {
     userDB.modifyUser(userid, 5, tags, null, (success, error) => {
       if (!success) {
-        setErrorMessage(error);
+        setMessage(error);
+        setModalVisible(true);
+      } else {
+        setMessage('updated successfully');
         setModalVisible(true);
       }
     });
 
     // Test error message
-    setErrorMessage('error');
+    setMessage('error');
     setModalVisible(true);
   }
 
@@ -142,7 +145,7 @@ function SettingInterests({ navigation }) {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>{errorMessage}</Text>
+              <Text style={styles.modalText}>{message}</Text>
               <Button title="CLOSE" onPress={() => setModalVisible(false)} />
             </View>
           </View>
