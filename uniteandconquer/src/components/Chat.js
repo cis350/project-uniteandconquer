@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
-import SidebarChat from './SidebarChat';
+import { Link } from 'react-router-dom';
+// import SidebarChat from './SidebarChat';
 import SideChats from './SideChats';
 import '../assets/Chat.css';
 
@@ -128,34 +129,45 @@ function Chat() {
 
   return (
     <div className="chat-page">
-      {groupList.map((group) => (
-        <div
-          className={group.groupName}
-          role="button"
-          tabIndex={0}
-          onClick={() => setCurrentGroup(group.id)}
-          onKeyPress={() => setCurrentGroup(group.id)}
-        >
-          {console.log(currGroup)}
-          <SideChats conversation={group} />
-        </div>
-      ))}
-      {/* <SidebarChat currGroupUpdate={selectCurrGroup} groupList={groupList} /> */}
-      <div>
-        <div className="menu-title"><h1>{getGroupName(currGroup)}</h1></div>
-        {/* {messageWindow(messages)} */}
-        { messages.map((m) => (
-          <div>
-            {m.author}
-            :
-            {m.content}
+      <div className="menu-title"><h1>{getGroupName(currGroup)}</h1></div>
+      <div className="chat-main">
+        <div className="chat-side">
+          <div className="main-page">
+            <Link className="link" to="/">
+              <div className="text">Back to Main Page</div>
+            </Link>
           </div>
-          // you can add a Message.js file to make message beutiful
-          // <Message text={m}/>
-        ))}
-        <div className="chat-field">
-          <input onChange={(e) => setText(e.target.value)} />
-          <button className="send" type="button" onClick={handleSend}> send </button>
+          {groupList.map((group) => (
+            <div
+              className={group.groupName}
+              role="button"
+              tabIndex={0}
+              onClick={() => setCurrentGroup(group.id)}
+              onKeyPress={() => setCurrentGroup(group.id)}
+            >
+              {group.groupName}
+              <SideChats conversation={group} />
+            </div>
+          ))}
+        </div>
+        {/* <SidebarChat currGroupUpdate={selectCurrGroup} groupList={groupList} /> */}
+        <div className="chat-messaging">
+          {/* {messageWindow(messages)} */}
+          <div className="messages">
+            { messages.map((m) => (
+              <div>
+                {m.author}
+                :
+                {m.content}
+              </div>
+              // you can add a Message.js file to make message beutiful
+              // <Message text={m}/>
+            ))}
+          </div>
+          <div className="chat-field">
+            <input onChange={(e) => setText(e.target.value)} />
+            <button className="send" type="button" onClick={handleSend}> send </button>
+          </div>
         </div>
       </div>
     </div>
