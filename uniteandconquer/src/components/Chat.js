@@ -53,7 +53,8 @@ function Chat() {
 
   /** get unread message of current group from db */
   const getUnreadMessage = () => {
-    ChatDB.getUnreadChatMessage(currGroup, (success, newMessage, err) => {
+    const myDate = new Date().toISOString();
+    ChatDB.getChatMessagesAfterTime(currGroup, myDate, (success, newMessage, err) => {
       if (success) {
         setMessages((message) => [...message, ...newMessage]);
       } else {
@@ -63,25 +64,14 @@ function Chat() {
   };
 
   useInterval(() => {
-    ChatDB.getUnreadChatGroup(userID, (success, unreadList, err) => {
-      if (success) {
-        if (unreadList.length !== 0) {
-          const idList = unreadList.map((group) => (group.id));
-          setUnreadGroups(idList);
-          /** current group's message has new update */
-          if (currGroup !== '' && idList.includes(currGroup)) {
-            getUnreadMessage();
-          }
-        }
-      } else {
-        console.log(err);
-      }
-    });
+    if (currGroup !== '') {
+      getUnreadMessage();
+    }
   }, 15000);
 
   /** get all groups that user join */
   useEffect(() => {
-    ChatDB.getChatGroup(userID, (success, chatList, err) => {
+    ChatDB.getChats(userID, (success, chatList, err) => {
       if (success) {
         if (chatList.length !== 0) {
           setGroupList(chatList);

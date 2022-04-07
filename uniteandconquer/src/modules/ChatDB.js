@@ -42,28 +42,28 @@ function getChatGroup(userID, callback) {
 /** get unread message of a group which user currently look at.
  * change message status in this method
  */
-function getUnreadChatMessage(groupId, callback) {
+function getChatMessagesAfterTime(groupId, timeStamp, callback) {
   return callback(true, [{ author: 'Yuying Fan', content: 'new message', createdAt: '2022-03-15T12:59:14.924Z' },
     { author: 'Dee Xie', content: 'new message', createdAt: '2022-03-15T13:00:34.924Z' }], null);
 }
-/** get all groups which has unread message.
- * note that this method will not change read status: message status is still unread */
-function getUnreadChatGroup(userID, callback) {
-  return callback(
-    true,
-    [{
-      id: '5087901e810c109679e860ea',
-      groupName: 'chat1',
+// /** get all groups which has unread message.
+//  * note that this method will not change read status: message status is still unread */
+// function getUnreadChatGroup(userID, callback) {
+//   return callback(
+//     true,
+//     [{
+//       id: '5087901e810c109679e860ea',
+//       groupName: 'chat1',
 
-    },
-    {
-      id: '5087901e810c109679e860eb',
-      groupName: 'chat2',
+//     },
+//     {
+//       id: '5087901e810c109679e860eb',
+//       groupName: 'chat2',
 
-    }],
-    null,
-  );
-}
+//     }],
+//     null,
+//   );
+// }
 
 export {
   createChat,
@@ -73,6 +73,5 @@ export {
   getChatMessagesInRange,
   createMessage,
   getChatGroup,
-  getUnreadChatMessage,
-  getUnreadChatGroup,
+  getChatMessagesAfterTime,
 };

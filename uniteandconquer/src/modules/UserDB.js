@@ -45,6 +45,22 @@ function getUserDetails(id, callback) {
     }],
   }, null);
 }
+function getChats(id, callback) {
+  return callback(
+    true,
+    [{
+      id: '5087901e810c109679e860ea',
+      groupName: 'chat1',
+      hasUpdates: true,
+    },
+    {
+      id: '5087901e810c109679e860eb',
+      groupName: 'chat2',
+      hasUpdates: true,
+    }],
+    null,
+  );
+}
 
 export {
   createUser,
@@ -53,4 +69,5 @@ export {
   getPassword,
   modifyUser,
   getUserDetails,
+  getChats,
 };
