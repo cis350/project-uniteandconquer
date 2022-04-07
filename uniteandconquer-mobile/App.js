@@ -58,7 +58,6 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="LogIn" component={LogIn} />
         <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Screen name="PostDetails" component={PostDetails} />
         <Stack.Screen name="CreatePost" component={CreatePost} />
