@@ -7,7 +7,7 @@ function UserProfile() {
   const [showNotifs, setShowNotifs] = useState(false);
 
   return (
-    <div className="user-profile-page">
+    <div className="user-profile">
       <SidebarTags />
       <div>
         <div className="profile-title"><h1>My Profile</h1></div>
