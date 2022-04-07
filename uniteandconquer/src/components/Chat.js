@@ -5,6 +5,7 @@ import SideChats from './SideChats';
 import '../assets/Chat.css';
 
 const ChatDB = require('../modules/ChatDB');
+const UserDB = require('../modules/UserDB');
 
 function Chat() {
   const [text, setText] = useState('');
@@ -71,7 +72,7 @@ function Chat() {
 
   /** get all groups that user join */
   useEffect(() => {
-    ChatDB.getChats(userID, (success, chatList, err) => {
+    UserDB.getChats(userID, (success, chatList, err) => {
       if (success) {
         if (chatList.length !== 0) {
           setGroupList(chatList);
