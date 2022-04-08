@@ -23,8 +23,11 @@ const userStyles = StyleSheet.create({
   },
   text: {
     textAlign: 'right',
+    margin: 4,
+    fontSize: 18,
+    marginBottom: 10,
   },
-  icon: {
+  button: {
     alignSelf: 'flex-end',
   },
 });
@@ -126,21 +129,33 @@ const tagStyles = StyleSheet.create({
 
 // app content --------
 
-export default function UserProfile() {
+export default function UserProfile({ navigation }) {
   const [showNotif, setShowNotif] = React.useState(false);
   return (
     <ScrollView style={styles.container}>
       {showNotif && <Notification setShowNotif={setShowNotif} showNotif={showNotif} />}
       <View style={userStyles.container}>
-        <Icon name="user" size={28} style={userStyles.icon} />
+        <TouchableOpacity
+          style={{ alignSelf: 'flex-end' }}
+          onPress={() => navigation.navigate('UserProfile')}
+        >
+          <Icon name="user" size={28} style={userStyles.icon} />
+        </TouchableOpacity>
         <Text style={userStyles.text}>
-          Hi, Jeremy
+          Hello, guest!
         </Text>
-        <Text style={userStyles.text}>
-          My Chats
+        <Text style={userStyles.button}>
+          <Button
+            color="#000"
+            title="My Chats"
+          />
         </Text>
-        <Text style={userStyles.text}>
-          Log Out
+        <Text style={userStyles.button}>
+          <Button
+            color="#000"
+            title="Log In"
+            onPress={() => navigation.navigate('LogIn')}
+          />
         </Text>
       </View>
       <View style={profileContainer.showButton}>
@@ -157,7 +172,7 @@ export default function UserProfile() {
         <Text style={profileContainer.header}>My Profile</Text>
         <View style={profileContainer.buttons}>
           <View style={profileContainer.leftButton}><Button color="#000" title="Settings" /></View>
-          <View style={profileContainer.rightButton}><Button color="#000" title="Main Page" /></View>
+          <View style={profileContainer.rightButton}><Button color="#000" title="Main Page" onPress={() => navigation.navigate('Home')} /></View>
         </View>
         <Text style={profileContainer.subtitle}>My Owned Posts</Text>
         <View style={profileContainer.postContainer}>
