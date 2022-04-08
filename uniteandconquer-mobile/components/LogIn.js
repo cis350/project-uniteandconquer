@@ -56,7 +56,7 @@ function PhoneLogIn({ navigation }) {
 
   const handleLogIn = () => {
     if (countryCode && phoneNumber && password) {
-      if (phoneNumber.match(/\d+/)) {
+      if (phoneNumber.match(/^\d+$/)) {
         loginUserWithPhone(countryCode, phoneNumber, password, (success, userId, err) => {
           if (success) {
             navigation.navigate({ name: 'Home', params: { userId }, merge: true });
