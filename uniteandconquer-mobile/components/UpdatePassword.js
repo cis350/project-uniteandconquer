@@ -166,7 +166,7 @@ function UpdatePassword({ navigation }) {
 
         <View style={styles.backButtonContainer}>
           <View style={styles.button}>
-            <Button title="Back to the main page" onPress={() => navigation.navigate('SettingMain')} />
+            <Button title="Back to the setting page" onPress={() => navigation.navigate('SettingMain')} />
           </View>
         </View>
       </View>
