@@ -129,9 +129,9 @@ function HomeScreen({ navigation, route }) {
   }, [route.params?.userId]);
 
   const [posts, setPosts] = React.useState([
-    { item: 'item', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat ex vel arcu eleifend, vestibulum lacinia libero scelerisque.' },
-    { item: 'item', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat ex vel arcu eleifend, vestibulum lacinia libero scelerisque.' },
-    { item: 'item', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat ex vel arcu eleifend, vestibulum lacinia libero scelerisque.' }]);
+    { id: 1, item: 'item', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat ex vel arcu eleifend, vestibulum lacinia libero scelerisque.' },
+    { id: 2, item: 'item', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat ex vel arcu eleifend, vestibulum lacinia libero scelerisque.' },
+    { id: 3, item: 'item', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat ex vel arcu eleifend, vestibulum lacinia libero scelerisque.' }]);
   const [searchKeyWord, setSearchKeyWord] = React.useState('');
   const [showNotif, setShowNotif] = React.useState(false);
   const [open, setOpen] = React.useState(false);
@@ -250,10 +250,10 @@ function HomeScreen({ navigation, route }) {
       <View style={homePageStyles.posts}>
         {posts.map((post) => (
           <TouchableOpacity
-            key={post.itemName}
+            key={post.id}
             onPress={() => navigation.navigate('PostDetails')}
           >
-            <View key={post.itemName} style={homePageStyles.center}>
+            <View key={post.id} style={homePageStyles.center}>
               <View style={homePageStyles.postContainer}>
                 <Text style={homePageStyles.postTitle}>{post.item}</Text>
                 <Text>{post.description}</Text>
