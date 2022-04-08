@@ -10,7 +10,13 @@ import UserProfile from './components/UserProfile';
 import PostDetails from './components/PostDetails';
 import CreatePost from './components/CreatePost';
 import Comment from './components/Comment';
+
+import Setting from './components/SettingMain';
+import SettingInterests from './components/UpdateInterests';
+import UpdateInfo from './components/UpdatePersonalInfo';
+import UpdatePassword from './components/UpdatePassword';
 import { getUserDetails } from './modules/UserDB';
+
 
 // styling ---------
 
@@ -65,6 +71,10 @@ function HomeScreen({ navigation, route }) {
         title="Create Post"
         onPress={() => navigation.navigate('CreatePost')}
       />
+      <Button
+        title="Setting"
+        onPress={() => navigation.navigate('SettingMain')}
+      />
     </View>
   );
 }
@@ -72,6 +82,7 @@ function HomeScreen({ navigation, route }) {
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
+
     <View style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
@@ -81,9 +92,14 @@ export default function App() {
           <Stack.Screen name="PostDetails" component={PostDetails} />
           <Stack.Screen name="CreatePost" component={CreatePost} />
           <Stack.Screen name="Comment" component={Comment} />
+          <Stack.Screen name="SettingMain" component={Setting} />
+          <Stack.Screen name="SettingInterests" component={SettingInterests} />
+          <Stack.Screen name="UpdateInfo" component={UpdateInfo} />
+          <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
         </Stack.Navigator>
       </NavigationContainer>
       <FlashMessage position="top" />
     </View>
+
   );
 }
