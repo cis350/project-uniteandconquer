@@ -3,11 +3,31 @@ import React, { useState } from 'react';
 import SidebarSettings from './SidebarSettings';
 import '../assets/UserSettingsPassword.css';
 
+const UserDB = require('../modules/UserDB');
+
 function UserSettingsPassword() {
   const [password, setPassword] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+  const myStorage = window.sessionStorage;
 
-  const updatePassword = () => {};
+  const updatePasswordWithVerify = (userID) => {
+    UserDB.modifyUser(userID, 2, password, oldPassword, (success, err) => {
+      if (!success) {
+        console.log(err);
+      }
+    });
+  };
 
+  const updatePassword = () => {
+    const userID = myStorage.getItem('UserID');
+    UserDB.getPassword(userID, (success, err) => {
+      if (success) {
+        updatePasswordWithVerify(userID);
+      } else {
+        console.log(err);
+      }
+    });
+  };
   return (
     <div className="user-settings-password">
       <SidebarSettings />
@@ -19,7 +39,7 @@ function UserSettingsPassword() {
             <div className="post-text-fields">
               <div className="post-field">
                 <div className="label">Old Password</div>
-                <input onChange={(e) => null} />
+                <input onChange={(e) => setOldPassword(e.target.value)} />
               </div>
               <div className="post-field">
                 <div className="label">New Password</div>

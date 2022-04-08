@@ -16,15 +16,6 @@ function SidebarChat() {
           <div className="text">Back to main menu</div>
         </Link>
       </div>
-      <div className="chat">
-        <div className="text">Chat 0</div>
-      </div>
-      <div className="chat1">
-        <div className="text">Chat 1</div>
-      </div>
-      <div className="chat2">
-        <div className="text">Chat 2</div>
-      </div>
     </div>
   );
 }
