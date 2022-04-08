@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet, View, ScrollView, Text, FlatList, Button,
+  StyleSheet, View, ScrollView, Text, Button, TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { leaveGroup } from '../modules/PostDB';
@@ -23,8 +23,11 @@ const userStyles = StyleSheet.create({
   },
   text: {
     textAlign: 'right',
+    margin: 4,
+    fontSize: 18,
+    marginBottom: 10,
   },
-  icon: {
+  button: {
     alignSelf: 'flex-end',
   },
 });
@@ -83,16 +86,15 @@ const postDetailStyles = StyleSheet.create({
     width: '40%',
   },
   groupUserName: {
-    marginTop: 5,
     fontSize: 20,
-    marginBottom: 25,
+    marginRight: 20,
   },
   groupUserQuantity: {
     fontSize: 20,
-    marginBottom: 33,
+    marginRight: 20,
   },
   groupUserIcon: {
-    marginBottom: 10,
+    marginRight: 20,
   },
   LeftButton: {
     backgroundColor: '#FFCB7D',
@@ -112,6 +114,7 @@ const postDetailStyles = StyleSheet.create({
     justifyContent: 'center',
     position: 'relative',
     bottom: -50,
+    marginBottom: 100,
   },
   upperBox: {
     padding: 5,
@@ -120,6 +123,11 @@ const postDetailStyles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  groupUserContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: 10,
   },
 });
 
@@ -141,15 +149,27 @@ export default function PostDetails({ navigation }) {
   return (
     <ScrollView style={styles.container}>
       <View style={userStyles.container}>
-        <Icon name="user" size={28} style={userStyles.icon} />
+        <TouchableOpacity
+          style={{ alignSelf: 'flex-end' }}
+          onPress={() => navigation.navigate('UserProfile')}
+        >
+          <Icon name="user" size={28} style={userStyles.icon} />
+        </TouchableOpacity>
         <Text style={userStyles.text}>
-          Hi, Jeremy
+          Hello, guest!
         </Text>
-        <Text style={userStyles.text}>
-          My Chats
+        <Text style={userStyles.button}>
+          <Button
+            color="#000"
+            title="My Chats"
+          />
         </Text>
-        <Text style={userStyles.text}>
-          Log Out
+        <Text style={userStyles.button}>
+          <Button
+            color="#000"
+            title="Log In"
+            onPress={() => navigation.navigate('LogIn')}
+          />
         </Text>
       </View>
       {errorMessage && (
@@ -185,47 +205,37 @@ export default function PostDetails({ navigation }) {
           <Text style={postDetailStyles.details}>Group size: 2</Text>
           <View>
             <View style={postDetailStyles.groupUser}>
-              <FlatList
-                scrollEnabled="false"
-                data={[
-                  { key: 'Alice' },
-                  { key: 'Bob' },
-                  { key: 'Dan' },
-                ]}
-                renderItem={() => (
-                  <Icon style={postDetailStyles.groupUserIcon} name="user" size={35} />
-                )}
-              />
-              <FlatList
-                scrollEnabled="false"
-                data={[
-                  { key: 'Alice' },
-                  { key: 'Bob' },
-                  { key: 'Dan' },
-                ]}
-                renderItem={({ item }) => (
-                  <Text
-                    style={postDetailStyles.groupUserName}
-                  >
-                    {item.key}
-                  </Text>
-                )}
-              />
-              <FlatList
-                scrollEnabled="false"
-                data={[
-                  { key: 5 },
-                  { key: 3 },
-                  { key: 4 },
-                ]}
-                renderItem={({ item }) => (
-                  <Text
-                    style={postDetailStyles.groupUserName}
-                  >
-                    {item.key}
-                  </Text>
-                )}
-              />
+              <View>
+                {[{ key: 'Johnny', quantity: 5 },
+                  { key: 'Yuying', quantity: 3 },
+                  { key: 'Zhihang', quantity: 4 }].map((item) => (
+                    <View key={item.key} style={postDetailStyles.groupUserContent}>
+                      <View>
+                        <Icon
+                          style={postDetailStyles.groupUserIcon}
+                          name="user"
+                          size={40}
+                        />
+                      </View>
+                      <View>
+                        <Text
+                          style={postDetailStyles.groupUserName}
+                        >
+                          {item.key}
+                        </Text>
+                      </View>
+                      <View>
+                        <Text
+                          style={postDetailStyles.groupUserQuantity}
+                        >
+                          Quantity:
+                          {' '}
+                          {item.quantity}
+                        </Text>
+                      </View>
+                    </View>
+                ))}
+              </View>
             </View>
           </View>
           <View>
@@ -233,7 +243,7 @@ export default function PostDetails({ navigation }) {
               <View style={postDetailStyles.LeftButton}><Button color="#000" title="Join" /></View>
               <View style={postDetailStyles.LeftButton}><Button color="#000" title="Leave" onPress={leavePressed} /></View>
               <View style={postDetailStyles.LeftButton}><Button color="#000" title="Comment" onPress={() => navigation.navigate('Comment')} /></View>
-              <View style={postDetailStyles.RightButton}><Button color="#000" title="Back" /></View>
+              <View style={postDetailStyles.RightButton}><Button color="#000" title="Back" onPress={() => navigation.navigate('Home')} /></View>
             </View>
           </View>
         </View>
