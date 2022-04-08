@@ -1,10 +1,52 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
+import Comment from './Comment';
 import '../assets/PostDetails.css';
 
+const PostDB = require('../modules/PostDB');
+
+// In the post details page, one can choose to join the group
+// if successful, redirect the user to the post which the user joins in
 function PostDetails() {
-  const joinGroup = () => {};
-  const back = () => {};
+  const [desiredQuantity, setDesiredQuantity] = useState(0);
+  const [validQuantity, setValidQuantity] = useState(false);
+  const navigate = useNavigate();
+  const myStorage = window.sessionStorage;
+  const joinGroup = () => {
+    const userID = myStorage.getItem('UserID');
+    const postID = 0;
+    const quantity = 2;
+    PostDB.joinGroup(userID, postID, quantity, (success, err) => {
+      if (success) {
+        navigate(`/post-details${postID}`);
+      } else {
+        console.log(err);
+      }
+    });
+  };
+  const back = () => {
+    navigate('/');
+  };
+
+  const quantityValidation = () => {
+    const num = /^\d+$/;
+
+    if (desiredQuantity) {
+      if (desiredQuantity.match(num)) {
+        setValidQuantity(true);
+      } else {
+        setValidQuantity(false);
+      }
+    } else {
+      setValidQuantity(false);
+    }
+  };
+
+  useEffect(() => {
+    quantityValidation();
+  });
 
   return (
     <div className="post-details-page">
@@ -54,6 +96,7 @@ function PostDetails() {
             </div>
           </div>
         </div>
+        <div className="comment-section"><Comment /></div>
         <div className="post-detail-tags">
           <div className="tags-label">Tags</div>
           <div className="tags-container">
@@ -66,7 +109,8 @@ function PostDetails() {
           </div>
         </div>
         <div className="buttons-container">
-          <button className="create" type="button" onClick={joinGroup}>
+          <div className="desired-quantity"><input placeholder="desired quantity" onChange={(e) => setDesiredQuantity(e.target.value)} /></div>
+          <button disabled={!validQuantity} className="create" type="button" onClick={joinGroup}>
             Join
           </button>
           <button className="cancel" type="button" onClick={back}>

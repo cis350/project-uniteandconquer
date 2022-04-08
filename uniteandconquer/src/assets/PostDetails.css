@@ -4,6 +4,10 @@
   grid-template-columns: 0.8fr 0.6fr;
 }
 
+.desired-quantity {
+  max-width: 330px;
+}
+
 .item-name {
   font-size: 25px;
 }
@@ -42,7 +46,7 @@ li {
 }
 
 .post-detail-tags {
-  margin-top: 75px;
+  margin-top: 10px;
   text-align: left;
 }
 
@@ -59,5 +63,10 @@ li {
 
 .buttons-container {
   margin: auto;
-  width: 60%;
+  width: 52%;
+  margin-bottom: 40px;
+}
+
+.comment-section {
+  padding: 15px;
 }

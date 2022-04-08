@@ -6,7 +6,6 @@ function addPost(
   pricePerItem,
   itemURL,
   itemDescription,
-  // dubiously needed
   ownerId,
   tags,
   callback,
@@ -15,7 +14,7 @@ function addPost(
 }
 
 function addComment(authorId, postId, content, callback) {
-  return callback(true, '507f191e8786gkbd9de860ea', null);
+  return callback(true, null);
 }
 
 function getPost(id, callback) {
@@ -40,7 +39,7 @@ function getPost(id, callback) {
       createdAt: '2022-03-15T12:53:14.924Z',
     }, {
       content: 'Yes I am',
-      author: { firstName: 'Yuying', lastname: 'Fan' },
+      author: { id: '507f1f77bcf86cd799439011', name: 'Yuying Fan' },
       createdAt: '2022-03-15T14:53:17.926Z',
     }],
     createdAt: '2022-03-14T13:14:14.925Z',
@@ -62,12 +61,6 @@ function getSortedPostsInRange(startIdx, endIdx, callback) {
 }
 
 function getSortedPostsByTags(startIdx, endIdx, tags, callback) {
-  return callback(true, [{
-    id: '5087901e810c19729de860ea', itemName: 'AA Batteries', pricePerItem: 0.46, createdAt: '2022-03-14T13:14:14.925Z', tags: ['Home'],
-  }], null);
-}
-
-function getSortedPostsBySearch(startIdx, endIdx, tags, keywords, callback) {
   return callback(true, [{
     id: '5087901e810c19729de860ea', itemName: 'AA Batteries', pricePerItem: 0.46, createdAt: '2022-03-14T13:14:14.925Z', tags: ['Home'],
   }], null);
@@ -96,7 +89,6 @@ export {
   addComment,
   getPost,
   getSortedPostsInRange,
-  getSortedPostsBySearch,
   getSortedPostsByTags,
   getSortedPostsByKeyword,
   joinGroup,

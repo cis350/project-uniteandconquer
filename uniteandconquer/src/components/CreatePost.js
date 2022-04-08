@@ -1,8 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import '../assets/App.css';
 import '../assets/CreatePost.css';
+
+const PostDB = require('../modules/PostDB');
 
 function CreatePost() {
   const [item, setItem] = useState('');
@@ -11,10 +14,33 @@ function CreatePost() {
   const [link, setLink] = useState('');
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState([]);
+  const navigate = useNavigate();
 
-  const createPost = () => {};
+  const createPost = () => {
+    if (!item || !price || !quantity || !link || !description || !tags) {
+      throw new Error('You need to fill in all the blank');
+    } else {
+      PostDB.addPost(
+        item,
+        Number(price),
+        Number(quantity),
+        link,
+        description,
+        tags,
+        (success, id, err) => {
+          if (success) {
+            navigate(`/post-details${id}`);
+          } else {
+            console.log(err);
+          }
+        },
+      );
+    }
+  };
 
-  const cancel = () => {};
+  const cancel = () => {
+    navigate('/');
+  };
 
   return (
     <div className="create-post-page">
