@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import FlashMessage from 'react-native-flash-message';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
 import {
   StyleSheet, View, Text, Button,
 } from 'react-native';
@@ -10,10 +10,13 @@ import UserProfile from './components/UserProfile';
 import PostDetails from './components/PostDetails';
 import CreatePost from './components/CreatePost';
 import Comment from './components/Comment';
+
 import Setting from './components/SettingMain';
 import SettingInterests from './components/UpdateInterests';
 import UpdateInfo from './components/UpdatePersonalInfo';
 import UpdatePassword from './components/UpdatePassword';
+import { getUserDetails } from './modules/UserDB';
+
 
 // styling ---------
 
@@ -28,10 +31,30 @@ const styles = StyleSheet.create({
 
 // app content --------
 
-function HomeScreen({ navigation }) {
+function HomeScreen({ navigation, route }) {
+  const [firstName, setFirsteName] = useState('');
+
+  useEffect(() => {
+    if (route.params?.userId) {
+      getUserDetails(route.params?.userId, (success, user, err) => {
+        if (success) {
+          setFirsteName(user.firstName);
+        } else {
+          showMessage({ message: err, type: 'danger' });
+        }
+      });
+    }
+  }, [route.params?.userId]);
+
   return (
     <View style={styles.container}>
-      <Text>Hello</Text>
+      {firstName ? (
+        <Text>
+          Hello,
+          {` ${firstName}`}
+          !
+        </Text>
+      ) : <Text>Hello, guest!</Text>}
       <Button
         title="Log In"
         onPress={() => navigation.navigate('LogIn')}
