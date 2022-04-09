@@ -171,7 +171,7 @@ export default function UserProfile({ navigation }) {
       <View>
         <Text style={profileContainer.header}>My Profile</Text>
         <View style={profileContainer.buttons}>
-          <View style={profileContainer.leftButton}><Button color="#000" title="Settings" /></View>
+          <View style={profileContainer.leftButton}><Button color="#000" title="Settings" onPress={() => navigation.navigate('SettingMain')} /></View>
           <View style={profileContainer.rightButton}><Button color="#000" title="Main Page" onPress={() => navigation.navigate('Home')} /></View>
         </View>
         <Text style={profileContainer.subtitle}>My Owned Posts</Text>
