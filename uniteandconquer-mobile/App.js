@@ -14,6 +14,10 @@ import PostDetails from './components/PostDetails';
 import CreatePost from './components/CreatePost';
 import Comment from './components/Comment';
 import Notification from './components/Notification';
+import Setting from './components/SettingMain';
+import UpdateInfo from './components/UpdatePersonalInfo';
+import UpdatePassword from './components/UpdatePassword';
+import SettingInterests from './components/UpdateInterests';
 import { getUserDetails } from './modules/UserDB';
 
 // styling ---------
@@ -278,6 +282,10 @@ export default function App() {
           <Stack.Screen name="PostDetails" component={PostDetails} />
           <Stack.Screen name="CreatePost" component={CreatePost} />
           <Stack.Screen name="Comment" component={Comment} />
+          <Stack.Screen name="SettingMain" component={Setting} />
+          <Stack.Screen name="SettingInterests" component={SettingInterests} />
+          <Stack.Screen name="UpdateInfo" component={UpdateInfo} />
+          <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
         </Stack.Navigator>
       </NavigationContainer>
       <FlashMessage position="top" />
