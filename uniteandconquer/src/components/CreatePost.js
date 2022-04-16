@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import '../assets/App.css';
@@ -10,11 +10,31 @@ const PostDB = require('../modules/PostDB');
 function CreatePost() {
   const [item, setItem] = useState('');
   const [price, setPrice] = useState(0);
-  const [quantity, setQuantity] = useState('');
+  const [quantity, setQuantity] = useState(0);
+  const [currQuantity, setCurrQuantity] = useState(0);
+
   const [link, setLink] = useState('');
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState([]);
   const navigate = useNavigate();
+  const allTags = ['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5', 'Tag6', 'Tag7', 'Tag8'];
+
+  /**
+   * dummy user id
+   */
+  const userID = 1;
+  function addTags(tag) {
+    if (tags.includes(tag)) {
+      const newList = tags.filter((i) => i !== tag);
+      setTags(newList);
+    } else {
+      setTags((arr) => [...arr, tag]);
+    }
+  }
+  useEffect(() => {
+    allTags.forEach((tag) => { document.getElementById(tag).className = 'tag'; });
+    tags.forEach((tag) => { document.getElementById(tag).className = 'tag_selected'; });
+  }, [tags]);
 
   const createPost = () => {
     if (!item || !price || !quantity || !link || !description || !tags) {
@@ -22,14 +42,16 @@ function CreatePost() {
     } else {
       PostDB.addPost(
         item,
-        Number(price),
         Number(quantity),
+        Number(currQuantity),
+        Number(price),
         link,
         description,
+        userID,
         tags,
         (success, id, err) => {
           if (success) {
-            navigate(`/post-details${id}`);
+            navigate(`/post-details/${id}`);
           } else {
             console.log(err);
           }
@@ -64,6 +86,10 @@ function CreatePost() {
                 <input onChange={(e) => setQuantity(e.target.value)} />
               </div>
               <div className="post-field">
+                <div className="label">Current Quantity</div>
+                <input onChange={(e) => setCurrQuantity(e.target.value)} />
+              </div>
+              <div className="post-field">
                 <div className="label">Item Link</div>
                 <input onChange={(e) => setLink(e.target.value)} />
               </div>
@@ -78,12 +104,14 @@ function CreatePost() {
             <div className="create-post-tags">
               <div className="tags-label">Tags</div>
               <div className="post-tags">
-                <div className="tag">Tag1</div>
-                <div className="tag">Tag2</div>
-                <div className="tag">Tag3</div>
-                <div className="tag">Tag4</div>
-                <div className="tag">Tag5</div>
-                <div className="tag">Tag6</div>
+                <button className="tag" type="button" key="Tag1" id="Tag1" onClick={() => addTags('Tag1')}>Tag1</button>
+                <button className="tag" type="button" key="Tag2" id="Tag2" onClick={() => addTags('Tag2')}>Tag2</button>
+                <button className="tag" type="button" key="Tag3" id="Tag3" onClick={() => addTags('Tag3')}>Tag3</button>
+                <button className="tag" type="button" key="Tag4" id="Tag4" onClick={() => addTags('Tag4')}>Tag4</button>
+                <button className="tag" type="button" key="Tag5" id="Tag5" onClick={() => addTags('Tag5')}>Tag5</button>
+                <button className="tag" type="button" key="Tag6" id="Tag6" onClick={() => addTags('Tag6')}>Tag6</button>
+                <button className="tag" type="button" key="Tag7" id="Tag7" onClick={() => addTags('Tag7')}>Tag7</button>
+                <button className="tag" type="button" key="Tag8" id="Tag8" onClick={() => addTags('Tag8')}>Tag8</button>
               </div>
             </div>
           </div>
