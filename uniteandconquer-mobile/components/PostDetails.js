@@ -66,10 +66,11 @@ const postDetailStyles = StyleSheet.create({
     borderWidth: 5,
     borderColor: '#FFFFFF',
     borderRadius: 15,
-    padding: 3,
+    padding: 5,
     backgroundColor: '#FFAB2D',
     overflow: 'hidden',
     margin: 4,
+    textAlign: 'center',
   },
   details: {
     marginBottom: 15,
@@ -134,6 +135,7 @@ const postDetailStyles = StyleSheet.create({
 // app content --------
 
 export default function PostDetails({ navigation }) {
+  const [tags, setTags] = useState(['Appliances', 'Books', 'Electronics']);
   // event handlers --------
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -181,11 +183,7 @@ export default function PostDetails({ navigation }) {
           <View style={postDetailStyles.tags}>
             <Text style={postDetailStyles.tagsHeader}>Tags</Text>
             <View>
-              <Text style={postDetailStyles.tag}>Tag1</Text>
-              <Text style={postDetailStyles.tag}>Tag2</Text>
-              <Text style={postDetailStyles.tag}>Tag3</Text>
-              <Text style={postDetailStyles.tag}>Tag3</Text>
-              <Text style={postDetailStyles.tag}>Tag3</Text>
+              {tags.map((tag) => <Text key={tag} style={postDetailStyles.tag}>{tag}</Text>)}
             </View>
           </View>
           <View style={{ flexShrink: 1 }}>

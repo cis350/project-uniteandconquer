@@ -131,6 +131,9 @@ const tagStyles = StyleSheet.create({
 
 export default function UserProfile({ navigation }) {
   const [showNotif, setShowNotif] = React.useState(false);
+  const [tags, setTags] = React.useState([
+    'Appliances', 'Books', 'Electronics',
+  ]);
   return (
     <ScrollView style={styles.container}>
       {showNotif && <Notification setShowNotif={setShowNotif} showNotif={showNotif} />}
@@ -226,8 +229,7 @@ export default function UserProfile({ navigation }) {
           <View style={tagStyles.container}>
             <Text style={tagStyles.header}>My Interests</Text>
             <View style={tagStyles.tags}>
-              <Text style={tagStyles.tag}>tag</Text>
-              <Text style={tagStyles.tag}>tag</Text>
+              {tags.map((tag) => (<Text key={tag} style={tagStyles.tag}>{tag}</Text>))}
             </View>
           </View>
         </View>
