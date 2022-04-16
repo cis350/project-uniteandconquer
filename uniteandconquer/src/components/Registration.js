@@ -24,21 +24,6 @@ function Registration() {
   const [validReqs, setValidReqs] = useState(false);
   const [validConfirmPassword, setValidConfirmPassword] = useState(false);
   const [tags, setTags] = useState([]);
-  const allTags = ['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5', 'Tag6'];
-
-  function addTags(tag) {
-    if (tags.includes(tag)) {
-      const newList = tags.filter((item) => item !== tag);
-      setTags(newList);
-    } else {
-      setTags((arr) => [...arr, tag]);
-    }
-  }
-  useEffect(() => {
-    allTags.forEach((tag) => { document.getElementById(tag).className = 'tag'; });
-    tags.forEach((tag) => { document.getElementById(tag).className = 'tag_selected'; });
-  }, [tags]);
-
   const options = [
     'US (+1)', 'UK (+44)', 'AS (+1684)',
   ];
@@ -161,12 +146,12 @@ function Registration() {
             <h3>Choose your interests</h3>
           </div>
           <div className="tags">
-            <button className="tag" type="button" key="Tag1" id="Tag1" onClick={() => addTags('Tag1')}>Tag1</button>
-            <button className="tag" type="button" key="Tag2" id="Tag2" onClick={() => addTags('Tag2')}>Tag2</button>
-            <button className="tag" type="button" key="Tag3" id="Tag3" onClick={() => addTags('Tag3')}>Tag2</button>
-            <button className="tag" type="button" key="Tag4" id="Tag4" onClick={() => addTags('Tag4')}>Tag2</button>
-            <button className="tag" type="button" key="Tag5" id="Tag5" onClick={() => addTags('Tag5')}>Tag2</button>
-            <button className="tag" type="button" key="Tag6" id="Tag6" onClick={() => addTags('Tag6')}>Tag2</button>
+            <div className="tag">Tag1</div>
+            <div className="tag">Tag2</div>
+            <div className="tag">Tag3</div>
+            <div className="tag">Tag4</div>
+            <div className="tag">Tag5</div>
+            <div className="tag">Tag6</div>
           </div>
         </div>
         <div className="registration-input">

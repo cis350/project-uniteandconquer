@@ -38,17 +38,6 @@
   margin: auto;
   margin-bottom: 20px;
 }
-.tag_selected {
-  background: #2dff50;
-  border: 5px solid #FFFFFF;
-  box-sizing: border-box;
-  border-radius: 40px;
-  text-align: center;
-  width: 75px;
-  height: 35px;
-  margin: auto;
-  margin-bottom: 20px;
-}
  
 .headers {
   color: white;
