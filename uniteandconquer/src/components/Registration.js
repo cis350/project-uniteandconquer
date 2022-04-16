@@ -48,6 +48,7 @@ function Registration() {
   // register the user given the information provided
   // if the password and confimPassword are not correct, then throw an exception
   const registerUser = () => {
+    console.log(countryCode);
     if (password !== confirmPassword) {
       throw new Error('password and confirmPassword need to be the same');
     }
@@ -201,9 +202,8 @@ function Registration() {
             <div className="registration-field">
               <div className="label">phone</div>
               <div className="full-phone-input">
-                <Dropdown className="area-code" options={options} value={countryCode} onChange={(value) => setCountryCode(value)} placeholder="Select an option" />
+                <Dropdown className="area-code" options={options} value={countryCode} onChange={(value) => setCountryCode(value.value)} placeholder="Select an option" />
                 <input className="phone-input" onChange={(e) => setPhone(e.target.value)} />
-
               </div>
               {validPhone ? <i className="fas fa-check" /> : <i className="fas fa-times" />}
             </div>
