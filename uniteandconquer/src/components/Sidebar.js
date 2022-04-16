@@ -8,7 +8,7 @@ function Sidebar() {
       <div className="greeting">
         <i className="far fa-user-circle fa-2x" />
         {' '}
-        Hi, Jeremy
+        Hi, Guest
       </div>
 
       <div className="profile">
@@ -21,9 +21,9 @@ function Sidebar() {
           <div className="text">Chat</div>
         </Link>
       </div>
-      <div className="logout">
+      <div className="login_button">
         <Link className="link" to="/login">
-          <div className="text">Logout</div>
+          <div className="text">Login</div>
         </Link>
       </div>
       <div className="ad">

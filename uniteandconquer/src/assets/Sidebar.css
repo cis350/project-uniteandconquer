@@ -87,7 +87,7 @@ i {
   background-color: #ffd9a0;
 }
 
-.logout {
+.login_button {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -105,7 +105,7 @@ i {
   box-sizing: border-box;
 }
 
-.logout:hover {
+.login_button:hover {
   background-color: #ffd9a0;
 }
 
