@@ -15,6 +15,7 @@ function Registration() {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [countryCode, setCountryCode] = useState('1');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [validFirstName, setValidFirstName] = useState(false);
   const [validLastName, setValidLastName] = useState(false);
@@ -40,7 +41,7 @@ function Registration() {
   }, [tags]);
 
   const options = [
-    'US (+1)', 'UK (+44)', 'AS (+1684)',
+    '1', '44', '1684',
   ];
   const navigate = useNavigate();
 
@@ -51,6 +52,7 @@ function Registration() {
       throw new Error('password and confirmPassword need to be the same');
     }
     UserDB.createUser(
+      countryCode,
       phone,
       email,
       password,
@@ -163,10 +165,10 @@ function Registration() {
           <div className="tags">
             <button className="tag" type="button" key="Tag1" id="Tag1" onClick={() => addTags('Tag1')}>Tag1</button>
             <button className="tag" type="button" key="Tag2" id="Tag2" onClick={() => addTags('Tag2')}>Tag2</button>
-            <button className="tag" type="button" key="Tag3" id="Tag3" onClick={() => addTags('Tag3')}>Tag2</button>
-            <button className="tag" type="button" key="Tag4" id="Tag4" onClick={() => addTags('Tag4')}>Tag2</button>
-            <button className="tag" type="button" key="Tag5" id="Tag5" onClick={() => addTags('Tag5')}>Tag2</button>
-            <button className="tag" type="button" key="Tag6" id="Tag6" onClick={() => addTags('Tag6')}>Tag2</button>
+            <button className="tag" type="button" key="Tag3" id="Tag3" onClick={() => addTags('Tag3')}>Tag3</button>
+            <button className="tag" type="button" key="Tag4" id="Tag4" onClick={() => addTags('Tag4')}>Tag4</button>
+            <button className="tag" type="button" key="Tag5" id="Tag5" onClick={() => addTags('Tag5')}>Tag5</button>
+            <button className="tag" type="button" key="Tag6" id="Tag6" onClick={() => addTags('Tag6')}>Tag6</button>
           </div>
         </div>
         <div className="registration-input">
@@ -199,7 +201,7 @@ function Registration() {
             <div className="registration-field">
               <div className="label">phone</div>
               <div className="full-phone-input">
-                <Dropdown className="area-code" options={options} value={options[0]} placeholder="Select an option" />
+                <Dropdown className="area-code" options={options} value={countryCode} onChange={(value) => setCountryCode(value)} placeholder="Select an option" />
                 <input className="phone-input" onChange={(e) => setPhone(e.target.value)} />
 
               </div>
