@@ -48,7 +48,6 @@ function Registration() {
   // register the user given the information provided
   // if the password and confimPassword are not correct, then throw an exception
   const registerUser = () => {
-    console.log(countryCode);
     if (password !== confirmPassword) {
       throw new Error('password and confirmPassword need to be the same');
     }
