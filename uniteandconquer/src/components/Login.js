@@ -25,6 +25,7 @@ function Login() {
   // We check whether a user using email or phone number as username
   // by checking whether the username_ include '@'.
   const checkPassword = (username_, password_) => {
+    let result;
     if (username_.includes('@')) {
       UserDB.loginUserWithEmail(username_, password_, (success, id, err) => {
         if (success) {
@@ -32,18 +33,19 @@ function Login() {
         } else {
           console.log(err);
         }
-        return success;
+        result = success;
       });
     } else {
-      UserDB.loginUserWithPhone(username_, password_, (success, id, err) => {
+      UserDB.loginUserWithPhone(countryCode, username_, password_, (success, id, err) => {
         if (success) {
           myStorage.setItem('UserID', id);
         } else {
           console.log(err);
         }
-        return success;
+        result = success;
       });
     }
+    return result;
   };
   const login = () => {
     if (username.length <= 0 || password.length <= 0) {
