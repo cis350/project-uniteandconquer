@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import SidebarTags from './SidebarTags';
 import Notifications from './Notifications';
 import '../assets/UserProfile.css';
@@ -16,44 +17,47 @@ function UserProfile() {
 
   const myStorage = window.sessionStorage;
   const PostTableGenerator = (postsOrWishList) => {
-    const table = postsOrWishList.map((post) => (
-      <div>
-        <tr className="table-post">
-          <td className="table-post-content">
-            <div className="post-title">
-              Post [
-              {post.id}
-              ]:
-              {' '}
-              <br />
-              {' '}
-              [
-              {post.itemName}
-              ] - [
-              {post.status}
-              ]
-            </div>
-            <div className="post-content">
-              This post is led by [
-              {post.ownerName}
-              ] and trades [
-              {post.itemNumTarget}
-              ] of [
-              {post.itemNumCurrent}
-              ] for
-              $[
-              {post.pricePerItem}
-              ]
-              <br />
-              <br />
-              [
-              {post.tags}
-              ]
-            </div>
-          </td>
-        </tr>
-      </div>
-    ));
+    const table = postsOrWishList.map((post) => {
+      const url = `/post-details/${post.id}`;
+      return (
+        <div>
+          <tr className="table-post">
+            <td className="table-post-content">
+              <Link className="link" to={url}>
+                <div className="post-title">
+                  Post:
+                  {' '}
+                  <br />
+                  {' '}
+
+                  {post.itemName}
+                  - [
+                  {post.status}
+                  ]
+                </div>
+                <div className="post-content">
+                  This post is led by [
+                  {post.ownerName}
+                  ] and trades [
+                  {post.itemNumTarget}
+                  ] of [
+                  {post.itemNumCurrent}
+                  ] for
+                  $[
+                  {post.pricePerItem}
+                  ]
+                  <br />
+                  <br />
+                  [
+                  {post.tags}
+                  ]
+                </div>
+              </Link>
+            </td>
+          </tr>
+        </div>
+      );
+    });
     return table;
   };
 
