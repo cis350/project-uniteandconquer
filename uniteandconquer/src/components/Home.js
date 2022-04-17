@@ -8,6 +8,7 @@ import Select from 'react-select';
 // import { Button, ButtonGroup } from '@material-ui/core';
 import Sidebar from './Sidebar';
 import '../assets/Home.css';
+import tagsList from '../data/tags.json';
 
 const PostDB = require('../modules/PostDB');
 
@@ -74,11 +75,11 @@ function Home() {
   );
 
   // const filters = ['filter 0', 'filter 1', 'filter 2'];
-  const tags = [
-    { value: 'filter0', label: 'filter0' },
-    { value: 'filter1', label: 'filter1' },
-    { value: 'filter2', label: 'filter2' },
-  ];
+  // const tags = [
+  //   { value: 'filter0', label: 'filter0' },
+  //   { value: 'filter1', label: 'filter1' },
+  //   { value: 'filter2', label: 'filter2' },
+  // ];
   const handleTagFilter = (Selectedtags) => {
     setSelectedTags(Selectedtags);
   };
@@ -86,7 +87,7 @@ function Home() {
     <Select
       isMulti
       name="tags"
-      options={tags}
+      options={tagsList}
       className="basic-multi-select"
       classNamePrefix="select"
       onChange={handleTagFilter}

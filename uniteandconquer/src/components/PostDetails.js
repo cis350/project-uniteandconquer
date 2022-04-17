@@ -12,6 +12,9 @@ const PostDB = require('../modules/PostDB');
 function PostDetails() {
   const [desiredQuantity, setDesiredQuantity] = useState(0);
   const [validQuantity, setValidQuantity] = useState(false);
+  const [tags, setTags] = useState([
+    'Appliances', 'Beauty & Care', 'Health & Household', 'Electronics',
+  ]);
   const [groupUsers, setGroupUsers] = useState([
     { name: 'Anna', quantity: 3 },
     { name: 'John', quantity: 5 },
@@ -108,12 +111,9 @@ function PostDetails() {
         <div className="post-detail-tags">
           <div className="tags-label">Tags</div>
           <div className="tags-container">
-            <div className="tag">Tag1</div>
-            <div className="tag">Tag2</div>
-            <div className="tag">Tag3</div>
-            <div className="tag">Tag4</div>
-            <div className="tag">Tag5</div>
-            <div className="tag">Tag6</div>
+            {tags.map((tag) => (
+              <button type="button" className="tag">{tag}</button>
+            ))}
           </div>
         </div>
         <div className="buttons-container">

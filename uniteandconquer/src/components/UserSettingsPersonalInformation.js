@@ -13,7 +13,9 @@ function UserSettingsPersonalInformation() {
   const [lastName, setlastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState(0);
   const [email, setEmail] = useState('');
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState([
+    'Appliances', 'Electronics', 'Books', 'Grocery and Food',
+  ]);
   const myStorage = window.sessionStorage;
   const userID = myStorage.getItem('UserID');
 
@@ -84,12 +86,9 @@ function UserSettingsPersonalInformation() {
             <div className="create-post-tags">
               <div className="tags-label">Tags</div>
               <div className="post-tags">
-                <div className="tag">Tag1</div>
-                <div className="tag">Tag2</div>
-                <div className="tag">Tag3</div>
-                <div className="tag">Tag4</div>
-                <div className="tag">Tag5</div>
-                <div className="tag">Tag6</div>
+                {tags.map((tag) => (
+                  <button type="button" className="tag">{tag}</button>
+                ))}
               </div>
             </div>
           </div>
