@@ -12,6 +12,10 @@ const PostDB = require('../modules/PostDB');
 function PostDetails() {
   const [desiredQuantity, setDesiredQuantity] = useState(0);
   const [validQuantity, setValidQuantity] = useState(false);
+  const [groupUsers, setGroupUsers] = useState([
+    { name: 'Anna', quantity: 3 },
+    { name: 'John', quantity: 5 },
+  ]);
   const navigate = useNavigate();
   const myStorage = window.sessionStorage;
   const joinGroup = () => {
@@ -66,37 +70,41 @@ function PostDetails() {
               {' '}
               <br />
               {' '}
-              Beautiful fairy lights you can use for your dorm
+              Beautiful fairy lights you can use for your
+              dorm
             </div>
           </div>
           <div className="group-details">
             <h3>Group Details</h3>
-            <div className="size">Group size: 2</div>
+            <div className="size">
+              Group size:
+              {' '}
+              {groupUsers.length}
+            </div>
             <div className="group-member">
               <ul>
-                <li>
-                  <div className="name">
-                    {' '}
-                    <i className="far fa-user-circle" />
-                    {' '}
-                    Anna
+                {groupUsers.map((user) => (
+                  <div className="group-user">
+                    <div className="name">
+                      {' '}
+                      <i className="far fa-user-circle" />
+                      {' '}
+                      {user.name}
+                    </div>
+                    <div className="quantity">
+                      Quantity:
+                      {' '}
+                      {user.quantity}
+                    </div>
                   </div>
-                  <div className="quantity">Quantity: 1</div>
-                </li>
-                <li>
-                  <div className="name">
-                    {' '}
-                    <i className="far fa-user-circle" />
-                    {' '}
-                    Jeff
-                  </div>
-                  <div className="quantity">Quantity: 3</div>
-                </li>
+                ))}
               </ul>
             </div>
           </div>
         </div>
-        <div className="comment-section"><Comment /></div>
+        <div className="comment-section">
+          <Comment />
+        </div>
         <div className="post-detail-tags">
           <div className="tags-label">Tags</div>
           <div className="tags-container">
@@ -109,13 +117,25 @@ function PostDetails() {
           </div>
         </div>
         <div className="buttons-container">
-          <div className="desired-quantity"><input placeholder="desired quantity" onChange={(e) => setDesiredQuantity(e.target.value)} /></div>
-          <button disabled={!validQuantity} className="create" type="button" onClick={joinGroup}>
-            Join
-          </button>
-          <button className="cancel" type="button" onClick={back}>
-            Back
-          </button>
+          <div className="desired-quantity">
+            <input
+              placeholder="desired quantity"
+              onChange={(e) => setDesiredQuantity(e.target.value)}
+            />
+          </div>
+          <div className="horizontal-buttons">
+            <button
+              disabled={!validQuantity}
+              className="create-button"
+              type="button"
+              onClick={joinGroup}
+            >
+              Join
+            </button>
+            <button className="cancel-button" type="button" onClick={back}>
+              Back
+            </button>
+          </div>
         </div>
       </div>
     </div>
