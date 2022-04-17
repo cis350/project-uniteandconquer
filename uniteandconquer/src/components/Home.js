@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.css';
 // import Dropdown from 'react-dropdown';
@@ -10,6 +10,7 @@ import Sidebar from './Sidebar';
 import '../assets/Home.css';
 
 const PostDB = require('../modules/PostDB');
+const notifyDB = require('../modules/NotificationDB');
 
 function Home() {
   /* const [tags, setTags] = useState([]); */
@@ -23,6 +24,30 @@ function Home() {
   const [posts, setPosts] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const myStorage = window.sessionStorage;
+
+  // time interval hook
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
+
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        const id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+      return null;
+    }, [delay]);
+  }
+
+  // get all posts when user get into the page
   useEffect(() => {
     PostDB.getSortedPostsInRange(0, 19, (success, postInfo, err) => {
       if (success) {
@@ -32,6 +57,10 @@ function Home() {
       }
     });
   }, []);
+
+  useInterval(() => {
+    
+  }, 15000);
 
   const handleSearch = () => {
     const tagList = selectedTags.map((tag) => (tag.value));
