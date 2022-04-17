@@ -3,6 +3,8 @@ import SidebarTags from './SidebarTags';
 import Notifications from './Notifications';
 import '../assets/UserProfile.css';
 
+// const notifyDB = require('../modules/NotificationDB');
+
 function UserProfile() {
   const [showNotifs, setShowNotifs] = useState(false);
 

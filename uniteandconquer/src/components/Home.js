@@ -10,7 +10,6 @@ import Sidebar from './Sidebar';
 import '../assets/Home.css';
 
 const PostDB = require('../modules/PostDB');
-const notifyDB = require('../modules/NotificationDB');
 
 function Home() {
   /* const [tags, setTags] = useState([]); */
@@ -59,8 +58,16 @@ function Home() {
   }, []);
 
   useInterval(() => {
-    
-  }, 15000);
+    const tagList = selectedTags.map((tag) => (tag.value));
+    PostDB.getSortedPostsBySearch(0, 19, tagList, searchString, (success, postInfo, err) => {
+      if (success) {
+        console.log(tagList, searchString);
+        setPosts(postInfo);
+      } else {
+        console.log(err);
+      }
+    });
+  }, 5000);
 
   const handleSearch = () => {
     const tagList = selectedTags.map((tag) => (tag.value));
