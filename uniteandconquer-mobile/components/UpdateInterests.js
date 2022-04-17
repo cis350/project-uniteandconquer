@@ -164,7 +164,14 @@ function SettingInterests({ navigation }) {
 
       <View style={styles.TagsContainer}>
         {tagsList.map((tag) => (
-          <Text style={styles.tag} onPress={() => addTags(tag.label)}>{tag.label}</Text>
+          <Text
+            key={tag.label}
+            style={styles.tag}
+            onPress={() => addTags(tag.label)}
+          >
+            {tag.label}
+
+          </Text>
         ))}
       </View>
 

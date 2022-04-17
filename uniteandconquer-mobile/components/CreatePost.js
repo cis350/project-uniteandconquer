@@ -275,6 +275,7 @@ export default function CreatePost({ navigation }) {
               <View style={createPostStyles.tagsBox}>
                 {tagsList.map((tag) => (
                   <Text
+                    key={tag.label}
                     style={createPostStyles.tag}
                     onPress={() => addTags(tag.label)}
                   >
