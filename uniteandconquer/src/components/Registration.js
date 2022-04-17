@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Dropdown from 'react-dropdown';
+import Modal from 'react-modal';
 import 'react-dropdown/style.css';
 
 import '../assets/App.css';
@@ -9,6 +10,17 @@ import '../assets/Registration.css';
 
 const UserDB = require('../modules/UserDB');
 
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    background: '#FFD9A0',
+  },
+};
 function Registration() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -26,6 +38,27 @@ function Registration() {
   const [validConfirmPassword, setValidConfirmPassword] = useState(false);
   const [tags, setTags] = useState([]);
   const allTags = ['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5', 'Tag6'];
+  const options = [
+    '1', '44', '1684',
+  ];
+  const navigate = useNavigate();
+
+  let subtitle;
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  const afterOpenModal = () => {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = '#f00';
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+    navigate('/login');
+  };
+
+  const showModal = () => {
+    setIsOpen(true);
+  };
 
   function addTags(tag) {
     if (tags.includes(tag)) {
@@ -39,11 +72,6 @@ function Registration() {
     allTags.forEach((tag) => { document.getElementById(tag).className = 'tag'; });
     tags.forEach((tag) => { document.getElementById(tag).className = 'tag_selected'; });
   }, [tags]);
-
-  const options = [
-    '1', '44', '1684',
-  ];
-  const navigate = useNavigate();
 
   // register the user given the information provided
   // if the password and confimPassword are not correct, then throw an exception
@@ -61,7 +89,8 @@ function Registration() {
       tags,
       (success, id, err) => {
         if (success) {
-          navigate('/login');
+          // navigate('/login');
+          showModal();
         } else {
           console.log(err);
         }
@@ -156,6 +185,22 @@ function Registration() {
 
   return (
     <div className="registration-page">
+
+      <div>
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <div className="modalContent">
+            <h2>Resgistration Successfully!</h2>
+            <button className="modalButton" type="button" onClick={closeModal}>Go to Login</button>
+          </div>
+        </Modal>
+      </div>
+
       <div className="registration">
         <div className="registration-tags">
           <div className="headers">
