@@ -2,7 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/SidebarTags.css';
 
-function SidebarTags() {
+function SidebarTags({ tags }) {
+  const tagListGenerator = () => {
+    console.log('lala');
+    console.log(tags);
+    return tags.map((tag) => (<div className="preference-tag">{tag}</div>));
+  };
   return (
     <div className="sidebar">
       <div className="greeting">
@@ -23,9 +28,7 @@ function SidebarTags() {
       </div>
       <div className="preferences">
         <div className="preferences-title">My Preferences</div>
-        <div className="preference-tag">Tag1</div>
-        <div className="preference-tag">Tag2</div>
-        <div className="preference-tag">Tag3</div>
+        {tagListGenerator()}
       </div>
     </div>
   );
