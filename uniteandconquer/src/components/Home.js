@@ -47,12 +47,13 @@ function Home() {
 
   const postsListGenerator = () => posts.map(
     (post) => {
-      // const url = `/post-details/${post.id}`;
+      const url = `/post-details/${post.id}`;
       myStorage.setItem('PostID', post.id);
+      const date = new Date(post.createdAt).toLocaleString('en-US', { timeZone: 'America/New_York' });
 
       return (
         <li>
-          <Link className="link" to="/post-details">
+          <Link className="link" to={url}>
             <div className="post-title">This is Post</div>
             <div className="post-content">
               This post is led by Jeremy and trades
@@ -65,7 +66,7 @@ function Home() {
               with
               maturity
               {' '}
-              {post.createdAt}
+              {date}
             </div>
           </Link>
         </li>
