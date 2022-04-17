@@ -16,22 +16,8 @@ function PostDetails() {
     { name: 'Anna', quantity: 3 },
     { name: 'John', quantity: 5 },
   ]);
-  const [tags, setTags] = useState([]);
   const navigate = useNavigate();
   const myStorage = window.sessionStorage;
-  const allTags = ['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5', 'Tag6', 'Tag7', 'Tag8'];
-  function addTags(tag) {
-    if (tags.includes(tag)) {
-      const newList = tags.filter((i) => i !== tag);
-      setTags(newList);
-    } else {
-      setTags((arr) => [...arr, tag]);
-    }
-  }
-  useEffect(() => {
-    allTags.forEach((tag) => { document.getElementById(tag).className = 'tag'; });
-    tags.forEach((tag) => { document.getElementById(tag).className = 'tag_selected'; });
-  }, [tags]);
 
   const joinGroup = () => {
     const userID = myStorage.getItem('UserID');
@@ -123,14 +109,12 @@ function PostDetails() {
         <div className="post-detail-tags">
           <div className="tags-label">Tags</div>
           <div className="tags-container">
-            <button className="tag" type="button" key="Tag1" id="Tag1" onClick={() => addTags('Tag1')}>Tag1</button>
-            <button className="tag" type="button" key="Tag2" id="Tag2" onClick={() => addTags('Tag2')}>Tag2</button>
-            <button className="tag" type="button" key="Tag3" id="Tag3" onClick={() => addTags('Tag3')}>Tag3</button>
-            <button className="tag" type="button" key="Tag4" id="Tag4" onClick={() => addTags('Tag4')}>Tag4</button>
-            <button className="tag" type="button" key="Tag5" id="Tag5" onClick={() => addTags('Tag5')}>Tag5</button>
-            <button className="tag" type="button" key="Tag6" id="Tag6" onClick={() => addTags('Tag6')}>Tag6</button>
-            <button className="tag" type="button" key="Tag7" id="Tag7" onClick={() => addTags('Tag7')}>Tag7</button>
-            <button className="tag" type="button" key="Tag8" id="Tag8" onClick={() => addTags('Tag8')}>Tag8</button>
+            <div className="tag">Tag1</div>
+            <div className="tag">Tag2</div>
+            <div className="tag">Tag3</div>
+            <div className="tag">Tag4</div>
+            <div className="tag">Tag5</div>
+            <div className="tag">Tag6</div>
           </div>
         </div>
         <div className="buttons-container">
