@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom';
 import '../assets/SidebarTags.css';
 
 function SidebarTags({ tags }) {
-  const tagListGenerator = () => {
-    console.log('lala');
-    console.log(tags);
-    return tags.map((tag) => (<div className="preference-tag">{tag}</div>));
-  };
+  const tagListGenerator = () => tags.map((tag) => (<div className="preference-tag">{tag}</div>));
   return (
     <div className="sidebar">
       <div className="greeting">
