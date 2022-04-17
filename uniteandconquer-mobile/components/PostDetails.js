@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import { React, useState } from 'react';
 import {
   StyleSheet, View, ScrollView, Text, Button, TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { leaveGroup } from '../modules/PostDB';
+
+const PostDB = require('../../uniteandconquer/src/modules/PostDB');
 
 // styling ---------
 
@@ -133,9 +135,11 @@ const postDetailStyles = StyleSheet.create({
 
 // app content --------
 
+
 export default function PostDetails({ navigation }) {
   // event handlers --------
   const [errorMessage, setErrorMessage] = useState(null);
+  const [join, setJoin] = useState(false);
 
   const leavePressed = () => {
     const userId = ''; // dummy, need to get from session once log in routing is set up
@@ -144,8 +148,28 @@ export default function PostDetails({ navigation }) {
       setErrorMessage(err); // trigger re-rendering; will display err if err is not null
     });
   };
+  const handleJoin=()=> {
+    const userID = 'bababababa';
+    const postID = 0;
+    const quantity = 2;
+    PostDB.joinGroup(userID, postID, quantity, (success, err) => {
+      if (success) {
+        setJoin(true);
+        // navigate(`/post-details${postID}`);
+      } else {
+        console.log(err);
+      }
+    });
+  }
+
+  const handleJoinLeave = () => {
+    if (join) {
+      handleJoin();
+    } else { leavePressed(); }
+  }
 
   // views ---------
+
   return (
     <ScrollView style={styles.container}>
       <View style={userStyles.container}>
@@ -240,10 +264,12 @@ export default function PostDetails({ navigation }) {
           </View>
           <View>
             <View style={postDetailStyles.buttons}>
+
               <View style={postDetailStyles.LeftButton}><Button color="#000" title="Join" /></View>
-              <View style={postDetailStyles.LeftButton}><Button color="#000" title="Leave" onPress={leavePressed} /></View>
+              <View style={postDetailStyles.LeftButton}><Button color="#000" title={join ? 'Leave' : 'Join'} onPress={handleJoinLeave} /></View>
               <View style={postDetailStyles.LeftButton}><Button color="#000" title="Comment" onPress={() => navigation.navigate('Comment')} /></View>
               <View style={postDetailStyles.RightButton}><Button color="#000" title="Back" onPress={() => navigation.navigate('Home')} /></View>
+
             </View>
           </View>
         </View>
