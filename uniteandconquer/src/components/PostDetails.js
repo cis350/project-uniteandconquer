@@ -15,23 +15,51 @@ function PostDetails() {
   const navigate = useNavigate();
   const myStorage = window.sessionStorage;
   const [postDetails, setPostDetails] = useState(null);
+  const [joined, setJoined] = useState(false);
+  const [isOwner, setIsOwner] = useState(false);
+
+  const postID = window.location.href.split('/').pop();
 
   useEffect(() => {
-    PostDB.getPost('', (success, details) => {
+    PostDB.getPost(postID, (success, details) => {
       if (success) {
         setPostDetails(details);
+        const loginAuth = JSON.parse(myStorage.getItem('loginAuth')).phone || JSON.parse(myStorage.getItem('loginAuth')).email;
+        const [ownerPhone, onwerEmail] = [details.owner.phone.phoneNumber, details.owner.email];
+        if (loginAuth === onwerEmail || loginAuth === ownerPhone) {
+          setIsOwner(true);
+        }
       }
     });
-  }, []);
+  }, [joined]);
+
+  const kickUser = () => {
+    // finish it when the backend is ready
+  };
+
+  const handleDelete = () => {
+    // finish it when the backend is ready
+  };
+
   const joinGroup = () => {
     const userID = myStorage.getItem('UserID');
-    const postID = '';
     const quantity = 2;
     PostDB.joinGroup(userID, postID, quantity, (success, err) => {
       if (success) {
-        navigate(`/post-details/${postID}`);
+        setJoined(true);
       } else {
         console.log(err);
+      }
+    });
+  };
+
+  const leaveGroup = () => {
+    const userID = myStorage.getItem('UserID');
+    PostDB.leaveGroup(userID, postID, (success, error) => {
+      if (success) {
+        setJoined(false);
+      } else {
+        console.log(error);
       }
     });
   };
@@ -109,18 +137,27 @@ function PostDetails() {
               <div className="group-member">
                 <ul>
                   {postDetails.group.map((user) => (
-                    <div className="group-user" key={user.firstName}>
-                      <div className="name">
-                        {' '}
-                        <i className="far fa-user-circle" />
-                        {' '}
-                        {user.firstName}
+                    <div className="row-setting" key={user.firstName}>
+                      <div className="group-user">
+                        <div className="name">
+                          {' '}
+                          <i className="far fa-user-circle" />
+                          {' '}
+                          {user.firstName}
+                        </div>
+                        <div className="quantity">
+                          Quantity:
+                          {' '}
+                          {user.quantity}
+                        </div>
                       </div>
-                      <div className="quantity">
-                        Quantity:
-                        {' '}
-                        {user.quantity}
-                      </div>
+                      {isOwner
+                        ? (
+                          <div className="cross-sign-wrapper">
+                            <button className="fas fa-times fa-lg cross-sign" type="button" onClick={kickUser}> </button>
+                          </div>
+                        )
+                        : null}
                     </div>
                   ))}
                 </ul>
@@ -146,17 +183,33 @@ function PostDetails() {
               />
             </div>
             <div className="horizontal-buttons">
-              <button
-                disabled={!validQuantity}
-                className="create-button"
-                type="button"
-                onClick={joinGroup}
-              >
-                Join
-              </button>
+              {!joined ? (
+                <button
+                  disabled={!validQuantity}
+                  className="create-button"
+                  type="button"
+                  onClick={joinGroup}
+                >
+                  Join
+                </button>
+              ) : (
+                <button
+                  disabled={!validQuantity}
+                  className="create-button"
+                  type="button"
+                  onClick={leaveGroup}
+                >
+                  Leave
+                </button>
+              )}
               <button className="cancel-button" type="button" onClick={back}>
                 Back
               </button>
+              {isOwner ? (
+                <button className="delete-button" type="button" onClick={handleDelete}>
+                  Delete Post
+                </button>
+              ) : null}
             </div>
           </div>
         </div>

@@ -30,6 +30,7 @@ function Login() {
       UserDB.loginUserWithEmail(username_, password_, (success, id, err) => {
         if (success) {
           myStorage.setItem('UserID', id);
+          myStorage.setItem('loginAuth', JSON.stringify({ email: username_ }));
         } else {
           console.log(err);
         }
@@ -39,6 +40,7 @@ function Login() {
       UserDB.loginUserWithPhone(countryCode, username_, password_, (success, id, err) => {
         if (success) {
           myStorage.setItem('UserID', id);
+          myStorage.setItem('loginAuth', JSON.stringify({ phone: username_ }));
         } else {
           console.log(err);
         }
