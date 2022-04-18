@@ -1,11 +1,13 @@
-import { React, useState } from 'react';
 import {
-  StyleSheet, View, ScrollView, Text, Button, TouchableOpacity,
+  React, useState, useEffect,
+} from 'react';
+import {
+  StyleSheet, View, ScrollView, Text, Button, TouchableOpacity, TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { leaveGroup } from '../modules/PostDB';
 
-const PostDB = require('../../uniteandconquer/src/modules/PostDB');
+const PostDB = require('../modules/PostDB');
 
 // styling ---------
 
@@ -135,37 +137,91 @@ const postDetailStyles = StyleSheet.create({
 
 // app content --------
 
-
 export default function PostDetails({ navigation }) {
   // event handlers --------
   const [errorMessage, setErrorMessage] = useState(null);
   const [join, setJoin] = useState(false);
+  const [members, setMembers] = useState([]);
+  const [ownerID, setOwnerID] = useState('');
+  const [quantity, setQuantity] = useState(0);
+  // const [memberId, setMemberId] = useState('');
+  const postId = '1';// need to be change.
+  const userId = '5087901e810c109679e860ea';
 
   const leavePressed = () => {
-    const userId = ''; // dummy, need to get from session once log in routing is set up
-    const postId = ''; // dummy, need to get from current view
+    // const userId = ''; // dummy, need to get from session once log in routing is set up
+    // const postId = ''; // dummy, need to get from current view
     leaveGroup(userId, postId, (success, err) => {
       setErrorMessage(err); // trigger re-rendering; will display err if err is not null
     });
+    setJoin(false);
   };
-  const handleJoin=()=> {
+  const handleJoin = () => {
     const userID = 'bababababa';
     const postID = 0;
-    const quantity = 2;
+    // const quantity = 2;
     PostDB.joinGroup(userID, postID, quantity, (success, err) => {
       if (success) {
         setJoin(true);
-        // navigate(`/post-details${postID}`);
+        PostDB.getPostMembers(postId, (success2, memberList, err2) => {
+          if (success2) {
+            setMembers(memberList);
+          } else {
+            console.log(err2);
+          }
+        });
+      } else { setErrorMessage(err); }
+    });
+  };
+
+  const handleJoinLeave = () => {
+    if (join) {
+      leavePressed();
+    } else {
+      handleJoin();
+    }
+  };
+
+  useEffect(() => {
+    PostDB.getPostMembers(postId, (success, memberList, err) => {
+      if (success) {
+        console.log(memberList);
+        setMembers(memberList);
+        if (memberList.some((e) => e.id === userId)) {
+          setJoin(true);
+        }
+      } else {
+        console.log(err);
+      }
+      PostDB.getOwner(postId, (success2, owner, err2) => {
+        if (success2) {
+          setOwnerID(owner);
+        } else {
+          console.log(err2);
+        }
+      });
+    });
+  }, []);
+  const handleKick = (memberID) => {
+    PostDB.kickMembers(memberID, postId, (success, err) => {
+      if (success) {
+        console.log(members.filter((item) => item.id !== memberID));
+        setMembers(members.filter((item) => item.id !== memberID));
       } else {
         console.log(err);
       }
     });
-  }
-
-  const handleJoinLeave = () => {
-    if (join) {
-      handleJoin();
-    } else { leavePressed(); }
+  };
+  function kickButton(memberID) {
+    console.log(ownerID === userId);
+    if (ownerID === userId && ownerID !== memberID) {
+      return (
+        <View style={postDetailStyles.LeftButton}>
+          <Button color="#000" title="Kick" onPress={() => handleKick(memberID)} />
+        </View>
+      );
+    }
+    return null;
   }
 
   // views ---------
@@ -226,46 +282,52 @@ export default function PostDetails({ navigation }) {
         </View>
         <View style={postDetailStyles.groupDetailsContainer}>
           <Text style={postDetailStyles.groupHeader}>Group Details</Text>
-          <Text style={postDetailStyles.details}>Group size: 2</Text>
+          <Text style={postDetailStyles.details}>
+            Group size:
+            {' '}
+            { members.length}
+          </Text>
           <View>
             <View style={postDetailStyles.groupUser}>
               <View>
-                {[{ key: 'Johnny', quantity: 5 },
-                  { key: 'Yuying', quantity: 3 },
-                  { key: 'Zhihang', quantity: 4 }].map((item) => (
-                    <View key={item.key} style={postDetailStyles.groupUserContent}>
-                      <View>
-                        <Icon
-                          style={postDetailStyles.groupUserIcon}
-                          name="user"
-                          size={40}
-                        />
-                      </View>
-                      <View>
-                        <Text
-                          style={postDetailStyles.groupUserName}
-                        >
-                          {item.key}
-                        </Text>
-                      </View>
-                      <View>
-                        <Text
-                          style={postDetailStyles.groupUserQuantity}
-                        >
-                          Quantity:
-                          {' '}
-                          {item.quantity}
-                        </Text>
-                      </View>
+                {members.map((item) => (
+                  <View key={item.name} style={postDetailStyles.groupUserContent}>
+                    <View>
+                      <Icon
+                        style={postDetailStyles.groupUserIcon}
+                        name="user"
+                        size={40}
+                      />
                     </View>
+                    <View>
+                      <Text
+                        style={postDetailStyles.groupUserName}
+                      >
+                        {item.name}
+                      </Text>
+                    </View>
+                    <View>
+                      <Text
+                        style={postDetailStyles.groupUserQuantity}
+                      >
+                        Quantity:
+                        {' '}
+                        {item.quantity}
+                      </Text>
+                    </View>
+                    {kickButton(item.id)}
+                  </View>
                 ))}
               </View>
             </View>
           </View>
           <View>
+            <TextInput
+              placeholder="quantity"
+              onChangeText={setQuantity}
+              value={quantity}
+            />
             <View style={postDetailStyles.buttons}>
-
-              <View style={postDetailStyles.LeftButton}><Button color="#000" title="Join" /></View>
               <View style={postDetailStyles.LeftButton}><Button color="#000" title={join ? 'Leave' : 'Join'} onPress={handleJoinLeave} /></View>
               <View style={postDetailStyles.LeftButton}><Button color="#000" title="Comment" onPress={() => navigation.navigate('Comment')} /></View>
               <View style={postDetailStyles.RightButton}><Button color="#000" title="Back" onPress={() => navigation.navigate('Home')} /></View>

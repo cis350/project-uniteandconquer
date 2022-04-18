@@ -56,6 +56,18 @@ function getAllPosts(callback) {
   }], null);
 }
 
+function getPostMembers(postId, callback) {
+  return callback(true, [{ id: '5087901e810c109679e860ea', name: 'Johnny', quantity: 5 }, {
+    id: '5087901e810c109679e860eb', name: 'Yuying', quantity: 3,
+  }, { id: '5087901e810c109679e860ec', name: 'Qiqi', quantity: 5 }], null);
+}
+function kickMembers(userId, postId, callback) {
+  return callback(true, { id: '5087901e810c109679e860ea', name: 'Johnny', quantity: 5 }, null);
+}
+function getOwner(postId, callback) {
+  return callback(true, '5087901e810c109679e860ea', null);
+}
+
 function getSortedPostsInRange(startIdx, endIdx, callback) {
   return getAllPosts(callback);
 }
@@ -94,4 +106,7 @@ export {
   joinGroup,
   leaveGroup,
   changePostStatus,
+  getPostMembers,
+  kickMembers,
+  getOwner,
 };
