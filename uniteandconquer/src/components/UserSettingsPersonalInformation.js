@@ -69,18 +69,30 @@ function UserSettingsPersonalInformation() {
               <div className="post-field">
                 <div className="label">Username</div>
                 <input onChange={(e) => setUsername(e.target.value)} />
+                <button className="confirm" type="button" onClick={setUsername}>
+                  confirm
+                </button>
               </div>
               <div className="post-field">
                 <div className="label">Full Name</div>
                 <input onChange={(e) => setFullName(e.target.value)} />
+                <button className="confirm" type="button" onClick={setFullName}>
+                  confirm
+                </button>
               </div>
               <div className="post-field">
                 <div className="label">Phone Number</div>
                 <input onChange={(e) => setPhoneNumber(e.target.value)} />
+                <button className="confirm" type="button" onClick={setPhoneNumber}>
+                  confirm
+                </button>
               </div>
               <div className="post-field">
                 <div className="label">Email</div>
                 <input onChange={(e) => setEmail(e.target.value)} />
+                <button className="confirm" type="button" onClick={setEmail}>
+                  confirm
+                </button>
               </div>
             </div>
             <div className="create-post-tags">
