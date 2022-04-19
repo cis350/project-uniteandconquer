@@ -150,8 +150,8 @@ function HomeScreen({ navigation, route }) {
   };
 
   const handleLogOut = () => {
+    navigation.setParams({ userId: '' });
     setFirstName('');
-    navigation.navigate('LogIn');
   };
 
   return (
