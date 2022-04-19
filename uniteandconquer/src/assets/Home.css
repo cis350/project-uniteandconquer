@@ -2,9 +2,10 @@ li {
   border: 10px solid #ffd9a0;
   box-sizing: border-box;
   min-width: 700px;
+  width: 700px;
   padding: 15px;
 
-  white-space: nowrap;
+  white-space: wrap;
 }
 
 list {
@@ -84,6 +85,7 @@ textarea {
 
 .post-content {
   font-size: 17px;
+  min-width: 700px;
 }
 
 .home-page {
