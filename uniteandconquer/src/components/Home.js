@@ -55,7 +55,7 @@ function Home() {
         <li>
           <Link className="link" to="/post-details">
             <div className="post-title">This is Post</div>
-            <div className="post-content">
+            <div className="post-content-home">
               This post is led by Jeremy and trades
               {' '}
               {post.itemName}
