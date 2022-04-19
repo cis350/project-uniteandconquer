@@ -3,6 +3,7 @@ import {
   StyleSheet, View, ScrollView, Text, TextInput, Button, Modal,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import tagsList from '../data/tags.json';
 
 const postDB = require('../modules/PostDB');
 
@@ -68,7 +69,7 @@ const createPostStyles = StyleSheet.create({
   },
   tags: {
     backgroundColor: '#FFCB7D',
-    width: '35%',
+    width: '50%',
     marginRight: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -98,6 +99,8 @@ const createPostStyles = StyleSheet.create({
     backgroundColor: '#FFAB2D',
     overflow: 'hidden',
     margin: 4,
+    textAlign: 'center',
+    fontSize: 15,
   },
   details: {
     marginBottom: 15,
@@ -118,8 +121,8 @@ const createPostStyles = StyleSheet.create({
   field: {
     backgroundColor: '#FFD9A0',
     padding: 5,
-    width: 235,
-    marginBottom: 10,
+    width: 170,
+    marginBottom: 50,
     height: 40,
   },
   description: {
@@ -154,6 +157,13 @@ const createPostStyles = StyleSheet.create({
   },
   tagsContainer: {
     marginTop: 10,
+  },
+  tagsBox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
   },
 });
 
@@ -262,12 +272,16 @@ export default function CreatePost({ navigation }) {
           <View style={createPostStyles.upper}>
             <View style={createPostStyles.tags}>
               <Text style={createPostStyles.tagsHeader}>Tags</Text>
-              <View>
-                <Text style={createPostStyles.tag} onPress={() => addTags('Tag1')}>Tag1</Text>
-                <Text style={createPostStyles.tag} onPress={() => addTags('Tag2')}>Tag2</Text>
-                <Text style={createPostStyles.tag} onPress={() => addTags('Tag3')}>Tag3</Text>
-                <Text style={createPostStyles.tag} onPress={() => addTags('Tag4')}>Tag4</Text>
-                <Text style={createPostStyles.tag} onPress={() => addTags('Tag5')}>Tag5</Text>
+              <View style={createPostStyles.tagsBox}>
+                {tagsList.map((tag) => (
+                  <Text
+                    key={tag.label}
+                    style={createPostStyles.tag}
+                    onPress={() => addTags(tag.label)}
+                  >
+                    {tag.label}
+                  </Text>
+                ))}
               </View>
             </View>
             <View style={{ flexShrink: 1 }}>
