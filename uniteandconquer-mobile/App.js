@@ -130,7 +130,7 @@ function HomeScreen({ navigation, route }) {
         }
       });
     }
-  }, [route.params?.userId]);
+  }, [route.params?.userId, firstName]);
 
   const [posts, setPosts] = React.useState([
     { id: 1, item: 'item', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat ex vel arcu eleifend, vestibulum lacinia libero scelerisque.' },
@@ -147,6 +147,11 @@ function HomeScreen({ navigation, route }) {
   ]);
   const search = () => {
 
+  };
+
+  const handleLogOut = () => {
+    setFirstName('');
+    navigation.navigate('LogIn');
   };
 
   return (
@@ -185,7 +190,7 @@ function HomeScreen({ navigation, route }) {
             <Button
               color="#000"
               title="Log Out"
-              onPress={() => setFirstName('')}
+              onPress={handleLogOut}
             />
           )}
         </Text>
