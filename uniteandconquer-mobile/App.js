@@ -133,6 +133,7 @@ function HomeScreen({ navigation, route }) {
     }
   }, [route.params?.userId]);
 
+  // eslint-disable-next-line no-unused-vars
   const [posts, setPosts] = React.useState([
     { id: 1, item: 'item', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat ex vel arcu eleifend, vestibulum lacinia libero scelerisque.' },
     { id: 2, item: 'item', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat ex vel arcu eleifend, vestibulum lacinia libero scelerisque.' },
