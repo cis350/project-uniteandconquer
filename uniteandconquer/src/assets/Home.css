@@ -88,6 +88,10 @@ textarea {
   min-width: 700px;
 }
 
+.post-id {
+  font-size: 0;
+}
+
 .home-page {
   display: grid;
   grid-template-columns: 0.3fr 0.6fr;

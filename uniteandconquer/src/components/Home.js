@@ -67,6 +67,11 @@ function Home() {
               maturity
               {' '}
               {post.createdAt}
+              {' '}
+              <span className="post-id">
+                post ID:
+                {post.id}
+              </span>
             </div>
           </Link>
         </li>
