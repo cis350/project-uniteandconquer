@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import tagsList from '../data/tags.json';
 
 import '../assets/App.css';
 import '../assets/Registration.css';
@@ -13,6 +14,8 @@ function Registration() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
+  // final phone input with area code
+  const finalPhone = React.useRef('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -25,8 +28,11 @@ function Registration() {
   const [validConfirmPassword, setValidConfirmPassword] = useState(false);
   const [tags, setTags] = useState([]);
   const options = [
-    'US (+1)', 'UK (+44)', 'AS (+1684)',
+    { label: 'US (+1)', value: 1 },
+    { label: 'UK (+44)', value: 44 },
+    { label: 'AS (+1684)', value: 1684 },
   ];
+  const [areaCode, setAreaCode] = useState(options[0].value);
   const navigate = useNavigate();
 
   // register the user given the information provided
@@ -81,6 +87,7 @@ function Registration() {
     if (phone) {
       if (phone.match(phoneRegex)) {
         setValidPhone(true);
+        finalPhone.current = areaCode + phone;
       } else {
         setValidPhone(false);
       }
@@ -120,11 +127,21 @@ function Registration() {
   };
 
   const allReqs = () => {
-    if (validFirstName && validLastName && validConfirmPassword && validEmail && validPhone) {
+    if (validFirstName && validLastName && validConfirmPassword && validEmail && validPhone
+      && tags.length > 0) {
       setValidReqs(true);
     } else {
       setValidReqs(false);
     }
+  };
+
+  const updateTags = (currTag) => {
+    if (!tags.includes(currTag)) {
+      setTags([currTag, ...tags]);
+    } else {
+      setTags(tags.filter((curr) => curr !== currTag));
+    }
+    console.log('tags:', tags);
   };
 
   useEffect(() => {
@@ -146,12 +163,17 @@ function Registration() {
             <h3>Choose your interests</h3>
           </div>
           <div className="tags">
-            <div className="tag">Tag1</div>
-            <div className="tag">Tag2</div>
-            <div className="tag">Tag3</div>
-            <div className="tag">Tag4</div>
-            <div className="tag">Tag5</div>
-            <div className="tag">Tag6</div>
+            {tagsList.map((tag) => (
+              <button
+                type="button"
+                key={tag.label}
+                className="tag"
+                onClick={() => updateTags(tag.label)}
+              >
+                {tag.label}
+
+              </button>
+            ))}
           </div>
         </div>
         <div className="registration-input">
@@ -184,7 +206,7 @@ function Registration() {
             <div className="registration-field">
               <div className="label">phone</div>
               <div className="full-phone-input">
-                <Dropdown className="area-code" options={options} value={options[0]} placeholder="Select an option" />
+                <Dropdown className="area-code" onChange={(e) => setAreaCode(e.value)} options={options} value={options[0].label} placeholder="Select an option" />
                 <input className="phone-input" onChange={(e) => setPhone(e.target.value)} />
 
               </div>
@@ -205,6 +227,18 @@ function Registration() {
               <input className="confirm-password-input" onChange={(e) => setConfirmPassword(e.target.value)} />
               {validConfirmPassword ? <i className="fas fa-check" /> : <i className="fas fa-times" />}
             </div>
+          </div>
+          <h3>Tags</h3>
+          <div className="selectedTags">
+            {tags.map((tag) => (
+              <button
+                type="button"
+                key={tag.label}
+                className="tag-selected"
+              >
+                {tag}
+              </button>
+            ))}
           </div>
           <br />
           <div className="reg-bottom">
