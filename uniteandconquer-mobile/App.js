@@ -131,7 +131,7 @@ function HomeScreen({ navigation, route }) {
         }
       });
     }
-  }, [route.params?.userId]);
+  }, [route.params?.userId, firstName]);
 
   // eslint-disable-next-line no-unused-vars
   const [posts, setPosts] = React.useState([
@@ -145,6 +145,11 @@ function HomeScreen({ navigation, route }) {
   const [items, setItems] = React.useState(tagsList);
   const search = () => {
 
+  };
+
+  const handleLogOut = () => {
+    navigation.setParams({ userId: '' });
+    setFirstName('');
   };
 
   return (
@@ -183,7 +188,7 @@ function HomeScreen({ navigation, route }) {
             <Button
               color="#000"
               title="Log Out"
-              onPress={() => setFirstName('')}
+              onPress={handleLogOut}
             />
           )}
         </Text>
