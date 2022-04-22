@@ -42,14 +42,7 @@ function Registration() {
     '1', '44', '1684',
   ];
   const navigate = useNavigate();
-
-  let subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
-
-  const afterOpenModal = () => {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = '#f00';
-  };
 
   const closeModal = () => {
     setIsOpen(false);
@@ -189,10 +182,10 @@ function Registration() {
       <div>
         <Modal
           isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
           style={customStyles}
           contentLabel="Example Modal"
+          ariaHideApp={false}
         >
           <div className="modalContent">
             <h2>Resgistration Successfully!</h2>

@@ -154,7 +154,7 @@ function PostDetails() {
                       {isOwner
                         ? (
                           <div className="cross-sign-wrapper">
-                            <button className="fas fa-times fa-lg cross-sign" type="button" onClick={kickUser}> </button>
+                            <button className="cross-sign" type="button" onClick={kickUser}> kick </button>
                           </div>
                         )
                         : null}
