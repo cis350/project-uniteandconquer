@@ -70,10 +70,11 @@
   box-sizing: border-box;
   border-radius: 40px;
   text-align: center;
-  width: 75px;
-  height: 35px;
   margin: auto;
   margin-bottom: 20px;
+  margin: 5px;
+  padding: 6px;
+  min-height: 65px;
 }
 
 .headers {
@@ -210,9 +211,9 @@ span.Dropdown-arrow {
 
 .modalContent {
   text-align: center;
+}
 
 .selectedTags {
   display: grid;
   grid-template-columns: 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr;
-
 }

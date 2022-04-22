@@ -115,12 +115,13 @@ i {
 
 .login_button {
 
+}
 .logout-box {
   justify-content: center;
   align-items: center;
   border: 16px solid #ffd9a0;
   margin-bottom: 40px;
-
+}
 
 .logout {
   display: flex;
@@ -142,7 +143,8 @@ i {
 
 
 .login_button:hover {
-
+  
+}
 .logout-box:hover {
   background-color: #ffd9a0;
 }

@@ -41,7 +41,6 @@ function Registration() {
   const [validConfirmPassword, setValidConfirmPassword] = useState(false);
   const [tags, setTags] = useState([]);
   const options = [
-
     '1', '44', '1684',
   ];
   const [areaCode, setAreaCode] = useState(options[0].value);
@@ -66,9 +65,7 @@ function Registration() {
     }
   }
   useEffect(() => {
-    console.log(tagsList);
     const allTags = tagsList.map((tag) => tag.label);
-    console.log(allTags);
     allTags.forEach((tag) => { document.getElementById(tag).className = 'tag'; });
     tags.forEach((tag) => { document.getElementById(tag).className = 'tag_selected'; });
   }, [tags]);
@@ -173,15 +170,6 @@ function Registration() {
     } else {
       setValidReqs(false);
     }
-  };
-
-  const updateTags = (currTag) => {
-    if (!tags.includes(currTag)) {
-      setTags([currTag, ...tags]);
-    } else {
-      setTags(tags.filter((curr) => curr !== currTag));
-    }
-    console.log('tags:', tags);
   };
 
   useEffect(() => {
