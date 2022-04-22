@@ -31,10 +31,14 @@ function PostDetails() {
     PostDB.getPost(postID, (success, details) => {
       if (success) {
         setPostDetails(details);
-        const loginAuth = JSON.parse(myStorage.getItem('loginAuth')).phone || JSON.parse(myStorage.getItem('loginAuth')).email;
-        const [ownerPhone, onwerEmail] = [details.owner.phone.phoneNumber, details.owner.email];
-        if (loginAuth === onwerEmail || loginAuth === ownerPhone) {
-          setIsOwner(true);
+        if (myStorage.getItem('loginAuth') == null) {
+          setIsOwner(false);
+        } else {
+          const loginAuth = JSON.parse(myStorage.getItem('loginAuth')).phone || JSON.parse(myStorage.getItem('loginAuth')).email;
+          const [ownerPhone, onwerEmail] = [details.owner.phone.phoneNumber, details.owner.email];
+          if (loginAuth === onwerEmail || loginAuth === ownerPhone) {
+            setIsOwner(true);
+          }
         }
       }
     });
