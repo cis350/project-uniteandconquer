@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Dropdown from 'react-dropdown';
 import Modal from 'react-modal';
 import 'react-dropdown/style.css';
+import tagsList from '../data/tags.json';
 
 import '../assets/App.css';
 import '../assets/Registration.css';
@@ -25,6 +26,8 @@ function Registration() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
+  // final phone input with area code
+  const finalPhone = React.useRef('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [countryCode, setCountryCode] = useState('1');
@@ -37,10 +40,10 @@ function Registration() {
   const [validReqs, setValidReqs] = useState(false);
   const [validConfirmPassword, setValidConfirmPassword] = useState(false);
   const [tags, setTags] = useState([]);
-  const allTags = ['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5', 'Tag6'];
   const options = [
     '1', '44', '1684',
   ];
+  const [areaCode, setAreaCode] = useState(options[0].value);
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -62,6 +65,9 @@ function Registration() {
     }
   }
   useEffect(() => {
+    console.log(tagsList);
+    const allTags = tagsList.map((tag) => tag.label);
+    console.log(allTags);
     allTags.forEach((tag) => { document.getElementById(tag).className = 'tag'; });
     tags.forEach((tag) => { document.getElementById(tag).className = 'tag_selected'; });
   }, [tags]);
@@ -120,6 +126,7 @@ function Registration() {
     if (phone) {
       if (phone.match(phoneRegex)) {
         setValidPhone(true);
+        finalPhone.current = areaCode + phone;
       } else {
         setValidPhone(false);
       }
@@ -159,7 +166,8 @@ function Registration() {
   };
 
   const allReqs = () => {
-    if (validFirstName && validLastName && validConfirmPassword && validEmail && validPhone) {
+    if (validFirstName && validLastName && validConfirmPassword && validEmail && validPhone
+      && tags.length > 0) {
       setValidReqs(true);
     } else {
       setValidReqs(false);
@@ -178,7 +186,6 @@ function Registration() {
 
   return (
     <div className="registration-page">
-
       <div>
         <Modal
           isOpen={modalIsOpen}
@@ -201,12 +208,18 @@ function Registration() {
             <h3>Choose your interests</h3>
           </div>
           <div className="tags">
-            <button className="tag" type="button" key="Tag1" id="Tag1" onClick={() => addTags('Tag1')}>Tag1</button>
-            <button className="tag" type="button" key="Tag2" id="Tag2" onClick={() => addTags('Tag2')}>Tag2</button>
-            <button className="tag" type="button" key="Tag3" id="Tag3" onClick={() => addTags('Tag3')}>Tag3</button>
-            <button className="tag" type="button" key="Tag4" id="Tag4" onClick={() => addTags('Tag4')}>Tag4</button>
-            <button className="tag" type="button" key="Tag5" id="Tag5" onClick={() => addTags('Tag5')}>Tag5</button>
-            <button className="tag" type="button" key="Tag6" id="Tag6" onClick={() => addTags('Tag6')}>Tag6</button>
+            {tagsList.map((tag) => (
+              <button
+                type="button"
+                key={tag.label}
+                className="tag"
+                onClick={() => addTags(tag.label)}
+                id={tag.label}
+              >
+                {tag.label}
+
+              </button>
+            ))}
           </div>
         </div>
         <div className="registration-input">
@@ -239,6 +252,7 @@ function Registration() {
             <div className="registration-field">
               <div className="label">phone</div>
               <div className="full-phone-input">
+
                 <Dropdown className="area-code" options={options} value={countryCode} onChange={(value) => setCountryCode(value.value)} placeholder="Select an option" />
                 <input className="phone-input" onChange={(e) => setPhone(e.target.value)} />
               </div>
@@ -259,6 +273,18 @@ function Registration() {
               <input className="confirm-password-input" onChange={(e) => setConfirmPassword(e.target.value)} />
               {validConfirmPassword ? <i className="fas fa-check" /> : <i className="fas fa-times" />}
             </div>
+          </div>
+          <h3>Tags</h3>
+          <div className="selectedTags">
+            {tags.map((tag) => (
+              <button
+                type="button"
+                key={tag.label}
+                className="tag-selected"
+              >
+                {tag}
+              </button>
+            ))}
           </div>
           <br />
           <div className="reg-bottom">
