@@ -3,6 +3,7 @@ import {
   StyleSheet, View, ScrollView, Text, Button,
 } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
+import tagsList from '../data/tags.json';
 
 const userDB = require('../modules/UserDB');
 
@@ -32,6 +33,10 @@ const styles = StyleSheet.create({
   },
   TagsContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
   },
   tagRow: {
     flex: 1,
@@ -158,18 +163,16 @@ function SettingInterests({ navigation }) {
       </View>
 
       <View style={styles.TagsContainer}>
-        <View style={styles.tagRow}>
-          <Text style={styles.tag} onPress={() => addTags('Tag1')}>Tag1</Text>
-          <Text style={styles.tag} onPress={() => addTags('Tag2')}>Tag2</Text>
-        </View>
-        <View style={styles.tagRow}>
-          <Text style={styles.tag} onPress={() => addTags('Tag3')}>Tag3</Text>
-          <Text style={styles.tag} onPress={() => addTags('Tag4')}>Tag4</Text>
-        </View>
-        <View style={styles.tagRow}>
-          <Text style={styles.tag} onPress={() => addTags('Tag5')}>Tag5</Text>
-          <Text style={styles.tag} onPress={() => addTags('Tag6')}>Tag6</Text>
-        </View>
+        {tagsList.map((tag) => (
+          <Text
+            key={tag.label}
+            style={styles.tag}
+            onPress={() => addTags(tag.label)}
+          >
+            {tag.label}
+
+          </Text>
+        ))}
       </View>
 
       <View style={styles.updateButton}>

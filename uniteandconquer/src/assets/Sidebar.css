@@ -1,9 +1,20 @@
 .sidebar {
   margin-bottom: 10px;
+  text-align: center;
+  margin: 20px;
 }
 
 i {
   margin-right: 10px;
+}
+
+.greeting-box {
+  justify-content: center;
+  align-items: center;
+  border: 16px solid #ffd9a0;
+  padding-bottom: 20px;
+  padding-top: 10px;
+  margin-bottom: 40px;
 }
 
 .greeting {
@@ -29,6 +40,13 @@ i {
   color: black;
 }
 
+.profile-box {
+  justify-content: center;
+  align-items: center;
+  border: 16px solid #ffd9a0;
+  margin-bottom: 40px;
+}
+
 .profile {
   display: flex;
   flex-direction: row;
@@ -47,7 +65,7 @@ i {
   box-sizing: border-box;
 }
 
-.profile:hover {
+.profile-box:hover {
   background-color: #ffd9a0;
 }
 
@@ -63,6 +81,13 @@ i {
   padding-right: 130px;
   padding-top: 170px;
   padding-bottom: 170px;
+}
+
+.chat-box {
+  justify-content: center;
+  align-items: center;
+  border: 16px solid #ffd9a0;
+  margin-bottom: 40px;
 }
 
 .chat {
@@ -83,11 +108,21 @@ i {
   box-sizing: border-box;
 }
 
-.chat:hover {
+.chat-box:hover {
   background-color: #ffd9a0;
 }
 
+
 .login_button {
+
+.logout-box {
+  justify-content: center;
+  align-items: center;
+  border: 16px solid #ffd9a0;
+  margin-bottom: 40px;
+
+
+.logout {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -105,8 +140,18 @@ i {
   box-sizing: border-box;
 }
 
+
 .login_button:hover {
+
+.logout-box:hover {
   background-color: #ffd9a0;
+}
+
+.ad-box {
+  justify-content: center;
+  align-items: center;
+  border: 16px solid #ffd9a0;
+  margin-bottom: 40px;
 }
 
 .ad {
@@ -127,6 +172,6 @@ i {
   box-sizing: border-box;
 }
 
-.ad:hover {
+.ad-box:hover {
   background-color: #ffd9a0;
 }

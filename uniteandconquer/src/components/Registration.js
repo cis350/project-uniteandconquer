@@ -41,6 +41,7 @@ function Registration() {
   const [validConfirmPassword, setValidConfirmPassword] = useState(false);
   const [tags, setTags] = useState([]);
   const options = [
+
     '1', '44', '1684',
   ];
   const [areaCode, setAreaCode] = useState(options[0].value);
@@ -172,6 +173,15 @@ function Registration() {
     } else {
       setValidReqs(false);
     }
+  };
+
+  const updateTags = (currTag) => {
+    if (!tags.includes(currTag)) {
+      setTags([currTag, ...tags]);
+    } else {
+      setTags(tags.filter((curr) => curr !== currTag));
+    }
+    console.log('tags:', tags);
   };
 
   useEffect(() => {

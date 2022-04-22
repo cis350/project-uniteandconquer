@@ -12,6 +12,13 @@ const PostDB = require('../modules/PostDB');
 function PostDetails() {
   const [desiredQuantity, setDesiredQuantity] = useState(0);
   const [validQuantity, setValidQuantity] = useState(false);
+  const [tags, setTags] = useState([
+    'Appliances', 'Beauty & Care', 'Health & Household', 'Electronics',
+  ]);
+  const [groupUsers, setGroupUsers] = useState([
+    { name: 'Anna', quantity: 3 },
+    { name: 'John', quantity: 5 },
+  ]);
   const navigate = useNavigate();
   const myStorage = window.sessionStorage;
   const [postDetails, setPostDetails] = useState(null);
@@ -125,7 +132,6 @@ function PostDetails() {
                 {' '}
                 {postDetails.itemDescription}
               </div>
-
             </div>
             <div className="group-details">
               <h3>Group Details</h3>

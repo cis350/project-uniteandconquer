@@ -86,6 +86,7 @@ li {
   grid-template-columns: 0.25fr 0.25fr 0.25fr 0.25fr;
   width: 60%;
   margin-top: 10px;
+  margin-bottom: 30px;
 }
 
 .tags-label {
@@ -131,6 +132,7 @@ li {
   font-size: 20px;
   margin: 5px;
 }
+
 
 .delete-button {
   border: none;
