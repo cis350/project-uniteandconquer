@@ -15,9 +15,11 @@ function CreatePost() {
 
   const [link, setLink] = useState('');
   const [description, setDescription] = useState('');
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState([
+
+  ]);
   const navigate = useNavigate();
-  const allTags = ['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5', 'Tag6', 'Tag7', 'Tag8'];
+  const allTags = ['Appliances', 'Electronics', 'Books', 'Grocery and Food'];
 
   /**
    * dummy user id
@@ -32,6 +34,7 @@ function CreatePost() {
     }
   }
   useEffect(() => {
+    console.log(allTags);
     allTags.forEach((tag) => { document.getElementById(tag).className = 'tag'; });
     tags.forEach((tag) => { document.getElementById(tag).className = 'tag_selected'; });
   }, [tags]);
@@ -104,14 +107,9 @@ function CreatePost() {
             <div className="create-post-tags">
               <div className="tags-label">Tags</div>
               <div className="post-tags">
-                <button className="tag" type="button" key="Tag1" id="Tag1" onClick={() => addTags('Tag1')}>Tag1</button>
-                <button className="tag" type="button" key="Tag2" id="Tag2" onClick={() => addTags('Tag2')}>Tag2</button>
-                <button className="tag" type="button" key="Tag3" id="Tag3" onClick={() => addTags('Tag3')}>Tag3</button>
-                <button className="tag" type="button" key="Tag4" id="Tag4" onClick={() => addTags('Tag4')}>Tag4</button>
-                <button className="tag" type="button" key="Tag5" id="Tag5" onClick={() => addTags('Tag5')}>Tag5</button>
-                <button className="tag" type="button" key="Tag6" id="Tag6" onClick={() => addTags('Tag6')}>Tag6</button>
-                <button className="tag" type="button" key="Tag7" id="Tag7" onClick={() => addTags('Tag7')}>Tag7</button>
-                <button className="tag" type="button" key="Tag8" id="Tag8" onClick={() => addTags('Tag8')}>Tag8</button>
+                {allTags.map((tag) => (
+                  <button type="button" className="tag" key={tag} id={tag} onClick={() => addTags(tag)}>{tag}</button>
+                ))}
               </div>
             </div>
           </div>
