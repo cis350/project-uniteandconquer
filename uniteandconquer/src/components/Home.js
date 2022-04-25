@@ -55,7 +55,7 @@ function Home() {
         <li>
           <Link className="link" to="/post-details">
             <div className="post-title">This is Post</div>
-            <div className="post-content-home">
+            <div className="post-content">
               This post is led by Jeremy and trades
               {' '}
               {post.itemName}
@@ -106,7 +106,7 @@ function Home() {
         <div className="menu-bar">
           <div className="new-post">
             <Link className="link" to="/create-post">
-              <div className="text">New Post</div>
+              <div className="new-post-text">New Post</div>
             </Link>
           </div>
           <div className="filter">

@@ -22,14 +22,11 @@ list {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    size-adjust: 100px;
     text-align: center;
     
     margin: 10px;
-    
   
     position: block;
-    width: 100px;
     max-width: 100px;
     height: 50px;
   
@@ -38,6 +35,10 @@ list {
     box-sizing: border-box;
 
     white-space: nowrap;
+}
+
+.new-post:hover {
+  background-color: #ffd9a0;
 }
 
 .menu-bar {
@@ -63,6 +64,10 @@ list {
     background: #fae9c7;
     border: 16px solid #ffd9a0;
     box-sizing: border-box;
+}
+
+.searchButton:hover {
+  background-color: #ffd9a0;
 }
 
 .filter {
