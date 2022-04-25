@@ -20,7 +20,7 @@ function SidebarTags() {
         </Link>
       </div>
       <div className="settings-box">
-        <Link className="link" to="/user-settings">
+        <Link className="link" to="/user-settings-personal-information">
           <div className="text">Settings</div>
         </Link>
       </div>

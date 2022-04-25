@@ -56,28 +56,6 @@
   padding-bottom: 30px;
 }
 
-.notification {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-
-  position: absolute;
-  width: 303px;
-  height: 98px;
-  left: 51px;
-  top: 289px;
-
-  background: #fae9c7;
-  border: 16px solid #ffd9a0;
-  box-sizing: border-box;
-}
-
-.notification:hover {
-  background-color: #ffd9a0;
-}
-
 .personal-information {
   display: flex;
   flex-direction: row;
@@ -89,7 +67,7 @@
   width: 303px;
   height: 98px;
   left: 51px;
-  top: 412px;
+  top: 289px;
 
   background: #fae9c7;
   border: 16px solid #ffd9a0;
@@ -109,6 +87,28 @@
 
   position: absolute;
   width: 303px;
+  height: 98px;
+  left: 51px;
+  top: 412px;
+
+  background: #fae9c7;
+  border: 16px solid #ffd9a0;
+  box-sizing: border-box;
+}
+
+.password:hover {
+  background-color: #ffd9a0;
+}
+
+.notificaiton {
+  display: none;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+
+  position: absolute;
+  width: 303px;
   height: 100px;
   left: 51px;
   top: 535px;
@@ -119,6 +119,6 @@
   box-sizing: border-box;
 }
 
-.password:hover {
+.notification:hover {
   background-color: #ffd9a0;
 }
