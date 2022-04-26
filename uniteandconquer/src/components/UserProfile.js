@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+
+import React, { useState } from 'react';
+
 import { Link } from 'react-router-dom';
 import SidebarTags from './SidebarTags';
 import Notifications from './Notifications';
@@ -137,7 +139,9 @@ function UserProfile() {
           <table>
             <thead>
               <tr>
+
                 <td>My Active Posts</td>
+
               </tr>
             </thead>
             <tbody>
@@ -147,7 +151,9 @@ function UserProfile() {
           <table>
             <thead>
               <tr>
+
                 <td>My Wishlist</td>
+
               </tr>
             </thead>
             <tbody>

@@ -51,8 +51,7 @@ function CreatePost() {
         <div className="post-input">
           <h3>Create a Post</h3>
           <div className="all-fields">
-            {' '}
-            <div className="post-text-fields">
+            <div className="post-fields">
               <div className="post-field">
                 <div className="label">Item Name</div>
                 <input onChange={(e) => setItem(e.target.value)} />

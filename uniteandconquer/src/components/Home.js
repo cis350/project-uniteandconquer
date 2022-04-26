@@ -89,6 +89,7 @@ function Home() {
       const date = new Date(post.createdAt).toLocaleString('en-US', { timeZone: 'America/New_York' });
 
       return (
+
         <li>
           <Link className="link" to={url}>
             <div className="post-title">This is Post</div>
@@ -107,6 +108,7 @@ function Home() {
             </div>
           </Link>
         </li>
+
       );
     },
   );
@@ -138,10 +140,12 @@ function Home() {
         <div className="menu-bar">
           <div className="new-post">
             <Link className="link" to="/create-post">
-              <div className="text">New Post</div>
+              <div className="new-post-text">New Post</div>
             </Link>
           </div>
-          {tagFilter()}
+          <div className="filter">
+            {tagFilter()}
+          </div>
           <div className="search-field">
             <input onChange={(e) => setSearchString(e.target.value)} />
           </div>
@@ -149,9 +153,11 @@ function Home() {
             Search
           </button>
         </div>
-        <list>
-          {postsListGenerator()}
-        </list>
+        <div className="all-posts">
+          <list>
+            {postsListGenerator()}
+          </list>
+        </div>
       </div>
     </div>
   );

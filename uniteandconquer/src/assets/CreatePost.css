@@ -1,7 +1,7 @@
 .create-post-page {
   height: 100%;
   display: grid;
-  grid-template-columns: 0.2fr 0.8fr;
+  grid-template-columns: 0.2fr 1fr;
 }
 
 .all-fields {
@@ -35,9 +35,7 @@ textarea {
   margin: auto;
 }
 
-.post-text-fields {
-  display: grid;
-  grid-template-columns: 0.5fr 0.5fr;
+.post-fields {
   margin: auto;
   width: 50%;
 }
