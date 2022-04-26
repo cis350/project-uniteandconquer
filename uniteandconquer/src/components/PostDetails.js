@@ -160,14 +160,14 @@ function PostDetails() {
                           {' '}
                           {user.quantity}
                         </div>
+                        {isOwner
+                          ? (
+                            <div className="cross-sign-wrapper">
+                              <button className="cross-sign" type="button" onClick={kickUser}> kick </button>
+                            </div>
+                          )
+                          : null}
                       </div>
-                      {isOwner
-                        ? (
-                          <div className="cross-sign-wrapper">
-                            <button className="cross-sign" type="button" onClick={kickUser}> kick </button>
-                          </div>
-                        )
-                        : null}
                     </div>
                   ))}
                 </ul>
