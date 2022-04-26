@@ -17,6 +17,13 @@ list {
     color: black;
 }
 
+.post {
+}
+
+.post:hover {
+  background-color: #ffd9a0;
+}
+
 .new-post {
     display: flex;
     flex-direction: row;
@@ -31,8 +38,9 @@ list {
     height: 50px;
   
     background: #fae9c7;
-    border: 16px solid #ffd9a0;
+    border: 10px solid #ffd9a0;
     box-sizing: border-box;
+    padding: 5px;
 
     white-space: nowrap;
 }
@@ -61,8 +69,9 @@ list {
     height: 50px;
     font-size: 17px;
   
+    padding: 5px;
     background: #fae9c7;
-    border: 16px solid #ffd9a0;
+    border: 10px solid #ffd9a0;
     box-sizing: border-box;
 }
 
@@ -72,6 +81,7 @@ list {
 
 .filter {
   margin: 10px;
+  width: 40%;
 }
 
 .search-field {
@@ -94,6 +104,7 @@ textarea {
 .post-title {
   font-size: 24px;
   margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .post-content-home {
@@ -113,4 +124,36 @@ textarea {
 .menu-title {
   font-size: 25px;
   text-align: center;
+}
+
+.Dropdown-control {
+  height: 50px;
+  background-color: #FFD9A0;
+  font-size: 20px
+}
+
+.Dropdown-option {
+  font-size: 15px;
+}
+
+.Dropdown-placeholder.is-selected {
+  font-size: 16px;
+  width: 80px;
+  margin-top: 5px;
+  font-style: normal;
+  color: black;
+}
+
+span.Dropdown-arrow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+.all-posts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
