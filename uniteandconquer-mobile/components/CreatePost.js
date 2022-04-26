@@ -1,8 +1,10 @@
 import React from 'react';
 import {
   StyleSheet, View, ScrollView, Text, TextInput, Button, Modal,
+  TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import tagsList from '../data/tags.json';
 
 const postDB = require('../modules/PostDB');
 
@@ -18,7 +20,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
   },
   modalView: {
     margin: 20,
@@ -54,8 +55,11 @@ const userStyles = StyleSheet.create({
   },
   text: {
     textAlign: 'right',
+    margin: 4,
+    fontSize: 18,
+    marginBottom: 10,
   },
-  icon: {
+  button: {
     alignSelf: 'flex-end',
   },
 });
@@ -68,7 +72,7 @@ const createPostStyles = StyleSheet.create({
   },
   tags: {
     backgroundColor: '#FFCB7D',
-    width: '35%',
+    width: '50%',
     marginRight: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -98,6 +102,8 @@ const createPostStyles = StyleSheet.create({
     backgroundColor: '#FFAB2D',
     overflow: 'hidden',
     margin: 4,
+    textAlign: 'center',
+    fontSize: 15,
   },
   details: {
     marginBottom: 15,
@@ -118,8 +124,8 @@ const createPostStyles = StyleSheet.create({
   field: {
     backgroundColor: '#FFD9A0',
     padding: 5,
-    width: 235,
-    marginBottom: 10,
+    width: 170,
+    marginBottom: 50,
     height: 40,
   },
   description: {
@@ -154,6 +160,13 @@ const createPostStyles = StyleSheet.create({
   },
   tagsContainer: {
     marginTop: 10,
+  },
+  tagsBox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
   },
 });
 
@@ -246,15 +259,27 @@ export default function CreatePost({ navigation }) {
 
       <View>
         <View style={userStyles.container}>
-          <Icon name="user" size={28} style={userStyles.icon} />
+          <TouchableOpacity
+            style={{ alignSelf: 'flex-end' }}
+            onPress={() => navigation.navigate('UserProfile')}
+          >
+            <Icon name="user" size={28} style={userStyles.icon} />
+          </TouchableOpacity>
           <Text style={userStyles.text}>
-            Hi, Jeremy
+            Hello, guest!
           </Text>
-          <Text style={userStyles.text}>
-            My Chats
+          <Text style={userStyles.button}>
+            <Button
+              color="#000"
+              title="My Chats"
+            />
           </Text>
-          <Text style={userStyles.text}>
-            Log Out
+          <Text style={userStyles.button}>
+            <Button
+              color="#000"
+              title="Log In"
+              onPress={() => navigation.navigate('LogIn')}
+            />
           </Text>
         </View>
         <Text style={createPostStyles.upperBox}>Create a Post</Text>
@@ -262,12 +287,16 @@ export default function CreatePost({ navigation }) {
           <View style={createPostStyles.upper}>
             <View style={createPostStyles.tags}>
               <Text style={createPostStyles.tagsHeader}>Tags</Text>
-              <View>
-                <Text style={createPostStyles.tag} onPress={() => addTags('Tag1')}>Tag1</Text>
-                <Text style={createPostStyles.tag} onPress={() => addTags('Tag2')}>Tag2</Text>
-                <Text style={createPostStyles.tag} onPress={() => addTags('Tag3')}>Tag3</Text>
-                <Text style={createPostStyles.tag} onPress={() => addTags('Tag4')}>Tag4</Text>
-                <Text style={createPostStyles.tag} onPress={() => addTags('Tag5')}>Tag5</Text>
+              <View style={createPostStyles.tagsBox}>
+                {tagsList.map((tag) => (
+                  <Text
+                    key={tag.label}
+                    style={createPostStyles.tag}
+                    onPress={() => addTags(tag.label)}
+                  >
+                    {tag.label}
+                  </Text>
+                ))}
               </View>
             </View>
             <View style={{ flexShrink: 1 }}>

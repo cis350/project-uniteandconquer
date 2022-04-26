@@ -19,6 +19,8 @@
   padding: 25px;
   border-radius: 5px;
   width: 70%;
+  max-height: 300px;
+  overflow-y: auto
 }
 
 .add-comment {

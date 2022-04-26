@@ -13,7 +13,9 @@ function CreatePost() {
   const [quantity, setQuantity] = useState('');
   const [link, setLink] = useState('');
   const [description, setDescription] = useState('');
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState([
+    'Appliances', 'Electronics', 'Books', 'Grocery and Food',
+  ]);
   const navigate = useNavigate();
 
   const createPost = () => {
@@ -78,12 +80,9 @@ function CreatePost() {
             <div className="create-post-tags">
               <div className="tags-label">Tags</div>
               <div className="post-tags">
-                <div className="tag">Tag1</div>
-                <div className="tag">Tag2</div>
-                <div className="tag">Tag3</div>
-                <div className="tag">Tag4</div>
-                <div className="tag">Tag5</div>
-                <div className="tag">Tag6</div>
+                {tags.map((tag) => (
+                  <button type="button" className="tag">{tag}</button>
+                ))}
               </div>
             </div>
           </div>

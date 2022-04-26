@@ -39,13 +39,16 @@ function Notifications({
       <div className="toggle-notifs">
         <button className="notif-button" type="button" onClick={handleClick}>
           {' '}
-          <i className="fas fa-times" />
+          <i className="fas fa-times fa-2x" />
         </button>
 
       </div>
       <div className="notifications-title">Notifications</div>
 
+
       {messageGenerator()}
+
+      
 
     </div>
 

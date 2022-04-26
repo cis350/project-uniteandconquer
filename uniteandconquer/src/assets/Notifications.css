@@ -19,6 +19,15 @@
   padding-top: 9px;
 }
 
+.notification-box {
+  background: #fae9c7;
+  border: 2px solid #ffffff;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
 .fas.fa-times {
   float: right;
 }

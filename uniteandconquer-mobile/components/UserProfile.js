@@ -59,14 +59,14 @@ const profileContainer = StyleSheet.create({
     marginLeft: 35,
   },
   subtitle: {
-    marginTop: 5,
+    marginTop: 20,
     fontSize: 25,
     textAlign: 'center',
     fontStyle: 'italic',
   },
   post: {
     marginTop: 10,
-    padding: 10,
+    padding: 20,
     backgroundColor: '#FFD9A0',
     marginBottom: 5,
     width: 380,
@@ -131,6 +131,17 @@ const tagStyles = StyleSheet.create({
 
 export default function UserProfile({ navigation }) {
   const [showNotif, setShowNotif] = React.useState(false);
+  const [tags, setTags] = React.useState([
+    'Appliances', 'Books', 'Electronics',
+  ]);
+  const [ownedPosts, setOwnedPosts] = React.useState([
+    { id: 1, item: 'item', description: 'This post is led by Jeremy and trades [ITEM] for $[VALUE] with maturity [DATE]' },
+    { id: 2, item: 'item', description: 'This post is led by Jeremy and trades [ITEM] for $[VALUE] with maturity [DATE]' },
+    { id: 3, item: 'item', description: 'This post is led by Jeremy and trades [ITEM] for $[VALUE] with maturity [DATE]' }]);
+  const [joinedPosts, setJoinedPosts] = React.useState([
+    { id: 1, item: 'item', description: 'This post is led by Jeremy and trades [ITEM] for $[VALUE] with maturity [DATE]' },
+    { id: 2, item: 'item', description: 'This post is led by Jeremy and trades [ITEM] for $[VALUE] with maturity [DATE]' },
+    { id: 3, item: 'item', description: 'This post is led by Jeremy and trades [ITEM] for $[VALUE] with maturity [DATE]' }]);
   return (
     <ScrollView style={styles.container}>
       {showNotif && <Notification setShowNotif={setShowNotif} showNotif={showNotif} />}
@@ -176,58 +187,41 @@ export default function UserProfile({ navigation }) {
         </View>
         <Text style={profileContainer.subtitle}>My Owned Posts</Text>
         <View style={profileContainer.postContainer}>
-          <View style={profileContainer.post}>
-            <Text style={profileContainer.postHeader}>This is a Post</Text>
-            <Text style={profileContainer.postContent}>
-              This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-              maturity [DATE]
-            </Text>
-          </View>
-          <View style={profileContainer.post}>
-            <Text style={profileContainer.postHeader}>This is a Post</Text>
-            <Text style={profileContainer.postContent}>
-              This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-              maturity [DATE]
-            </Text>
-          </View>
-          <View style={profileContainer.post}>
-            <Text style={profileContainer.postHeader}>This is a Post</Text>
-            <Text style={profileContainer.postContent}>
-              This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-              maturity [DATE]
-            </Text>
-          </View>
+          {ownedPosts.map((post) => (
+            <TouchableOpacity
+              key={post.id}
+              onPress={() => navigation.navigate('PostDetails')}
+            >
+              <View key={post.id} style={profileContainer.post}>
+                <Text style={profileContainer.postHeader}>{post.item}</Text>
+                <Text style={profileContainer.postContent}>
+                  {post.description}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ))}
         </View>
         <Text style={profileContainer.subtitle}>My Joined Posts</Text>
         <View style={profileContainer.postContainer}>
-          <View style={profileContainer.post}>
-            <Text style={profileContainer.postHeader}>This is a Post</Text>
-            <Text style={profileContainer.postContent}>
-              This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-              maturity [DATE]
-            </Text>
-          </View>
-          <View style={profileContainer.post}>
-            <Text style={profileContainer.postHeader}>This is a Post</Text>
-            <Text style={profileContainer.postContent}>
-              This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-              maturity [DATE]
-            </Text>
-          </View>
-          <View style={profileContainer.post}>
-            <Text style={profileContainer.postHeader}>This is a Post</Text>
-            <Text style={profileContainer.postContent}>
-              This post is led by Jeremy and trades [ITEM] for $[VALUE] with
-              maturity [DATE]
-            </Text>
-          </View>
+          {joinedPosts.map((post) => (
+            <TouchableOpacity
+              key={post.id}
+              onPress={() => navigation.navigate('PostDetails')}
+            >
+              <View key={post.id} style={profileContainer.post}>
+                <Text style={profileContainer.postHeader}>{post.item}</Text>
+                <Text style={profileContainer.postContent}>
+                  {post.description}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ))}
         </View>
         <View style={tagStyles.position}>
           <View style={tagStyles.container}>
             <Text style={tagStyles.header}>My Interests</Text>
             <View style={tagStyles.tags}>
-              <Text style={tagStyles.tag}>tag</Text>
-              <Text style={tagStyles.tag}>tag</Text>
+              {tags.map((tag) => (<Text key={tag} style={tagStyles.tag}>{tag}</Text>))}
             </View>
           </View>
         </View>

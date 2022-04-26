@@ -19,6 +19,7 @@ import UpdateInfo from './components/UpdatePersonalInfo';
 import UpdatePassword from './components/UpdatePassword';
 import SettingInterests from './components/UpdateInterests';
 import { getUserDetails } from './modules/UserDB';
+import tagsList from './data/tags.json';
 
 // styling ---------
 
@@ -130,8 +131,9 @@ function HomeScreen({ navigation, route }) {
         }
       });
     }
-  }, [route.params?.userId]);
+  }, [route.params?.userId, firstName]);
 
+  // eslint-disable-next-line no-unused-vars
   const [posts, setPosts] = React.useState([
     { id: 1, item: 'item', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat ex vel arcu eleifend, vestibulum lacinia libero scelerisque.' },
     { id: 2, item: 'item', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat ex vel arcu eleifend, vestibulum lacinia libero scelerisque.' },
@@ -140,13 +142,14 @@ function HomeScreen({ navigation, route }) {
   const [showNotif, setShowNotif] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState([]);
-  const [items, setItems] = React.useState([
-    { key: 'tag1', label: 'tag1', value: 'tag1' },
-    { key: 'tag2', label: 'tag2', value: 'tag2' },
-    { key: 'tag3', label: 'tag3', value: 'tag3' },
-  ]);
+  const [items, setItems] = React.useState(tagsList);
   const search = () => {
 
+  };
+
+  const handleLogOut = () => {
+    navigation.setParams({ userId: '' });
+    setFirstName('');
   };
 
   return (
@@ -185,7 +188,7 @@ function HomeScreen({ navigation, route }) {
             <Button
               color="#000"
               title="Log Out"
-              onPress={() => setFirstName('')}
+              onPress={handleLogOut}
             />
           )}
         </Text>
