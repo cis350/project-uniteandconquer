@@ -325,7 +325,7 @@ export default function PostDetails({ navigation }) {
             <TextInput
               placeholder="quantity"
               onChangeText={setQuantity}
-              value={quantity}
+              value={String(quantity)}
             />
             <View style={postDetailStyles.buttons}>
               <View style={postDetailStyles.LeftButton}><Button color="#000" title={join ? 'Leave' : 'Join'} onPress={handleJoinLeave} /></View>
