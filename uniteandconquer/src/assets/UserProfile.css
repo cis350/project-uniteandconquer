@@ -1,7 +1,11 @@
+
 td,
 th {
   border: 10px solid #ffd9a0;
   box-sizing: border-box;
+  max-width: 400px;
+  width: 400px;
+  min-width: 400px;
 }
 
 table {
@@ -14,7 +18,6 @@ th {
 }
 
 td {
-  max-width: 700px;
   padding: 15px;
 }
 
@@ -25,6 +28,9 @@ td {
 
 .post-content {
   font-size: 17px;
+  max-width: 400px;
+  width: 400px;
+  min-width: 400px;
 }
 
 .user-profile-page {

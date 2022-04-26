@@ -67,6 +67,11 @@ function Home() {
               maturity
               {' '}
               {post.createdAt}
+              {' '}
+              <span className="post-id">
+                post ID:
+                {post.id}
+              </span>
             </div>
           </Link>
         </li>
@@ -101,10 +106,12 @@ function Home() {
         <div className="menu-bar">
           <div className="new-post">
             <Link className="link" to="/create-post">
-              <div className="text">New Post</div>
+              <div className="new-post-text">New Post</div>
             </Link>
           </div>
-          {tagFilter()}
+          <div className="filter">
+            {tagFilter()}
+          </div>
           <div className="search-field">
             <input onChange={(e) => setSearchString(e.target.value)} />
           </div>
