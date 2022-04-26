@@ -167,7 +167,7 @@ export default function PostDetails({ navigation }) {
           if (success2) {
             setMembers(memberList);
           } else {
-            console.log(err2);
+            setErrorMessage(err2);
           }
         });
       } else { setErrorMessage(err); }
@@ -185,19 +185,18 @@ export default function PostDetails({ navigation }) {
   useEffect(() => {
     PostDB.getPostMembers(postId, (success, memberList, err) => {
       if (success) {
-        console.log(memberList);
         setMembers(memberList);
         if (memberList.some((e) => e.id === userId)) {
           setJoin(true);
         }
       } else {
-        console.log(err);
+        setErrorMessage(err);
       }
       PostDB.getOwner(postId, (success2, owner, err2) => {
         if (success2) {
           setOwnerID(owner);
         } else {
-          console.log(err2);
+          setErrorMessage(err2);
         }
       });
     });
@@ -205,15 +204,15 @@ export default function PostDetails({ navigation }) {
   const handleKick = (memberID) => {
     PostDB.kickMembers(memberID, postId, (success, err) => {
       if (success) {
-        console.log(members.filter((item) => item.id !== memberID));
+        //
         setMembers(members.filter((item) => item.id !== memberID));
       } else {
-        console.log(err);
+        setErrorMessage(err);
       }
     });
   };
   function kickButton(memberID) {
-    console.log(ownerID === userId);
+    //
     if (ownerID === userId && ownerID !== memberID) {
       return (
         <View style={postDetailStyles.LeftButton}>
