@@ -65,7 +65,7 @@ function UserSettingsPersonalInformation() {
         <div className="post-input">
           <div className="all-fields">
             {' '}
-            <div className="post-text-fields">
+            <div className="post-fields">
               <div className="post-field">
                 <div className="label">Username</div>
                 <input onChange={(e) => setUsername(e.target.value)} />

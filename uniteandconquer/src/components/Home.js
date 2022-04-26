@@ -52,29 +52,31 @@ function Home() {
       myStorage.setItem('PostID', post.id);
 
       return (
-        <li>
-          <Link className="link" to="/post-details">
-            <div className="post-title">This is Post</div>
-            <div className="post-content">
-              This post is led by Jeremy and trades
-              {' '}
-              {post.itemName}
-              {' '}
-              for $
-              {post.pricePerItem}
-              {' '}
-              with
-              maturity
-              {' '}
-              {post.createdAt}
-              {' '}
-              <span className="post-id">
-                post ID:
-                {post.id}
-              </span>
-            </div>
-          </Link>
-        </li>
+        <div className="post">
+          <li>
+            <Link className="link" to="/post-details">
+              <div className="post-title">This is Post</div>
+              <div className="post-content">
+                This post is led by Jeremy and trades
+                {' '}
+                {post.itemName}
+                {' '}
+                for $
+                {post.pricePerItem}
+                {' '}
+                with
+                maturity
+                {' '}
+                {post.createdAt}
+                {' '}
+                <span className="post-id">
+                  post ID:
+                  {post.id}
+                </span>
+              </div>
+            </Link>
+          </li>
+        </div>
       );
     },
   );
@@ -119,9 +121,11 @@ function Home() {
             Search
           </button>
         </div>
-        <list>
-          {postsListGenerator()}
-        </list>
+        <div className="all-posts">
+          <list>
+            {postsListGenerator()}
+          </list>
+        </div>
       </div>
     </div>
   );
