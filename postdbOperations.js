@@ -16,6 +16,14 @@ const connect = async (url) => {
   }
 };
 
+
+
+const transactionOptions = {
+  readPreference: 'primary',
+  readConcern: { level: 'local' },
+  writeConcern: { w: 'majority' }
+};
+
 const addPost = async (
   db,
   post,
@@ -121,34 +129,40 @@ const joinGroup = async (
     throw new Error('fail to add new comment');
   }
 };
-// has error
+
 const leaveGroup = async (
-  db,
+  sessiondb,
   userInfo,
 ) => {
+  const session = sessiondb.startSession();
   try {
-    await db.collection('postDB').aggregate(
-      {
-        $match: { _id: ObjectId(userInfo.postId) },
-      },
-
-      {
-        $inc: {
-          itemNumCurrent: -1 * {
-            $getField:
-                        {
-                          field: userInfo.userId,
-                          input: '$group',
-                        },
-
-          },
-        },
-      },
-      { $pull: { group: { userId: userInfo.userId } } },
-
-    );
-  } catch (e) {
-    throw new Error('fail to add new comment');
+    await session.withTransaction(async () => {
+      const coll1 = sessiondb.db('uniteconquer').collection('postDB');
+      
+      // Important:: You must pass the session to the operations
+      const memberList = await coll1.findOne({ _id: ObjectId(userInfo.postId) }, { session });
+      console.log(memberList);
+      
+      const userIndx = memberList.group.findIndex(p => p.userId == userInfo.userId);
+      console.log(userIndx);
+      if (userIndx !== -1) {
+        const num = memberList.group[userIndx].quantity;
+        console.log(num);
+        await coll1.updateOne({ _id: ObjectId(userInfo.postId) },
+          {
+            $inc: { itemNumCurrent: -1 * (num) },
+            $pull:{ group: { userId: userInfo.userId } }  },
+          { session });
+      }else{throw new Error('fail to add new comment');}
+    }, transactionOptions);
+  } 
+  catch (e) {
+    console.log(e);
+    throw new Error('fail to leave group');
+  }
+  finally {
+    await session.endSession();
+    // await client.close();
   }
 };
 
