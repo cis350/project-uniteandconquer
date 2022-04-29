@@ -127,8 +127,15 @@ const getUserDetails = async (
   }
 }
 
-const getChats = async () => {
-
+const getChats = async (
+  db,
+  userId,
+) => {
+  try {
+    //
+  } catch (e) {
+    throw new Error('fail to get chats');
+  }
 }
 
 module.exports = {
