@@ -54,8 +54,7 @@ function PostDetails() {
 
   const joinGroup = () => {
     const userID = myStorage.getItem('UserID');
-    const quantity = 2;
-    PostDB.joinGroup(userID, postID, quantity, (success, err) => {
+    PostDB.joinGroup(userID, postID, desiredQuantity, (success, err) => {
       if (success) {
         setJoined(true);
       } else {
