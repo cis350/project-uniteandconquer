@@ -14,13 +14,13 @@ async function addPost(
 ) {
   const response = await axios.post(`${rootURL}/addPost`, {
     itemName: `${itemName}`,
-    itemNumTarget: `${itemNumTarget}`,
-    itemNumCurrent: `${itemNumCurrent}`,
-    pricePerItem: `${pricePerItem}`,
+    itemNumTarget: Number(itemNumTarget),
+    itemNumCurrent: Number(itemNumCurrent),
+    pricePerItem: Number(pricePerItem),
     itemURL: `${itemURL}`,
     itemDescription: `${itemDescription}`,
     ownerId: `${ownerId}`,
-    tags: `${tags}`,
+    tags: tags,
   });
   const result = response.data;
   return callback(result.success, result.data, result.error);
@@ -81,14 +81,14 @@ async function joinGroup(userId, postId, quantity, callback) {
   const response = await axios.post(`${rootURL}/joinGroup`, {
     userId: `${userId}`,
     postId: `${postId}`,
-    quantity: `${quantity}`,
+    quantity: Number(quantity),
   });
   const result = response.data;
   return callback(result.success, result.error);
 }
 
 async function leaveGroup(userId, postId, callback) {
-  const response = await axios.post(`${rootURL}/joinGroup`, {
+  const response = await axios.post(`${rootURL}/leaveGroup`, {
     userId: `${userId}`,
     postId: `${postId}`,
   });
@@ -97,10 +97,10 @@ async function leaveGroup(userId, postId, callback) {
 }
 
 async function changePostStatus(userId, postId, newStatus, callback) {
-  const response = await axios.post(`${rootURL}/joinGroup`, {
+  const response = await axios.post(`${rootURL}/changePostStatus`, {
     userId: `${userId}`,
     postId: `${postId}`,
-    newStatus: `${newStatus}`,
+    newStatus: Number(newStatus),
   });
   const result = response.data;
   return callback(result.success, result.error);

@@ -25,7 +25,7 @@ function Home() {
   const [selectedTags, setSelectedTags] = useState([]);
   const myStorage = window.sessionStorage;
   useEffect(() => {
-    PostDB.getSortedPostsInRange(0, 19, (success, postInfo, err) => {
+    PostDB.getSortedPostBySearch(0, 19, '', [], (success, postInfo, err) => {
       if (success) {
         setPosts(postInfo);
       } else {
