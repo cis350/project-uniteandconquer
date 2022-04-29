@@ -8,7 +8,7 @@ const userlib = require('./userdbOperation');
 const postlib = require('./postdbOperations');
 
 let db;
-let sessiondb;
+
 
 webapp.use(express.json());
 webapp.use(
@@ -192,9 +192,9 @@ webapp.post('/leaveGroup', async (req, resp) => {
     resp.status(404).json({ error: 'postId not provided' });
   }
   try {
-    await postlib.leaveGroup(sessiondb, req.body);
+    await postlib.leaveGroup(db, req.body);
     // send the response
-    resp.status(201).json({ message: 'user join' });
+    resp.status(201).json({ message: 'user leave' });
   } catch (err) {
     console.log(err);
     resp.status(500).json({ error: 'try again later' });
@@ -231,7 +231,6 @@ webapp.use((_req, res) => {
 const port = process.env.PORT || 8080;
 webapp.listen(port, async () => {
   db = await userlib.connect(url);
-  sessiondb = new MongoClient(uri);
-  await sessiondb.connect();
+  
   console.log(`Server running on port:${port}`);
 });

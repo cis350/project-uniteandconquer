@@ -131,38 +131,24 @@ const joinGroup = async (
 };
 
 const leaveGroup = async (
-  sessiondb,
+  db,
   userInfo,
 ) => {
-  const session = sessiondb.startSession();
   try {
-    await session.withTransaction(async () => {
-      const coll1 = sessiondb.db('uniteconquer').collection('postDB');
-      
-      // Important:: You must pass the session to the operations
-      const memberList = await coll1.findOne({ _id: ObjectId(userInfo.postId) }, { session });
-      console.log(memberList);
-      
+      const memberList = await db.collection('postDB').findOne({ _id: ObjectId(userInfo.postId) });
       const userIndx = memberList.group.findIndex(p => p.userId == userInfo.userId);
-      console.log(userIndx);
       if (userIndx !== -1) {
         const num = memberList.group[userIndx].quantity;
         console.log(num);
-        await coll1.updateOne({ _id: ObjectId(userInfo.postId) },
+        await db.collection('postDB').updateOne({ _id: ObjectId(userInfo.postId) },
           {
             $inc: { itemNumCurrent: -1 * (num) },
-            $pull:{ group: { userId: userInfo.userId } }  },
-          { session });
+            $pull:{ group: { userId: userInfo.userId } }  });
       }else{throw new Error('fail to add new comment');}
-    }, transactionOptions);
-  } 
+  }
   catch (e) {
     console.log(e);
     throw new Error('fail to leave group');
-  }
-  finally {
-    await session.endSession();
-    // await client.close();
   }
 };
 
