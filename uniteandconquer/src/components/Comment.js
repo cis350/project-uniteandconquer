@@ -4,26 +4,23 @@ import '../assets/Comment.css';
 const postDB = require('../modules/PostDB');
 
 function Comment(props) {
+  const { postID } = props;
   const [commentInput, setCommentInput] = useState('');
   const [comments, setComments] = useState(null);
-  /**
-   * temperary information
-   */
-  const firstName = 'Yuxi';
-  const secondName = 'Dai';
-  const authorID = 1;
-  const postID = 1;
 
   useEffect(() => {
-    const { histComments } = props;
-    setComments(histComments);
+    postDB.getPost(postID, (success, details) => {
+      if (success) {
+        setComments(details.comments)
+      }
+    });
   }, []);
 
   const addComment = () => {
     if (commentInput && commentInput.length > 0) {
       const newComment = {
-        createdAt: new Date().getDate(),
-        author: { firstName, secondName },
+        createdAt: new Date(),
+        author: { firstName, lastName },
         content: commentInput,
       };
       setComments([...comments, newComment]);

@@ -174,7 +174,7 @@ function PostDetails() {
             </div>
           </div>
           <div className="comment-section">
-            <Comment histComments={postDetails.comments} />
+            <Comment postID={postID} />
           </div>
           <div className="post-detail-tags">
             <div className="tags-label">Tags</div>
