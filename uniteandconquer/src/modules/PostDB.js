@@ -78,7 +78,7 @@ async function getSortedPostsByKeyword(startIdx, endIdx, keyword, callback) {
 }
 
 async function joinGroup(userId, postId, quantity, callback) {
-  const response = await axios.get(`${rootURL}/joinGroup`, {
+  const response = await axios.post(`${rootURL}/joinGroup`, {
     userId: `${userId}`,
     postId: `${postId}`,
     quantity: `${quantity}`,
@@ -88,7 +88,7 @@ async function joinGroup(userId, postId, quantity, callback) {
 }
 
 async function leaveGroup(userId, postId, callback) {
-  const response = await axios.get(`${rootURL}/joinGroup`, {
+  const response = await axios.post(`${rootURL}/joinGroup`, {
     userId: `${userId}`,
     postId: `${postId}`,
   });
@@ -97,7 +97,7 @@ async function leaveGroup(userId, postId, callback) {
 }
 
 async function changePostStatus(userId, postId, newStatus, callback) {
-  const response = await axios.get(`${rootURL}/joinGroup`, {
+  const response = await axios.post(`${rootURL}/joinGroup`, {
     userId: `${userId}`,
     postId: `${postId}`,
     newStatus: `${newStatus}`,

@@ -56,7 +56,7 @@ const getPost = async (
     const result = await db.collection('postDB').findOne({ _id: ObjectId(postId) });
     return result;
   } catch (e) {
-    throw new Error('fail to add new post');
+    throw new Error('fail to get post');
   }
 };
 
@@ -98,7 +98,7 @@ const getSortedPostBySearch = async (
 
     return result;
   } catch (e) {
-    throw new Error('fail to add new post');
+    throw new Error('fail to search for match post');
   }
 };
 
@@ -125,7 +125,7 @@ const joinGroup = async (
 
     );
   } catch (e) {
-    throw new Error('fail to add new comment');
+    throw new Error('fail to join group');
   }
 };
 
@@ -146,7 +146,7 @@ const leaveGroup = async (
           $pull: { group: { userId: userInfo.userId } },
         },
       );
-    } else { throw new Error('fail to add new comment'); }
+    } else { throw new Error('fail to leave group'); }
   } catch (e) {
     console.log(e);
     throw new Error('fail to leave group');
@@ -166,7 +166,7 @@ const changePostStatus = async (
 
     );
   } catch (e) {
-    throw new Error('fail to add new comment');
+    throw new Error('fail to change post status');
   }
 };
 module.exports = {
