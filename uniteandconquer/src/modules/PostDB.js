@@ -77,7 +77,7 @@ function getSortedPostsByKeyword(startIdx, endIdx, keyword, callback) {
 
 function joinGroup(userId, postId, quantity, callback) {
   const response = await axios.get(`${rootURL}/joinGroup`, {
-    authorId: `${authorId}`,
+    userId: `${userId}`,
     postId: `${postId}`,
     quantity: `${quantity}`,
   });
