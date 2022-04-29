@@ -1,43 +1,30 @@
-
 td,
 th {
-  border: 8px solid #ffd9a0;
+  border: 10px solid #ffd9a0;
   box-sizing: border-box;
-  max-width: 430px;
-  width: 430px;
-  min-width: 430px;
 }
 
 table {
   border-collapse: collapse;
-  margin: 0;
+  margin-left: 50px;
 }
 
 th {
-  font-size: 23px;
+  font-size: 25px;
 }
 
 td {
-
-  width: 800px;
-
+  max-width: 700px;
   padding: 15px;
 }
 
-td:hover {
-  background-color: #ffd9a0;
-}
-
 .post-title {
-  font-size: 23px;
+  font-size: 24px;
   margin-bottom: 20px;
 }
 
 .post-content {
   font-size: 17px;
-  max-width: 400px;
-  width: 400px;
-  min-width: 400px;
 }
 
 .user-profile-page {
@@ -70,9 +57,4 @@ td:hover {
 
 .bell-button:hover {
   color: rgb(133, 235, 85);
-}
-
-.table-lists {
-  display: flex;
-  flex-direction: row;
 }

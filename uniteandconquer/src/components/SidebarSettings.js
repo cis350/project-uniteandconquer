@@ -16,14 +16,19 @@ function SidebarSettings() {
           <div className="text">Back to Main Page</div>
         </Link>
       </div>
-      <div className="personal-information">
-        <Link className="link" to="/user-settings-personal-information">
-          <div className="text">Personal Information</div>
+      <div className="notification">
+        <Link className="link" to="/user-settings">
+          <div className="text">Notification</div>
         </Link>
       </div>
       <div className="password">
         <Link className="link" to="/user-settings-password">
           <div className="text">Password</div>
+        </Link>
+      </div>
+      <div className="personal-information">
+        <Link className="link" to="/user-settings-personal-information">
+          <div className="text">Personal Information</div>
         </Link>
       </div>
     </div>
