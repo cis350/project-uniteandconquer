@@ -55,9 +55,27 @@ webapp.post('/addPost', async (req, resp) => {
   }
   try {
     const myDate = new Date();
-    const member = { userId: req.body.ownerId, quantity: req.body.itemNumCurrent };
+    const userDetails = {
+      phone: { countryCode: '1', phoneNumber: '9783999395' },
+      email: 'yuyingf@seas.upenn.edu',
+      firstName: 'Yuying',
+      lastName: 'Fan',
+      interests: ['Food', 'Home'],
+      posts: [{
+        id: '5087901e810c19729de860ea', itemName: 'AA Batteries', itemNumTarget: 20, itemNumCurrent: 5, pricePerItem: 0.46, ownerName: 'Yuying Fan', status: 0, tags: ['Home'],
+      }],
+      wishList: [{
+        id: '507f191e810c19729de860ea', itemName: 'Trash Can', itemNumTarget: 5, itemCurrent: 3, pricePerItem: 2.0, ownerName: 'Yuxi Dai', status: 0, tags: ['Home'],
+      },
+      {
+        id: '507f191e810c19729dccba45', itemName: 'Laundry Bags', itemNumTarget: 2, itemCurrent: 3, pricePerItem: 14.99, ownerName: 'Roy Bae', status: 1, tags: ['Home'],
+      }],
+    };
+    const member = { userId: req.body.ownerId, firstName: userDetails.firstName, lastName: userDetails.lastName, quantity: req.body.itemNumCurrent };
+    const ownerInfo = {firstName: userDetails.firstName, lastName: userDetails.lastName, phone: userDetails.phone, email: userDetails.email};
     const post = {
       ...req.body,
+      ownerInfo: ownerInfo,
       comments: [],
       createdAt: myDate,
       status: 0,
@@ -182,13 +200,14 @@ webapp.post('/changePostStatus', async (req, resp) => {
   }
 });
 
+
 // Default response for any other request
 webapp.use((_req, res) => {
   res.status(404);
 });
 
 // Start server
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 webapp.listen(port, async () => {
   db = await userlib.connect(url);
   console.log(`Server running on port:${port}`);
