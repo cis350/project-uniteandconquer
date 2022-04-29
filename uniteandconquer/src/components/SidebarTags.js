@@ -2,10 +2,10 @@ import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/SidebarTags.css';
 
-function SidebarTags() {
-  const tags = useRef([
-    'Appliances', 'Beauty & Care', 'Health & Household', 'Electronics',
-  ]);
+
+function SidebarTags({ tags }) {
+  const tagListGenerator = () => tags.map((tag) => (<div className="preference-tag">{tag}</div>));
+
   return (
     <div className="sidebar">
       <div className="greeting-box">
@@ -20,15 +20,15 @@ function SidebarTags() {
         </Link>
       </div>
       <div className="settings-box">
-        <Link className="link" to="/user-settings">
+        <Link className="link" to="/user-settings-personal-information">
           <div className="text">Settings</div>
         </Link>
       </div>
       <div className="preferences-box">
         <div className="preferences-title">My Preferences</div>
-        {tags.current.map((tag) => (
-          <button type="button" key={tag} className="preference-tag">{tag}</button>
-        ))}
+
+        {tagListGenerator()}
+
       </div>
     </div>
   );
