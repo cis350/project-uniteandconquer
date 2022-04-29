@@ -39,7 +39,14 @@ const addComment = async (
         _id: ObjectId(comment.postId),
       },
       {
-        $push: { comments: { author: {firstName: comment.firstName, lastName: comment.lastName}, content: comment.content, createdAt: new Date() } },
+        $push: {
+          comments: {
+            author:
+          { firstName: comment.firstName, lastName: comment.lastName },
+            content: comment.content,
+            createdAt: new Date(),
+          },
+        },
       },
 
     );
@@ -158,18 +165,28 @@ const changePostStatus = async (
   statusInfo,
 ) => {
   try {
-    console.log(statusInfo.ownerId, statusInfo.userId)
+    console.log(statusInfo.ownerId, statusInfo.userId);
     await db.collection('postDB').updateOne(
       {
         _id: ObjectId(statusInfo.postId),
       },
       [
-        { $set: { status: { $switch: {
-          branches: [
-            {case: { $eq: [statusInfo.ownerId, statusInfo.userId]}, then: statusInfo.newStatus}
-          ]
-        }}}},
-      ]
+        {
+          $set: {
+            status: {
+              $switch: {
+                branches: [
+                  {
+                    case:
+                    { $eq: [statusInfo.ownerId, statusInfo.userId] },
+                    then: statusInfo.newStatus,
+                  },
+                ],
+              },
+            },
+          },
+        },
+      ],
     );
   } catch (e) {
     throw new Error('fail to change post status');
