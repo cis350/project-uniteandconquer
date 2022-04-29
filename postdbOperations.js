@@ -47,7 +47,7 @@ const addComment = async (
         _id: ObjectId(comment.postId),
       },
       {
-        $push: { comments: { authorId: comment.authorId, content: comment.content } },
+        $push: { comments: { author: {firstName: comment.firstName, lastName: comment.lastName}, content: comment.content, createdAt: new Date() } },
       },
 
     );

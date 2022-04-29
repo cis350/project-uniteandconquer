@@ -105,8 +105,23 @@ webapp.post('/addComment', async (req, resp) => {
     resp.status(404).json({ error: 'username not provided' });
   }
   try {
-    console.log(req.body);
-    await postlib.addComment(db, req.body);
+    const userDetails = {
+      phone: { countryCode: '1', phoneNumber: '9783999395' },
+      email: 'yuyingf@seas.upenn.edu',
+      firstName: 'Yuying',
+      lastName: 'Fan',
+      interests: ['Food', 'Home'],
+      posts: [{
+        id: '5087901e810c19729de860ea', itemName: 'AA Batteries', itemNumTarget: 20, itemNumCurrent: 5, pricePerItem: 0.46, ownerName: 'Yuying Fan', status: 0, tags: ['Home'],
+      }],
+      wishList: [{
+        id: '507f191e810c19729de860ea', itemName: 'Trash Can', itemNumTarget: 5, itemCurrent: 3, pricePerItem: 2.0, ownerName: 'Yuxi Dai', status: 0, tags: ['Home'],
+      },
+      {
+        id: '507f191e810c19729dccba45', itemName: 'Laundry Bags', itemNumTarget: 2, itemCurrent: 3, pricePerItem: 14.99, ownerName: 'Roy Bae', status: 1, tags: ['Home'],
+      }],
+    };
+    await postlib.addComment(db, {...req.body, firstName: userDetails.firstName, lastName: userDetails.lastName});
     // send the response
     resp.status(201).json({ message: 'comment added' });
   } catch (err) {
