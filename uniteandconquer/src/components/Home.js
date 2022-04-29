@@ -49,7 +49,7 @@ function Home() {
 
   // get all posts when user get into the page
   useEffect(() => {
-    PostDB.getSortedPostsInRange(0, 19, (success, postInfo, err) => {
+    PostDB.getSortedPostBySearch(0, 19, '', [], (success, postInfo, err) => {
       if (success) {
         setPosts(postInfo);
       } else {

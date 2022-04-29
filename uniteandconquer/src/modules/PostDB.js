@@ -1,55 +1,49 @@
 /* Post and comment operations */
-function addPost(
+import axios from 'axios';
+const rootURL = 'http://localhost:8080';
+async function addPost(
   itemName,
   itemNumTarget,
   itemNumCurrent,
   pricePerItem,
   itemURL,
   itemDescription,
-  // dubiously needed
   ownerId,
   tags,
   callback,
 ) {
-  return callback(true, '507f191e810c19729de860ea', null);
+  const response = await axios.post(`${rootURL}/addPost`, {
+    itemName: `${itemName}`,
+    itemNumTarget: Number(itemNumTarget),
+    itemNumCurrent: Number(itemNumCurrent),
+    pricePerItem: Number(pricePerItem),
+    itemURL: `${itemURL}`,
+    itemDescription: `${itemDescription}`,
+    ownerId: `${ownerId}`,
+    tags: tags,
+  });
+  const result = response.data;
+  return callback(result.success, result.data, result.error);
 }
 
-function addComment(authorId, postId, content, callback) {
-  return callback(true, '507f191e8786gkbd9de860ea', null);
+async function addComment(authorId, postId, content, callback) {
+  const response = await axios.post(`${rootURL}/addComment`, {
+    authorId: `${authorId}`,
+    postId: `${postId}`,
+    content: `${content}`,
+  });
+  const result = response.data;
+  return callback(result.success, result.error);
 }
 
-function getPost(id, callback) {
-  return callback(true, {
-    itemName: 'AA Batteries',
-    itemNumTarget: 20,
-    itemNumCurrent: 5,
-    pricePerItem: 0.46,
-    itemURL: 'https://www.amazon.com/AmazonBasics-Performance-Alkaline-Batteries-20-Pack/dp/B00NTCH52W/ref=sr_1_5?keywords=20+aa+batteries&qid=1647322286&sprefix=20+aa+ba%2Caps%2C208&sr=8-5',
-    itemDescription: 'AA batteries for anything',
-    owner: {
-      firstName: 'Yuying',
-      lastName: 'Fan',
-      phone: { countryCode: '1', phoneNumber: '9783999395' },
-      email: 'yuyingf@seas.upenn.edu',
-    },
-    group: [{ firstName: 'Yuying', lastName: 'Fan', quantity: 2 },
-      { firstName: 'Zhihang', lastName: 'Yuan', quantity: 3 }],
-    comments: [{
-      content: 'Are you on campus',
-      author: { firstName: 'Dee', lastname: 'Xie' },
-      createdAt: '2022-03-15T12:53:14.924Z',
-    }, {
-      content: 'Yes I am',
-      author: { firstName: 'Yuying', lastname: 'Fan' },
-      createdAt: '2022-03-15T14:53:17.926Z',
-    }],
-    createdAt: '2022-03-14T13:14:14.925Z',
-    status: 0,
-    tags: ['Home'],
-  }, null);
+async function getPost(id, callback) {
+  const response = await axios.get(`${rootURL}/getPost/${id}`, {
+  });
+  const result = response.data;
+  return callback(result.success, result.data, result.error);
 }
 
-function getAllPosts(callback) {
+async function getAllPosts(callback) {
   return callback(true, [{
     id: '5087901e810c109679e860ea', itemName: 'Ramen', pricePerItem: 0.99, createdAt: '2022-03-15T15:14:17.925Z', tags: ['Food'],
   }, {
@@ -57,38 +51,59 @@ function getAllPosts(callback) {
   }], null);
 }
 
-function getSortedPostsInRange(startIdx, endIdx, callback) {
+async function getSortedPostsInRange(startIdx, endIdx, callback) {
   return getAllPosts(callback);
 }
 
-function getSortedPostsByTags(startIdx, endIdx, tags, callback) {
+async function getSortedPostsByTags(startIdx, endIdx, tags, callback) {
   return callback(true, [{
     id: '5087901e810c19729de860ea', itemName: 'AA Batteries', pricePerItem: 0.46, createdAt: '2022-03-14T13:14:14.925Z', tags: ['Home'],
   }], null);
 }
 
-function getSortedPostsBySearch(startIdx, endIdx, tags, keywords, callback) {
-  return callback(true, [{
-    id: '5087901e810c19729de860ea', itemName: 'AA Batteries', pricePerItem: 0.46, createdAt: '2022-03-14T13:14:14.925Z', tags: ['Home'],
-  }], null);
+async function getSortedPostBySearch(startIdx, endIdx, keywords, tags, callback) {
+  const url = `${rootURL}/getSortedPostBySearch/${startIdx}/${endIdx}/?keywords=${keywords}`;
+  for (const tag of tags) {
+    url = url + `&tags[]=${tag}`;
+  }
+  const response = await axios.get(url);
+  const result = response.data;
+  return callback(result.success, result.data, result.error);
 }
 
-function getSortedPostsByKeyword(startIdx, endIdx, keyword, callback) {
+async function getSortedPostsByKeyword(startIdx, endIdx, keyword, callback) {
   return callback(true, [{
     id: '5087901e810c109679e860ea', itemName: 'Ramen', pricePerItem: 0.99, createdAt: '2022-03-15T15:14:17.925Z', tags: ['Food'],
   }], null);
 }
 
-function joinGroup(userId, postId, quantity, callback) {
-  return callback(true, null);
+async function joinGroup(userId, postId, quantity, callback) {
+  const response = await axios.post(`${rootURL}/joinGroup`, {
+    userId: `${userId}`,
+    postId: `${postId}`,
+    quantity: Number(quantity),
+  });
+  const result = response.data;
+  return callback(result.success, result.error);
 }
 
-function leaveGroup(userId, postId, callback) {
-  return callback(true, null);
+async function leaveGroup(userId, postId, callback) {
+  const response = await axios.post(`${rootURL}/leaveGroup`, {
+    userId: `${userId}`,
+    postId: `${postId}`,
+  });
+  const result = response.data;
+  return callback(result.success, result.error);
 }
 
-function changePostStatus(userId, postId, newStatus, callback) {
-  return callback(true, null);
+async function changePostStatus(userId, postId, newStatus, callback) {
+  const response = await axios.post(`${rootURL}/changePostStatus`, {
+    userId: `${userId}`,
+    postId: `${postId}`,
+    newStatus: Number(newStatus),
+  });
+  const result = response.data;
+  return callback(result.success, result.error);
 }
 
 export {
@@ -96,10 +111,11 @@ export {
   addComment,
   getPost,
   getSortedPostsInRange,
-  getSortedPostsBySearch,
   getSortedPostsByTags,
   getSortedPostsByKeyword,
   joinGroup,
   leaveGroup,
   changePostStatus,
+  getSortedPostBySearch,
 };
+

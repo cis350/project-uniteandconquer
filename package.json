@@ -1,0 +1,37 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend of unite and conquer",
+  "main": "server.js",
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-react": "^7.29.4"
+  },
+  "scripts": {
+    "test": "jest --coverage",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cis350/project-uniteandconquer.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "cis350",
+    "project"
+  ],
+  "author": "CIS350",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cis350/project-uniteandconquer/issues"
+  },
+  "homepage": "https://github.com/cis350/project-uniteandconquer#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "mongodb": "^4.5.0"
+  }
+}
