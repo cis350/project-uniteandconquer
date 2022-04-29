@@ -132,14 +132,14 @@ function Chat() {
       <div className="menu-title"><h1>{getGroupName(currGroup)}</h1></div>
       <div className="chat-main">
         <div className="chat-side">
-          <div className="main-page">
+          <div className="home-button">
             <Link className="link" to="/">
-              <div className="text">Back to Main Page</div>
+              <div className="">Back to Main Page</div>
             </Link>
           </div>
           {groupList.map((group) => (
             <div
-              className={group.groupName}
+              className="chat-button"
               role="button"
               tabIndex={0}
               onClick={() => setCurrentGroup(group.id)}

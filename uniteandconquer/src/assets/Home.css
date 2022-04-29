@@ -2,9 +2,10 @@ li {
   border: 10px solid #ffd9a0;
   box-sizing: border-box;
   min-width: 700px;
+  width: 700px;
   padding: 15px;
 
-  white-space: nowrap;
+  white-space: wrap;
 }
 
 list {
@@ -16,24 +17,36 @@ list {
     color: black;
 }
 
+.post {
+}
+
+.post:hover {
+  background-color: #ffd9a0;
+}
+
 .new-post {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    text-align: center;
+    
+    margin: 10px;
   
-    position: relative;
-    width: 150px;
+    position: block;
+    max-width: 100px;
     height: 50px;
   
     background: #fae9c7;
-    border: 16px solid #ffd9a0;
+    border: 10px solid #ffd9a0;
     box-sizing: border-box;
-    margin: 5px;
-    margin-right: 100px;
+    padding: 5px;
 
     white-space: nowrap;
+}
+
+.new-post:hover {
+  background-color: #ffd9a0;
 }
 
 .menu-bar {
@@ -41,10 +54,7 @@ list {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 10px;
-
-    position: relative;
-    right: 90px;
+    padding: 15px;
 }
 
 .searchButton {
@@ -59,9 +69,23 @@ list {
     height: 50px;
     font-size: 17px;
   
+    padding: 5px;
     background: #fae9c7;
-    border: 16px solid #ffd9a0;
+    border: 10px solid #ffd9a0;
     box-sizing: border-box;
+}
+
+.searchButton:hover {
+  background-color: #ffd9a0;
+}
+
+.filter {
+  margin: 10px;
+  width: 40%;
+}
+
+.search-field {
+  margin-left: 10px;
 }
 
 textarea {
@@ -80,10 +104,16 @@ textarea {
 .post-title {
   font-size: 24px;
   margin-bottom: 20px;
+  font-weight: bold;
 }
 
-.post-content {
+.post-content-home {
   font-size: 17px;
+  min-width: 700px;
+}
+
+.post-id {
+  font-size: 0;
 }
 
 .home-page {
@@ -94,4 +124,36 @@ textarea {
 .menu-title {
   font-size: 25px;
   text-align: center;
+}
+
+.Dropdown-control {
+  height: 50px;
+  background-color: #FFD9A0;
+  font-size: 20px
+}
+
+.Dropdown-option {
+  font-size: 15px;
+}
+
+.Dropdown-placeholder.is-selected {
+  font-size: 16px;
+  width: 80px;
+  margin-top: 5px;
+  font-style: normal;
+  color: black;
+}
+
+span.Dropdown-arrow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+.all-posts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

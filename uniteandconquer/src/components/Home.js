@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.css';
 // import Dropdown from 'react-dropdown';
@@ -24,6 +24,30 @@ function Home() {
   const [posts, setPosts] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const myStorage = window.sessionStorage;
+
+  // time interval hook
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
+
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        const id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+      return null;
+    }, [delay]);
+  }
+
+  // get all posts when user get into the page
   useEffect(() => {
     PostDB.getSortedPostBySearch(0, 19, '', [], (success, postInfo, err) => {
       if (success) {
@@ -33,6 +57,18 @@ function Home() {
       }
     });
   }, []);
+
+  useInterval(() => {
+    const tagList = selectedTags.map((tag) => (tag.value));
+    PostDB.getSortedPostsBySearch(0, 19, tagList, searchString, (success, postInfo, err) => {
+      if (success) {
+        console.log(tagList, searchString);
+        setPosts(postInfo);
+      } else {
+        console.log(err);
+      }
+    });
+  }, 5000);
 
   const handleSearch = () => {
     const tagList = selectedTags.map((tag) => (tag.value));
@@ -48,12 +84,14 @@ function Home() {
 
   const postsListGenerator = () => posts.map(
     (post) => {
-      // const url = `/post-details/${post.id}`;
+      const url = `/post-details/${post.id}`;
       myStorage.setItem('PostID', post.id);
+      const date = new Date(post.createdAt).toLocaleString('en-US', { timeZone: 'America/New_York' });
 
       return (
+
         <li>
-          <Link className="link" to="/post-details">
+          <Link className="link" to={url}>
             <div className="post-title">This is Post</div>
             <div className="post-content">
               This post is led by Jeremy and trades
@@ -66,10 +104,11 @@ function Home() {
               with
               maturity
               {' '}
-              {post.createdAt}
+              {date}
             </div>
           </Link>
         </li>
+
       );
     },
   );
@@ -101,10 +140,12 @@ function Home() {
         <div className="menu-bar">
           <div className="new-post">
             <Link className="link" to="/create-post">
-              <div className="text">New Post</div>
+              <div className="new-post-text">New Post</div>
             </Link>
           </div>
-          {tagFilter()}
+          <div className="filter">
+            {tagFilter()}
+          </div>
           <div className="search-field">
             <input onChange={(e) => setSearchString(e.target.value)} />
           </div>
@@ -112,9 +153,11 @@ function Home() {
             Search
           </button>
         </div>
-        <list>
-          {postsListGenerator()}
-        </list>
+        <div className="all-posts">
+          <list>
+            {postsListGenerator()}
+          </list>
+        </div>
       </div>
     </div>
   );

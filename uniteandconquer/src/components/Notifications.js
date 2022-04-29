@@ -1,51 +1,57 @@
 import React from 'react';
 import '../assets/Notifications.css';
 
-function Notifications({ showNotifs, setShowNotifs }) {
+const notifyDB = require('../modules/NotificationDB');
+
+const myStorage = window.sessionStorage;
+const userID = myStorage.getItem('UserID');
+
+function Notifications({
+  showNotifs, setShowNotifs, notifs, setNotifs,
+}) {
+  const messageGenerator = () => notifs.map(
+    (notif) => {
+      const message = notif.content;
+      const date = new Date(notif.createdAt).toLocaleString('en-US', { timeZone: 'America/New_York' });
+      return (
+        <div>
+          {message}
+          {' '}
+          {date}
+        </div>
+      );
+    },
+  );
+  const handleClick = () => {
+    notifyDB.deleteNotifications(userID, notifs, (success, err) => {
+      if (success) {
+        console.log('click');
+        setNotifs([]);
+      } else {
+        console.log(err);
+      }
+    });
+    setShowNotifs(!showNotifs);
+  };
+
   return (
     <div className="notifications-container">
       <div className="toggle-notifs">
-        <button className="notif-button" type="button" onClick={() => setShowNotifs(!showNotifs)}>
+        <button className="notif-button" type="button" onClick={handleClick}>
           {' '}
           <i className="fas fa-times fa-2x" />
         </button>
 
       </div>
       <div className="notifications-title">Notifications</div>
-      <div className="notif-time">Last Week</div>
-      <div>
-        <div className="notification-box">
-          [Message] &#8226; 2 days ago
-          {' '}
-          <i className="fas fa-times" />
-        </div>
-        <div className="notification-box">
-          [Message] &#8226; 3 days ago
-          {' '}
-          <i className="fas fa-times" />
-        </div>
-      </div>
-      <div className="notif-time">22 Feb 2022</div>
-      <div>
-        <div className="notification-box">
-          [Message] &#8226; 7 weeks ago
-          {' '}
-          <i className="fas fa-times" />
-        </div>
-        <div className="notification-box">
-          [Message] &#8226; 6 weeks ago
-          {' '}
-          <i className="fas fa-times" />
 
-        </div>
-        <div className="notification-box">
-          [Message] &#8226; 6 weeks ago
-          {' '}
-          <i className="fas fa-times" />
 
-        </div>
-      </div>
+      {messageGenerator()}
+
+      
+
     </div>
+
   );
 }
 

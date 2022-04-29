@@ -1,30 +1,43 @@
+
 td,
 th {
-  border: 10px solid #ffd9a0;
+  border: 8px solid #ffd9a0;
   box-sizing: border-box;
+  max-width: 430px;
+  width: 430px;
+  min-width: 430px;
 }
 
 table {
   border-collapse: collapse;
-  margin-left: 50px;
+  margin: 0;
 }
 
 th {
-  font-size: 25px;
+  font-size: 23px;
 }
 
 td {
-  max-width: 700px;
+
+  width: 800px;
+
   padding: 15px;
 }
 
+td:hover {
+  background-color: #ffd9a0;
+}
+
 .post-title {
-  font-size: 24px;
+  font-size: 23px;
   margin-bottom: 20px;
 }
 
 .post-content {
   font-size: 17px;
+  max-width: 400px;
+  width: 400px;
+  min-width: 400px;
 }
 
 .user-profile-page {
@@ -57,4 +70,9 @@ td {
 
 .bell-button:hover {
   color: rgb(133, 235, 85);
+}
+
+.table-lists {
+  display: flex;
+  flex-direction: row;
 }
