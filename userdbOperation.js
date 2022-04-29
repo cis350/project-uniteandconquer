@@ -44,43 +44,47 @@ const createUser = async (db, newUser) => {
 // not needed
 const getPassword = async (
   db,
-  userId,
+  user,
 ) => {
+  const { userId } = user;
   try {
     const result = await db.collection('userDB').findOne({ _id: ObjectId(userId) });
     return result.password;
   } catch (e) {
-    throw new Error('fail to get password');
+    throw new Error('fail to add new post');
   }
 };
 
 const loginUserWithPhone = async (
   db,
-  countryCode,
-  phoneNumber,
-  password,
+  user,
 ) => {
+  const { phone, password } = user;
   let result;
   try {
-    result = await db.collection('userDB').findOne({ phone: { countryCode, phoneNumber } });
+    result = await db.collection('userDB').findOne({ phone });
+    console.log('user', result);
   } catch (e) {
     throw new Error('failed to login with phone');
   }
 
-  if (password === getPassword(db, ObjectId(result.userId))) {
+  if (password === result.password) {
+    console.log('correct password');
     return true;
   }
+  console.log('incorrect password');
+
   return false;
 };
 
 const loginUserWithEmail = async (
   db,
-  emailAddress,
-  password,
+  user,
 ) => {
+  const { email, password } = user;
   let result;
   try {
-    result = await db.collection('userDB').findOne({ email: emailAddress });
+    result = await db.collection('userDB').findOne({ email });
   } catch (e) {
     throw new Error('failed to login with email');
   }
@@ -95,19 +99,38 @@ const loginUserWithEmail = async (
 
 const modifyUser = async (
   db,
-  userId,
-  fieldToChange,
-  newValue,
-  oldPassword,
+  user,
 ) => {
+  const {
+    userId,
+    fieldToChange,
+    newValue,
+  } = user;
   try {
-    const field = fieldToChange;
-    await db.collection('userDB').updateOne(
-      {
-        _id: ObjectId(userId),
-      },
-      { $set: { field: newValue } },
-    );
+    if (fieldToChange === 'password') {
+      await db.collection('userDB').updateOne(
+        {
+          _id: ObjectId(userId),
+        },
+        { $set: { password: newValue } },
+      );
+    }
+    if (fieldToChange === 'email') {
+      await db.collection('userDB').updateOne(
+        {
+          _id: ObjectId(userId),
+        },
+        { $set: { email: newValue } },
+      );
+    }
+    if (fieldToChange === 'phone') {
+      await db.collection('userDB').updateOne(
+        {
+          _id: ObjectId(userId),
+        },
+        { $set: { phone: newValue } },
+      );
+    }
   } catch (e) {
     throw new Error('fail to modify user');
   }
@@ -115,18 +138,12 @@ const modifyUser = async (
 
 const getUserDetails = async (
   db,
-  userId,
+  user,
 ) => {
+  const { userId } = user;
   try {
     const result = await db.collection('userDB').findOne({ _id: ObjectId(userId) });
-    const phone = result.phone;
-    const email = result.email;
-    const { firstName } = result.firstName;
-    const { lastName } = result.lastName;
-    const interests = result.interests;
-    const posts = result.posts;
-    const wishList = result.wishList;
-    return { phone, email, firstName, lastName, interests, posts, wishList };
+    return result;
   } catch (e) {
     throw new Error('fail to get user details');
   }
