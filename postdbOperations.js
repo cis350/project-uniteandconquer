@@ -112,7 +112,7 @@ const joinGroup = async (
         _id: ObjectId(userInfo.postId),
       },
       {
-        $push: { group: { userId: userInfo.userId, quantity: userInfo.quantity } },
+        $push: { group: { userId: userInfo.userId, quantity: userInfo.quantity, firstName: userInfo.firstName, lastName: userInfo.lastName } },
         $inc: { itemNumCurrent: userInfo.quantity },
       },
 
