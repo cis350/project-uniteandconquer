@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../assets/Comment.css';
 
 const postDB = require('../modules/PostDB');
@@ -7,6 +7,7 @@ function Comment(props) {
   const { postID } = props;
   const [commentInput, setCommentInput] = useState('');
   const [comments, setComments] = useState(null);
+  const [flag, setFlag] = useState(0);
 
   useEffect(() => {
     postDB.getPost(postID, (success, details) => {
@@ -14,21 +15,14 @@ function Comment(props) {
         setComments(details.comments)
       }
     });
-  }, []);
+  }, [flag]);
 
   const addComment = () => {
+    const authorID = "dummy";
     if (commentInput && commentInput.length > 0) {
-      const newComment = {
-        createdAt: new Date(),
-        author: { firstName, lastName },
-        content: commentInput,
-      };
-      setComments([...comments, newComment]);
-      setCommentInput('');
-
-      postDB.addComment(authorID, postID, newComment, (success, id, error) => {
+      postDB.addComment(authorID, postID, commentInput, (success, id, error) => {
         if (success) {
-          //
+          setFlag(flag + 1);
         } else {
           console.log(error);
         }
