@@ -1,5 +1,6 @@
 // Create express app
 const express = require('express');
+const { MongoClient, ObjectId } = require('mongodb');
 
 const webapp = express();
 const cors = require('cors');
@@ -7,6 +8,7 @@ const userlib = require('./userdbOperation');
 const postlib = require('./postdbOperations');
 
 let db;
+let sessiondb;
 
 webapp.use(express.json());
 webapp.use(
@@ -18,6 +20,7 @@ webapp.use(
 webapp.use(cors({ credentials: true, origin: true }));
 
 const url = 'mongodb+srv://cis350:cis350@cluster0.ivirc.mongodb.net/uniteconquer?retryWrites=true&w=majority';
+const uri = 'mongodb+srv://cis350:cis350@cluster0.ivirc.mongodb.net/?retryWrites=true&w=majority';
 
 // Root endpoint
 webapp.get('/', (req, res) => {
@@ -189,10 +192,11 @@ webapp.post('/leaveGroup', async (req, resp) => {
     resp.status(404).json({ error: 'postId not provided' });
   }
   try {
-    await postlib.leaveGroup(db, req.body);
+    await postlib.leaveGroup(sessiondb, req.body);
     // send the response
     resp.status(201).json({ message: 'user join' });
   } catch (err) {
+    console.log(err);
     resp.status(500).json({ error: 'try again later' });
   }
 });
@@ -227,5 +231,7 @@ webapp.use((_req, res) => {
 const port = process.env.PORT || 8080;
 webapp.listen(port, async () => {
   db = await userlib.connect(url);
+  sessiondb = new MongoClient(uri);
+  await sessiondb.connect();
   console.log(`Server running on port:${port}`);
 });
