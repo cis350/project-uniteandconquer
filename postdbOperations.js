@@ -16,7 +16,6 @@ const connect = async (url) => {
   }
 };
 
-
 const addPost = async (
   db,
   post,
@@ -113,7 +112,14 @@ const joinGroup = async (
         _id: ObjectId(userInfo.postId),
       },
       {
-        $push: { group: { userId: userInfo.userId, quantity: userInfo.quantity, firstName: userInfo.firstName, lastName: userInfo.lastName } },
+        $push: {
+          group: {
+            userId: userInfo.userId,
+            quantity: userInfo.quantity,
+            firstName: userInfo.firstName,
+            lastName: userInfo.lastName,
+          },
+        },
         $inc: { itemNumCurrent: userInfo.quantity },
       },
 
@@ -128,18 +134,20 @@ const leaveGroup = async (
   userInfo,
 ) => {
   try {
-      const memberList = await db.collection('postDB').findOne({ _id: ObjectId(userInfo.postId) });
-      const userIndx = memberList.group.findIndex(p => p.userId == userInfo.userId);
-      if (userIndx !== -1) {
-        const num = memberList.group[userIndx].quantity;
-        console.log(num);
-        await db.collection('postDB').updateOne({ _id: ObjectId(userInfo.postId) },
-          {
-            $inc: { itemNumCurrent: -1 * (num) },
-            $pull:{ group: { userId: userInfo.userId } }  });
-      }else{throw new Error('fail to add new comment');}
-  }
-  catch (e) {
+    const memberList = await db.collection('postDB').findOne({ _id: ObjectId(userInfo.postId) });
+    const userIndx = memberList.group.findIndex((p) => p.userId === userInfo.userId);
+    if (userIndx !== -1) {
+      const num = memberList.group[userIndx].quantity;
+      console.log(num);
+      await db.collection('postDB').updateOne(
+        { _id: ObjectId(userInfo.postId) },
+        {
+          $inc: { itemNumCurrent: -1 * (num) },
+          $pull: { group: { userId: userInfo.userId } },
+        },
+      );
+    } else { throw new Error('fail to add new comment'); }
+  } catch (e) {
     console.log(e);
     throw new Error('fail to leave group');
   }

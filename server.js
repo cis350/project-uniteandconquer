@@ -1,6 +1,5 @@
 // Create express app
 const express = require('express');
-const { MongoClient, ObjectId } = require('mongodb');
 
 const webapp = express();
 const cors = require('cors');
@@ -8,7 +7,6 @@ const userlib = require('./userdbOperation');
 const postlib = require('./postdbOperations');
 
 let db;
-
 
 webapp.use(express.json());
 webapp.use(
@@ -20,7 +18,6 @@ webapp.use(
 webapp.use(cors({ credentials: true, origin: true }));
 
 const url = 'mongodb+srv://cis350:cis350@cluster0.ivirc.mongodb.net/uniteconquer?retryWrites=true&w=majority';
-const uri = 'mongodb+srv://cis350:cis350@cluster0.ivirc.mongodb.net/?retryWrites=true&w=majority';
 
 // Root endpoint
 webapp.get('/', (req, res) => {
@@ -74,22 +71,31 @@ webapp.post('/addPost', async (req, resp) => {
         id: '507f191e810c19729dccba45', itemName: 'Laundry Bags', itemNumTarget: 2, itemCurrent: 3, pricePerItem: 14.99, ownerName: 'Roy Bae', status: 1, tags: ['Home'],
       }],
     };
-    const member = { userId: req.body.ownerId, firstName: userDetails.firstName, lastName: userDetails.lastName, quantity: req.body.itemNumCurrent };
-    const ownerInfo = {firstName: userDetails.firstName, lastName: userDetails.lastName, phone: userDetails.phone, email: userDetails.email};
+    const member = {
+      userId: req.body.ownerId,
+      firstName: userDetails.firstName,
+      lastName: userDetails.lastName,
+      quantity: req.body.itemNumCurrent,
+    };
+    const ownerInfo = {
+      firstName: userDetails.firstName,
+      lastName: userDetails.lastName,
+      phone: userDetails.phone,
+      email: userDetails.email,
+    };
     const post = {
       ...req.body,
-      ownerInfo: ownerInfo,
+      ownerInfo,
       comments: [],
       createdAt: myDate,
       status: 0,
       group: [member],
     };
-    console.log(post);
     const result = await postlib.addPost(db, post);
     // send the response
-    return resp.status(201).json({ success:true, data: result, error: null });
+    return resp.status(201).json({ success: true, data: result, error: null });
   } catch (err) {
-    return resp.status(500).json({ success:false, data: null, error: err });
+    return resp.status(500).json({ success: false, data: null, error: err });
   }
 });
 
@@ -105,12 +111,11 @@ webapp.post('/addComment', async (req, resp) => {
     resp.status(404).json({ error: 'username not provided' });
   }
   try {
-    console.log(req.body);
     await postlib.addComment(db, req.body);
     // send the response
-    return resp.status(201).json({ success:true, error: null });
+    return resp.status(201).json({ success: true, error: null });
   } catch (err) {
-    return resp.status(500).json({ success:false, error: err });
+    return resp.status(500).json({ success: false, error: err });
   }
 });
 
@@ -122,7 +127,7 @@ webapp.get('/getPost/:postId', async (req, resp) => {
     // send the response
     return resp.status(201).json({ success: true, data: result, error: null });
   } catch (err) {
-    return resp.status(500).json({ success:false, data: null, error: err });
+    return resp.status(500).json({ success: false, data: null, error: err });
   }
 });
 
@@ -133,10 +138,6 @@ webapp.get('/getSortedPostBySearch/:startIdx/:endIdx', async (req, resp) => {
   } = req.params;
   const keywords = req.query.keywords ? req.query.keywords : '';
   const tags = req.query.tags ? req.query.tags : [];
-  console.log(keywords);
-  console.log(tags);
-  console.log(startIdx);
-  console.log(endIdx);
   try {
     const result = await postlib.getSortedPostBySearch(db, startIdx, endIdx, keywords, tags);
     // send the response
@@ -174,10 +175,13 @@ webapp.post('/joinGroup', async (req, resp) => {
         id: '507f191e810c19729dccba45', itemName: 'Laundry Bags', itemNumTarget: 2, itemCurrent: 3, pricePerItem: 14.99, ownerName: 'Roy Bae', status: 1, tags: ['Home'],
       }],
     };
-    console.log({ ...req.body, firstName: userDetails.firstName, lastName: userDetails.lastName });
-    await postlib.joinGroup(db, { ...req.body, firstName: userDetails.firstName, lastName: userDetails.lastName });
+    await postlib.joinGroup(db, {
+      ...req.body,
+      firstName: userDetails.firstName,
+      lastName: userDetails.lastName,
+    });
     // send the response
-    return resp.status(201).json({success: true, error: null });
+    return resp.status(201).json({ success: true, error: null });
   } catch (err) {
     return resp.status(500).json({ success: false, error: err });
   }
@@ -221,7 +225,6 @@ webapp.post('/changePostStatus', async (req, resp) => {
   }
 });
 
-
 // Default response for any other request
 webapp.use((_req, res) => {
   res.status(404);
@@ -231,6 +234,4 @@ webapp.use((_req, res) => {
 const port = process.env.PORT || 8080;
 webapp.listen(port, async () => {
   db = await userlib.connect(url);
-  
-  console.log(`Server running on port:${port}`);
 });
