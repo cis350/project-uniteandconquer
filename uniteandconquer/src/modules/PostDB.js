@@ -1,5 +1,6 @@
 /* Post and comment operations */
 import axios from 'axios';
+const rootURL = 'http://localhost:8080';
 async function addPost(
   itemName,
   itemNumTarget,
