@@ -23,7 +23,7 @@ ReactDOM.render(
         <Route path="/chat" element={<Chat />} />
         <Route path="/create-post" element={<CreatePost />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/post-details" element={<PostDetails />} />
+        <Route path="/post-details/*" element={<PostDetails />} />
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/user-settings" element={<UserSettings />} />
         <Route path="/user-settings-password" element={<UserSettingsPassword />} />

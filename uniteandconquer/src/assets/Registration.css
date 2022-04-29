@@ -2,7 +2,7 @@
   margin: auto;
   height: 100%;
 }
- 
+
 .submit {
   border: none;
   background: #FFCB7D;
@@ -10,19 +10,19 @@
   border-radius: 5px;
   padding: 15px;
   width: 60%;
- 
+
   font-style: italic;
   font-weight: bold;
   font-size: 15px;
 }
- 
+
 .registration-tags {
   background-color: #FFCB7D;
   height: 100%;
   max-width: 400px;
   padding: 30px;
 }
- 
+
 .tags {
   display: grid;
   grid-template-columns: 0.5fr 0.5fr;
@@ -44,7 +44,7 @@
   width: 100px;
   min-height: 65px;
 }
- 
+
 .tag {
   background: #FFAB2D;
   border: 5px solid #FFFFFF;
@@ -63,35 +63,48 @@
   background-color: #df9629;
   transition-duration: 0.2s;
 }
- 
+
+.tag_selected {
+  background: #2dff50;
+  border: 5px solid #FFFFFF;
+  box-sizing: border-box;
+  border-radius: 40px;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 20px;
+  margin: 5px;
+  padding: 6px;
+  min-height: 65px;
+}
+
 .headers {
   color: white;
   padding: 6px;
   font-style: italic;
   text-align: center;
 }
- 
+
 .label {
   text-align: left;
 }
- 
+
 h3 {
   font-size: 30px;
 }
- 
+
 .registration {
   height: 100%;
   display: grid;
   grid-template-columns: 0.3fr 0.7fr;
 }
- 
+
 .registration-input {
   margin: auto;
   font-size: 20px;
   font-style: italic;
   text-align: center;
 }
- 
+
 input {
   border: none;
   background-color: #FFD9A0;
@@ -105,24 +118,23 @@ input {
 input.phone-input {
   width: 157px;
   position: relative;
-
 }
- 
+
 .registration-field {
   margin: 10px;
 }
- 
+
 .submit:hover {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
   background-color: grey;
   transition-duration: 0.4s;
 }
- 
+
 .registration-text-fields {
   display: grid;
   grid-template-columns: 300px 300px;
 }
- 
+
 .reg-bottom {
   text-align: center;
 }
@@ -186,6 +198,19 @@ span.Dropdown-arrow {
   right: 0;
   margin-top: 5px;
   margin-right: 5px;
+}
+
+
+.modalButton {
+  border: none;
+  background: #21e97b;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.modalContent {
+  text-align: center;
 }
 
 .selectedTags {
