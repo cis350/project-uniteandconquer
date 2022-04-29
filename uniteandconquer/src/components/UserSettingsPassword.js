@@ -36,7 +36,7 @@ function UserSettingsPassword() {
         <div className="post-input">
           <div className="all-fields">
             {' '}
-            <div className="post-text-fields">
+            <div className="post-fields">
               <div className="post-field">
                 <div className="label">Old Password</div>
                 <input onChange={(e) => setOldPassword(e.target.value)} />
@@ -49,13 +49,10 @@ function UserSettingsPassword() {
                 <div className="label">Confirm New Password</div>
                 <input onChange={(e) => setPassword(e.target.value)} />
               </div>
+              <button className="update" type="button" onClick={updatePassword}>
+                Change Password
+              </button>
             </div>
-          </div>
-          <br />
-          <div className="password-bottom">
-            <button className="update" type="button" onClick={updatePassword}>
-              Change Password
-            </button>
           </div>
         </div>
       </div>
