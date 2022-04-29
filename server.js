@@ -224,13 +224,14 @@ webapp.post('/changePostStatus', async (req, resp) => {
   if (!req.body.postId || req.body.postId.length === 0) {
     resp.status(404).json({ error: 'postId not provided' });
   }
-  if (!req.body.newStatus) {
-    resp.status(404).json({ error: 'quantity not provided' });
+  if (req.body.newStatus == null || !typeof (req.body.newStatus) == "number") {
+    resp.status(404).json({ error: 'status not provided' });
   }
   try {
-    await postlib.changePostStatus(db, req.body);
+    const post = await postlib.getPost(db, req.body.postId);
+    await postlib.changePostStatus(db, { ...req.body, ownerId: post.ownerId });
     // send the response
-    resp.status(201).json({ message: 'user join' });
+    resp.status(201).json({ message: 'status changed' });
   } catch (err) {
     resp.status(500).json({ error: 'try again later' });
   }
