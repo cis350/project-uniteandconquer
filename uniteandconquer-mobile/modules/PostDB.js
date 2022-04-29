@@ -10,42 +10,35 @@ function addPost(
   tags,
   callback,
 ) {
-  return callback(true, '507f191e810c19729de860ea', null);
+  const response = await axios.post(`${rootURL}/addPost`, {
+    itemName: `${itemName}`,
+    itemNumTarget: `${itemNumTarget}`,
+    itemNumCurrent: `${itemNumCurrent}`,
+    pricePerItem: `${pricePerItem}`,
+    itemURL: `${itemURL}`,
+    itemDescription: `${itemDescription}`,
+    ownerId: `${ownerId}`,
+    tags: `${tags}`,
+  });
+  const result = response.data;
+  return callback(result.success, result.data, result.error);
 }
 
 function addComment(authorId, postId, content, callback) {
-  return callback(true, null);
+  const response = await axios.post(`${rootURL}/addComment`, {
+    authorId: `${authorId}`,
+    postId: `${postId}`,
+    content: `${content}`,
+  });
+  const result = response.data;
+  return callback(result.success, result.error);
 }
 
 function getPost(id, callback) {
-  return callback(true, {
-    itemName: 'AA Batteries',
-    itemNumTarget: 20,
-    itemNumCurrent: 5,
-    pricePerItem: 0.46,
-    itemURL: 'https://www.amazon.com/AmazonBasics-Performance-Alkaline-Batteries-20-Pack/dp/B00NTCH52W/ref=sr_1_5?keywords=20+aa+batteries&qid=1647322286&sprefix=20+aa+ba%2Caps%2C208&sr=8-5',
-    itemDescription: 'AA batteries for anything',
-    owner: {
-      firstName: 'Yuying',
-      lastName: 'Fan',
-      phone: { countryCode: '1', phoneNumber: '9783999395' },
-      email: 'yuyingf@seas.upenn.edu',
-    },
-    group: [{ firstName: 'Yuying', lastName: 'Fan', quantity: 2 },
-      { firstName: 'Zhihang', lastName: 'Yuan', quantity: 3 }],
-    comments: [{
-      content: 'Are you on campus',
-      author: { firstName: 'Dee', lastname: 'Xie' },
-      createdAt: '2022-03-15T12:53:14.924Z',
-    }, {
-      content: 'Yes I am',
-      author: { id: '507f1f77bcf86cd799439011', name: 'Yuying Fan' },
-      createdAt: '2022-03-15T14:53:17.926Z',
-    }],
-    createdAt: '2022-03-14T13:14:14.925Z',
-    status: 0,
-    tags: ['Home'],
-  }, null);
+  const response = await axios.get(`${rootURL}/getPost/${id}`, {
+  });
+  const result = response.data;
+  return callback(result.success, result.data, result.error);
 }
 
 function getAllPosts(callback) {
@@ -66,6 +59,16 @@ function getSortedPostsByTags(startIdx, endIdx, tags, callback) {
   }], null);
 }
 
+function getSortedPostBySearch(startIdx, endIdx, keywords, tags, callback) {
+  const url = `${rootURL}/getSortedPostBySearch/${startIdx}/${endIdx}/?keywords=${keywords}`;
+  for (const tag of tags) {
+    url = url + `&tags[]=${tag}`;
+  }
+  const response = await axios.get(url);
+  const result = response.data;
+  return callback(result.success, result.data, result.error);
+}
+
 function getSortedPostsByKeyword(startIdx, endIdx, keyword, callback) {
   return callback(true, [{
     id: '5087901e810c109679e860ea', itemName: 'Ramen', pricePerItem: 0.99, createdAt: '2022-03-15T15:14:17.925Z', tags: ['Food'],
@@ -73,15 +76,32 @@ function getSortedPostsByKeyword(startIdx, endIdx, keyword, callback) {
 }
 
 function joinGroup(userId, postId, quantity, callback) {
-  return callback(true, null);
+  const response = await axios.get(`${rootURL}/joinGroup`, {
+    authorId: `${authorId}`,
+    postId: `${postId}`,
+    quantity: `${quantity}`,
+  });
+  const result = response.data;
+  return callback(result.success, result.error);
 }
 
 function leaveGroup(userId, postId, callback) {
-  return callback(true, null);
+  const response = await axios.get(`${rootURL}/joinGroup`, {
+    userId: `${userId}`,
+    postId: `${postId}`,
+  });
+  const result = response.data;
+  return callback(result.success, result.error);
 }
 
 function changePostStatus(userId, postId, newStatus, callback) {
-  return callback(true, null);
+  const response = await axios.get(`${rootURL}/joinGroup`, {
+    userId: `${userId}`,
+    postId: `${postId}`,
+    newStatus: `${newStatus}`,
+  });
+  const result = response.data;
+  return callback(result.success, result.error);
 }
 
 export {
@@ -94,4 +114,5 @@ export {
   joinGroup,
   leaveGroup,
   changePostStatus,
+  getSortedPostBySearch,
 };

@@ -17,13 +17,6 @@ const connect = async (url) => {
 };
 
 
-
-const transactionOptions = {
-  readPreference: 'primary',
-  readConcern: { level: 'local' },
-  writeConcern: { w: 'majority' }
-};
-
 const addPost = async (
   db,
   post,
@@ -31,9 +24,9 @@ const addPost = async (
   try {
     const result = await db.collection('postDB').insertOne(post);
     console.log(`Created player with id: ${result.insertedId}`);
-    return result;
+    return result.insertedId;
   } catch (e) {
-    throw new Error('fail to add new post');
+    return ('fail to add new post');
   }
 };
 

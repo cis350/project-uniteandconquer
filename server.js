@@ -87,9 +87,9 @@ webapp.post('/addPost', async (req, resp) => {
     console.log(post);
     const result = await postlib.addPost(db, post);
     // send the response
-    resp.status(201).json({ data: result });
+    return resp.status(201).json({ success:true, data: result, error: null });
   } catch (err) {
-    resp.status(500).json({ error: 'try again later' });
+    return resp.status(500).json({ success:false, data: null, error: err });
   }
 });
 
@@ -108,9 +108,9 @@ webapp.post('/addComment', async (req, resp) => {
     console.log(req.body);
     await postlib.addComment(db, req.body);
     // send the response
-    resp.status(201).json({ message: 'comment added' });
+    return resp.status(201).json({ success:true, error: null });
   } catch (err) {
-    resp.status(500).json({ error: 'try again later' });
+    return resp.status(500).json({ success:false, error: err });
   }
 });
 
@@ -120,9 +120,9 @@ webapp.get('/getPost/:postId', async (req, resp) => {
   try {
     const result = await postlib.getPost(db, postId);
     // send the response
-    resp.status(201).json({ data: result });
+    return resp.status(201).json({ success: true, data: result, error: null });
   } catch (err) {
-    resp.status(500).json({ error: 'try again later' });
+    return resp.status(500).json({ success:false, data: null, error: err });
   }
 });
 
@@ -140,9 +140,9 @@ webapp.get('/getSortedPostBySearch/:startIdx/:endIdx', async (req, resp) => {
   try {
     const result = await postlib.getSortedPostBySearch(db, startIdx, endIdx, keywords, tags);
     // send the response
-    resp.status(201).json({ data: result });
+    return resp.status(201).json({ success: true, data: result, error: null });
   } catch (err) {
-    resp.status(500).json({ error: 'try again later' });
+    return resp.status(500).json({ success: false, data: null, error: err });
   }
 });
 
@@ -177,9 +177,9 @@ webapp.post('/joinGroup', async (req, resp) => {
     console.log({ ...req.body, firstName: userDetails.firstName, lastName: userDetails.lastName });
     await postlib.joinGroup(db, { ...req.body, firstName: userDetails.firstName, lastName: userDetails.lastName });
     // send the response
-    resp.status(201).json({ message: 'user join' });
+    return resp.status(201).json({success: true, error: null });
   } catch (err) {
-    resp.status(500).json({ error: 'try again later' });
+    return resp.status(500).json({ success: false, error: err });
   }
 });
 
@@ -194,10 +194,10 @@ webapp.post('/leaveGroup', async (req, resp) => {
   try {
     await postlib.leaveGroup(db, req.body);
     // send the response
-    resp.status(201).json({ message: 'user leave' });
+    resp.status(201).json({ success: true, error: null });
   } catch (err) {
     console.log(err);
-    resp.status(500).json({ error: 'try again later' });
+    resp.status(500).json({ success: false, error: err });
   }
 });
 
@@ -215,9 +215,9 @@ webapp.post('/changePostStatus', async (req, resp) => {
   try {
     await postlib.changePostStatus(db, req.body);
     // send the response
-    resp.status(201).json({ message: 'user join' });
+    resp.status(201).json({ success: true, error: null });
   } catch (err) {
-    resp.status(500).json({ error: 'try again later' });
+    resp.status(500).json({ success: false, error: err });
   }
 });
 
