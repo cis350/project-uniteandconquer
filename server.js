@@ -75,14 +75,15 @@ webapp.post('/addPost', async (req, resp) => {
 webapp.post('/addComment', async (req, resp) => {
   // check the name was provided
   if (!req.body.authorId || req.body.authorId.length === 0) {
-    resp.status(404).json({ error: 'username not provided' });
+    resp.status(404).json({ error: 'authorId not provided' });
   }
   if (!req.body.postId || req.body.postId.length === 0) {
-    resp.status(404).json({ error: 'username not provided' });
+    resp.status(404).json({ error: 'postId not provided' });
   }
   if (!req.body.content || req.body.content.length === 0) {
-    resp.status(404).json({ error: 'username not provided' });
+    resp.status(404).json({ error: 'content not provided' });
   }
+  
   try {
     console.log(req.body);
     await postlib.addComment(db, req.body);
@@ -182,13 +183,42 @@ webapp.post('/changePostStatus', async (req, resp) => {
   }
 });
 
+// login endpoint
+
+webapp.post('/registration', async (req, resp) => {
+  if (!req.body.firstName || req.body.firstName.length === 0) {
+    resp.status(404).json({ error: 'firstName not provided' });
+  }
+  try {
+    await userlib.createUser(db, req.body);
+    // send the response
+    resp.status(201).json({ message: 'user join' });
+  } catch (err) {
+    resp.status(500).json({ error: 'try again later' });
+  }
+});
+
+// login with email endpoint
+webapp.post('/loginaWithEmail', async (req, resp) => {
+  if (!req.body.firstName || req.body.firstName.length === 0) {
+    resp.status(404).json({ error: 'firstName not provided' });
+  }
+  try {
+    await userlib.createUser(db, req.body);
+    // send the response
+    resp.status(201).json({ message: 'user l' });
+  } catch (err) {
+    resp.status(500).json({ error: 'try again later' });
+  }
+});
+
 // Default response for any other request
 webapp.use((_req, res) => {
   res.status(404);
 });
 
 // Start server
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3001;
 webapp.listen(port, async () => {
   db = await userlib.connect(url);
   console.log(`Server running on port:${port}`);

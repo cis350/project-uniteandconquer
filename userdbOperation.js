@@ -31,12 +31,26 @@ const createUser = async (db, newUser) => {
           lastName: newUser.lastName,
           posts: newUser.posts,
           wishList: newUser.wishList,
-         },
+          password: newUser.password,
+        },
       },
       { upsert: true },
     );
   } catch (e) {
     throw new Error('fail to add a new user');
+  }
+};
+
+// not needed
+const getPassword = async (
+  db,
+  userId,
+) => {
+  try {
+    const result = await db.collection('userDB').findOne({ _id: ObjectId(userId) });
+    return result.password;
+  } catch (e) {
+    throw new Error('fail to get password');
   }
 };
 
@@ -48,16 +62,17 @@ const loginUserWithPhone = async (
 ) => {
   let result;
   try {
-    result = await db.collection('userDB').findOne({phone: {countryCode, phoneNumber}});
+    result = await db.collection('userDB').findOne({ phone: { countryCode, phoneNumber } });
   } catch (e) {
     throw new Error('failed to login with phone');
   }
 
-  if (password == getPassword(db, ObjectId(result.userId))) {
+  if (password === getPassword(db, ObjectId(result.userId))) {
     return true;
   }
   return false;
-}
+};
+
 const loginUserWithEmail = async (
   db,
   emailAddress,
@@ -65,16 +80,18 @@ const loginUserWithEmail = async (
 ) => {
   let result;
   try {
-    result = await db.collection('userDB').findOne({email: emailAddress});
+    result = await db.collection('userDB').findOne({ email: emailAddress });
   } catch (e) {
     throw new Error('failed to login with email');
   }
 
-  if (password == getPassword(db, ObjectId(result.userId))) {
+  console.log(result);
+
+  if (password === result.password) {
     return true;
   }
   return false;
-}
+};
 
 const modifyUser = async (
   db,
@@ -96,18 +113,6 @@ const modifyUser = async (
   }
 };
 
-const getPassword = async (
-  db,
-  id,
-) => {
-  try {
-    const result = await db.collection('userDB').findOne({ _id: ObjectId(userId) });
-    return result.password;
-  } catch (e) {
-    throw new Error('fail to get password');
-  }
-}
-
 const getUserDetails = async (
   db,
   userId,
@@ -116,8 +121,8 @@ const getUserDetails = async (
     const result = await db.collection('userDB').findOne({ _id: ObjectId(userId) });
     const phone = result.phone;
     const email = result.email;
-    const firstName = result.firstName;
-    const lastName = result.lastName;
+    const { firstName } = result.firstName;
+    const { lastName } = result.lastName;
     const interests = result.interests;
     const posts = result.posts;
     const wishList = result.wishList;
@@ -125,7 +130,7 @@ const getUserDetails = async (
   } catch (e) {
     throw new Error('fail to get user details');
   }
-}
+};
 
 const getChats = async (
   db,
@@ -136,7 +141,7 @@ const getChats = async (
   } catch (e) {
     throw new Error('fail to get chats');
   }
-}
+};
 
 module.exports = {
   connect,
