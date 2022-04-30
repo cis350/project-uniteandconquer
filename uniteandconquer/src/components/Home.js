@@ -92,17 +92,15 @@ function Home() {
 
         <li>
           <Link className="link" to={url}>
-            <div className="post-title">This is Post</div>
+            <div className="post-title">{post.itemName}</div>
             <div className="post-content">
-              This post is led by Jeremy and trades
+              This post is led by 
+              {post.ownerInfo.firstName}
               {' '}
-              {post.itemName}
+              {post.ownerInfo.lastName}
               {' '}
               for $
               {post.pricePerItem}
-              {' '}
-              with
-              maturity
               {' '}
               {date}
             </div>
