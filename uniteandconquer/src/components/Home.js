@@ -60,9 +60,9 @@ function Home() {
 
   useInterval(() => {
     const tagList = selectedTags.map((tag) => (tag.value));
-    PostDB.getSortedPostsBySearch(0, 19, tagList, searchString, (success, postInfo, err) => {
+    PostDB.getSortedPostBySearch(0, 19, searchString, tagList, (success, postInfo, err) => {
       if (success) {
-        console.log(tagList, searchString);
+        console.log(searchString, tagList);
         setPosts(postInfo);
       } else {
         console.log(err);
@@ -72,7 +72,7 @@ function Home() {
 
   const handleSearch = () => {
     const tagList = selectedTags.map((tag) => (tag.value));
-    PostDB.getSortedPostsBySearch(0, 19, tagList, searchString, (success, postInfo, err) => {
+    PostDB.getSortedPostBySearch(0, 19, searchString, tagList, (success, postInfo, err) => {
       if (success) {
         console.log(tagList, searchString);
         setPosts(postInfo);
