@@ -93,7 +93,7 @@ function Home() {
         <li>
           <Link className="link" to={url}>
             <div className="post-title">{post.itemName}</div>
-            <div className="post-content">
+            <div className="post-content-home">
               This post is led by 
               {' '}
               {post.ownerInfo.firstName}
