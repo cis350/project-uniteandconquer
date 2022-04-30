@@ -84,7 +84,7 @@ function Home() {
 
   const postsListGenerator = () => posts.map(
     (post) => {
-      const url = `/post-details/${post.id}`;
+      const url = `/post-details/${post._id}`;
       myStorage.setItem('PostID', post.id);
       const date = new Date(post.createdAt).toLocaleString('en-US', { timeZone: 'America/New_York' });
 
@@ -95,13 +95,20 @@ function Home() {
             <div className="post-title">{post.itemName}</div>
             <div className="post-content">
               This post is led by 
+              {' '}
               {post.ownerInfo.firstName}
               {' '}
               {post.ownerInfo.lastName}
               {' '}
-              for $
+              for
+              {' '}
+              {post.itemName}
+              {' '}
+              with price $
+              {' '}
               {post.pricePerItem}
               {' '}
+              {'\n'}
               {date}
             </div>
           </Link>
