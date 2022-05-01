@@ -31,7 +31,10 @@ const createUser = async (db, newUser) => {
           lastName: newUser.lastName,
           posts: newUser.posts,
           wishList: newUser.wishList,
+          interests: newUser.interests,
           password: newUser.password,
+          createdAt: newUser.createdAt,
+          lastCheckNotification: newUser.lastCheckNotification,
         },
       },
       { upsert: true },
@@ -151,10 +154,11 @@ const getUserDetails = async (
 
 const getChats = async (
   db,
-  userId,
+  user,
 ) => {
+  const { userId } = user;
   try {
-    //
+    return (await db.collection('userDB').findOne({ _id: ObjectId(userId) })).chats;
   } catch (e) {
     throw new Error('fail to get chats');
   }

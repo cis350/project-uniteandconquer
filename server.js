@@ -188,6 +188,12 @@ webapp.post('/changePostStatus', async (req, resp) => {
 webapp.post('/registration', async (req, resp) => {
   if (!req.body.firstName || req.body.firstName.length === 0) {
     resp.status(404).json({ error: 'firstName not provided' });
+  } else if (!req.body.phone.countryCode || req.body.phone.countryCode === 0) {
+    resp.status(404).json({ error: 'country code not provided' });
+  } else if (!req.body.phone.phoneNumber || req.body.phone.phoneNumber === 0) {
+    resp.status(404).json({ error: 'phone number not provided' });
+  } else if (!req.body.email || req.body.email === 0) {
+    resp.status(404).json({ error: 'phone number not provided' });
   }
   // add the other argument checks
   try {
