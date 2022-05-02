@@ -8,10 +8,7 @@ async function createUser(
   password,
   firstName,
   lastName,
-  posts,
   interests,
-  createdAt,
-  lastCheckNotification,
   callback,
 ) {
   const response = await axios.post(`${rootURL}/createUser`, {
@@ -19,18 +16,18 @@ async function createUser(
     email: `${email}`,
     firstName: `${firstName}`,
     lastName: `${lastName}`,
-    posts: posts,
-    wishList: wishList,
+    posts: null,
+    wishList: null,
     interests: interests,
     password: `${password}`,
-    createdAt: `${createdAt}`,
-    lastCheckNotification: `${lastCheckNotification}`,
+    createdAt: null,
+    lastCheckNotification: null,
   });
   const result = response.data;
   return callback(result.success, result.data, result.error);
 }
 
-function loginUserWithPhone(
+async function loginUserWithPhone(
   countryCode,
   phoneNumber,
   password,
@@ -44,7 +41,7 @@ function loginUserWithPhone(
   return callback(result.success, result.data, result.error);
 }
 
-function loginUserWithEmail(
+async function loginUserWithEmail(
   email,
   password,
   callback,
@@ -57,11 +54,11 @@ function loginUserWithEmail(
   return callback(result.success, result.data, result.error);
 }
 
-function modifyUser(id, fieldToChange, newValue, oldPassword, callback) {
+async function modifyUser(id, fieldToChange, newValue, oldPassword, callback) {
   return callback(true, null);
 }
 
-function getPassword(
+async function getPassword(
   id,
   callback,
 ) {
@@ -72,7 +69,7 @@ function getPassword(
   return callback(result.success, result.data, result.error);
 }
 
-function getUserDetails(
+async function getUserDetails(
   id,
   callback,
 ) {
@@ -83,7 +80,7 @@ function getUserDetails(
   return callback(result.success, result.data, result.error);
 }
 
-function getChats(
+async function getChats(
   id,
   callback,
 ) {

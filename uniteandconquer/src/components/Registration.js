@@ -35,6 +35,7 @@ function Registration() {
   const [areaCode, setAreaCode] = useState(options[0].value);
   const navigate = useNavigate();
 
+  // timestamp of genesis not implemented
   // register the user given the information provided
   // if the password and confimPassword are not correct, then throw an exception
   const registerUser = () => {
@@ -42,6 +43,7 @@ function Registration() {
       throw new Error('password and confirmPassword need to be the same');
     }
     UserDB.createUser(
+      areaCode,
       phone,
       email,
       password,
