@@ -99,8 +99,8 @@ function UserProfile() {
     return table;
   };
 
-  useEffect(() => {
-    UserDB.getUserDetails(userID, (success, userInfo, err) => {
+  useEffect(async () => {
+    await UserDB.getUserDetails(userID, (success, userInfo, err) => {
       if (success) {
         setTags(userInfo.interests);
         setPosts(userInfo.posts);

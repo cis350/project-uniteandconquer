@@ -18,11 +18,11 @@ async function createUser(
     email: `${email}`,
     firstName: `${firstName}`,
     lastName: `${lastName}`,
-    posts: null,
-    wishList: null,
+    posts: [],
+    wishList: [],
     interests,
     password: `${password}`,
-    createdAt: null,
+    createdAt: new Date(),
     lastCheckNotification: null,
   });
   const result = response.data;
