@@ -5,6 +5,7 @@ const webapp = express();
 const cors = require('cors');
 const userlib = require('./userdbOperation');
 const postlib = require('./postdbOperations');
+const notiflib = require('./notifydbOperation');
 
 let db;
 
@@ -307,6 +308,23 @@ webapp.get('/getPassword', async (req, resp) => {
     resp.status(201).json({ data: result });
   } catch (err) {
     resp.status(500).json({ error: 'try again later' });
+  }
+});
+// # ---------------------------------------- Below is notif db ----------------------- #
+webapp.post('/addNotification', async (req, resp) => {
+  if (!req.body.userIds || req.body.userIds.length === 0) {
+    resp.status(404).json({ error: 'userIds not provided' });
+  } else if (!req.body.content || req.body.content.length === 0) {
+    resp.status(404).json({ error: 'content not provided' });
+  } 
+  try {
+    const res = await notiflib.addNotif(db, req.body.userIds, req.body.content);
+    // send the response
+    if (res) {
+      resp.status(201).json({ success: true, data: res, error: null });
+    } 
+  } catch (err) {
+    resp.status(500).json({ success: false, id: null, error: err });
   }
 });
 

@@ -6,6 +6,7 @@ import Comment from './Comment';
 import '../assets/PostDetails.css';
 
 const PostDB = require('../modules/PostDB');
+const NotifDB = require('../modules/NotificationDB');
 
 // In the post details page, one can choose to join the group
 // if successful, redirect the user to the post which the user joins in
@@ -57,6 +58,9 @@ function PostDetails() {
     PostDB.joinGroup(userID, postID, desiredQuantity, (success, err) => {
       if (success) {
         setJoined(true);
+        const userIds = postDetails.group.map((member) => (member.userId));
+        const content = `${myStorage.getItem('firstName')} is join the post ${postID}`;
+        NotifDB.createNotification(userIds, content);
       } else {
         console.log(err);
       }
@@ -68,6 +72,9 @@ function PostDetails() {
     PostDB.leaveGroup(userID, postID, (success, error) => {
       if (success) {
         setJoined(false);
+        const userIds = postDetails.group.map((member) => (member.userId));
+        const content = `${myStorage.getItem('firstName')} leave the post ${postID}`;
+        NotifDB.createNotification(userIds, content);
       } else {
         console.log(error);
       }

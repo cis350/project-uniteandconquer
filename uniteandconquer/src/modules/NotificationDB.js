@@ -1,6 +1,15 @@
 /* Notification operations */
-function createNotification(userIds, content, callback) {
-  return callback(true, '507f1f7789076cd799439011', null);
+import axios from 'axios';
+
+const rootURL = 'http://localhost:8080';
+
+async function createNotification(userIds, content, callback) {
+  const response = await axios.post(`${rootURL}/addNotification`, {
+    userIds,
+    content: `${content}`,
+  });
+  const result = response.data;
+  return callback(result.success, result.error);
 }
 
 function getNotificationsForUser(userId, callback) {
