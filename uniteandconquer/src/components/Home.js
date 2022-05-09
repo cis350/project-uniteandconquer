@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.css';
@@ -85,7 +86,7 @@ function Home() {
   const postsListGenerator = () => posts.map(
     (post) => {
       const url = `/post-details/${post._id}`;
-      myStorage.setItem('PostID', post.id);
+      myStorage.setItem('PostID', post._id);
       const date = new Date(post.createdAt).toLocaleString('en-US', { timeZone: 'America/New_York' });
 
       return (

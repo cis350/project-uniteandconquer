@@ -7,6 +7,7 @@ import '../assets/CreatePost.css';
 
 const PostDB = require('../modules/PostDB');
 
+const myStorage = window.sessionStorage;
 function CreatePost() {
   const [item, setItem] = useState('');
   const [price, setPrice] = useState(0);
@@ -24,7 +25,7 @@ function CreatePost() {
   /**
    * dummy user id
    */
-  const userID = 1;
+  const userID = myStorage.getItem('UserID');
   function addTags(tag) {
     if (tags.includes(tag)) {
       const newList = tags.filter((i) => i !== tag);

@@ -55,7 +55,9 @@ webapp.post('/addPost', async (req, resp) => {
   }
   try {
     const myDate = new Date();
-    const userDetails = await userlib.getUserDetails(db, req.body.userId);
+    console.log(req.body.ownerId);
+    const userDetails = await userlib.getUserDetails(db, req.body.ownerId);
+    console.log(userDetails, "from server");
     const member = {
       userId: req.body.ownerId,
       firstName: userDetails.firstName,
@@ -96,7 +98,7 @@ webapp.post('/addComment', async (req, resp) => {
     resp.status(404).json({ error: 'username not provided' });
   }
   try {
-    const userDetails = await userlib.getUserDetails(db, req.body.userId);
+    const userDetails = await userlib.getUserDetails(db, req.body.authorId);
     await postlib.addComment(
       db,
       { ...req.body, firstName: userDetails.firstName, lastName: userDetails.lastName },
@@ -245,7 +247,7 @@ webapp.post('/loginUserWithEmail', async (req, resp) => {
       resp.status(201).json({ success: false, id: res, error: null });
     }
   } catch (err) {
-    resp.status(500).json({ success: false, id: res, error: err });
+    resp.status(500).json({ success: false, id: null, error: err });
   }
 });
 
@@ -267,7 +269,7 @@ webapp.post('/loginUserWithPhone', async (req, resp) => {
       resp.status(201).json({ success: false, id: res, error: null });
     }
   } catch (err) {
-    resp.status(500).json({ success: false, error: err });
+    resp.status(500).json({ success: false, id: null, error: err });
   }
 });
 
@@ -291,7 +293,7 @@ webapp.get('/getUserDetails', async (req, resp) => {
     // send the response
     resp.status(201).json({ success: true, data: result, error: null});
   } catch (err) {
-    resp.status(500).json({ success: true, data: result, error: 'try again later' });
+    resp.status(500).json({ success: true, data: null, error: 'try again later' });
   }
 });
 

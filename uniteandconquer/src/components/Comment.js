@@ -3,6 +3,8 @@ import '../assets/Comment.css';
 
 const postDB = require('../modules/PostDB');
 
+const myStorage = window.sessionStorage;
+
 function Comment(props) {
   const { postID } = props;
   const [commentInput, setCommentInput] = useState('');
@@ -18,7 +20,7 @@ function Comment(props) {
   }, [flag]);
 
   const addComment = () => {
-    const authorID = 'dummy';
+    const authorID = myStorage.getItem('UserID');
     if (commentInput && commentInput.length > 0) {
       postDB.addComment(authorID, postID, commentInput, (success, id, error) => {
         if (success) {

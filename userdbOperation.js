@@ -96,7 +96,7 @@ const loginUserWithEmail = async (
   console.log(result);
 
   if (password === result.password) {
-    return true;
+    return result._id;
   }
   return false;
 };
