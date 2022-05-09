@@ -1,7 +1,8 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es2021": true,
+        "node": true
     },
     "extends": [
         "plugin:react/recommended",
@@ -18,7 +19,15 @@
         "react"
     ],
     "rules": {
+<<<<<<< Updated upstream
         "react/jsx-filename-extension": "off",
         "linebreak-style": 0
+=======
+        "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+        "react/prop-types": 0,
+        "no-unused-vars": [2, {"varsIgnorePattern": "^_$"}],  // suppress unused var rule for wildcard pattern
+        "import/no-named-as-default": 0,
+        "linebreak-style":0
+>>>>>>> Stashed changes
     }
 }
