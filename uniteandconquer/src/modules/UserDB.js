@@ -14,7 +14,7 @@ async function createUser(
 ) {
   console.log('entering create user in userdb');
   const response = await axios.post(`${rootURL}/createUser`, {
-    phone: { countryCode: Number(countryCode), phoneNumber: Number(phoneNumber) },
+    phone: { countryCode: `${countryCode}`, phoneNumber: `${phoneNumber}` },
     email: `${email}`,
     firstName: `${firstName}`,
     lastName: `${lastName}`,
@@ -37,11 +37,9 @@ async function loginUserWithPhone(
   callback,
 ) {
   const response = await axios.post(`${rootURL}/loginUserWithPhone`, {
-    phone: { countryCode: Number(countryCode), phoneNumber: Number(phoneNumber) },
+    phone: { countryCode: `${countryCode}`, phoneNumber: `${phoneNumber}` },
     password: `${password}`,
   });
-  console.log(response);
-  console.log(response.data);
   const result = response.data;
   return callback(result.success, result.id, result.error);
 }
