@@ -7,6 +7,7 @@ import '../assets/UserProfile.css';
 
 const notifyDB = require('../modules/NotificationDB');
 const UserDB = require('../modules/UserDB');
+const PostDB = require('../modules/PostDB');
 
 function UserProfile() {
   const [showNotifs, setShowNotifs] = useState(false);
@@ -75,7 +76,7 @@ function UserProfile() {
                 </div>
                 <div className="post-content">
                   This post is led by [
-                  {post.ownerName}
+                  {post.ownerInfo.firstName}
                   ] and trades [
                   {post.itemNumTarget}
                   ] of [
@@ -103,8 +104,16 @@ function UserProfile() {
     await UserDB.getUserDetails(userID, (success, userInfo, err) => {
       if (success) {
         setTags(userInfo.interests);
-        setPosts(userInfo.posts);
-        setWishList(userInfo.wishList);
+        userInfo.posts.forEach((post) => {
+          PostDB.getPost(post, (success2, postInfo, err2) => {
+            if (success2) {
+              setPosts((arr) => [...arr, postInfo]);
+            } else {
+              console.log(err2);
+            }
+          });
+        });
+        // setWishList(userInfo.wishList);
       } else {
         console.log(err);
       }
