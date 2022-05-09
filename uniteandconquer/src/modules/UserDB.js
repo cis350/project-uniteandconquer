@@ -58,7 +58,14 @@ async function loginUserWithEmail(
 }
 
 async function modifyUser(id, fieldToChange, newValue, oldPassword, callback) {
-  return callback(true, null);
+  const response = await axios.put(`${rootURL}/modify`, {
+    userId: id,
+    fieldToChange,
+    newValue,
+    oldPassword,
+  });
+  const result = response.data;
+  return callback(result.success, result.id, result.error);
 }
 
 async function getPassword(

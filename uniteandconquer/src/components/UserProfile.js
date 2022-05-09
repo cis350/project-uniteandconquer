@@ -150,9 +150,7 @@ function UserProfile() {
           <table>
             <thead>
               <tr>
-
                 <td>My Wishlist</td>
-
               </tr>
             </thead>
             <tbody>

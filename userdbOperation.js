@@ -109,15 +109,25 @@ const modifyUser = async (
     userId,
     fieldToChange,
     newValue,
+    oldPassword,
   } = user;
   try {
     if (fieldToChange === 'password') {
-      await db.collection('userDB').updateOne(
-        {
-          _id: ObjectId(userId),
-        },
-        { $set: { password: newValue } },
-      );
+      const result = await db.collection('userDB').findOne({ _id: ObjectId(userId) })
+      const pswd = String(result.password);
+      if (pswd === oldPassword) {
+
+        await db.collection('userDB').updateOne(
+          {
+            _id: ObjectId(userId),
+          },
+          {
+            $set: {
+              password: newValue
+            },
+          },
+        );
+      }
     }
     if (fieldToChange === 'email') {
       await db.collection('userDB').updateOne(
@@ -133,6 +143,14 @@ const modifyUser = async (
           _id: ObjectId(userId),
         },
         { $set: { phone: newValue } },
+      );
+    }
+    if (fieldToChange === 'posts') {
+      await db.collection('userDB').updateOne(
+        {
+          _id: ObjectId(userId),
+        },
+        { $push: { posts: newValue } },
       );
     }
   } catch (e) {

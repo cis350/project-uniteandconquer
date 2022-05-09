@@ -278,9 +278,9 @@ webapp.put('/modify', async (req, resp) => {
   try {
     await userlib.modifyUser(db, req.body);
     // send the response
-    resp.status(201).json({ message: 'user modified' });
+    resp.status(201).json({ success:true, error: null });
   } catch (err) {
-    resp.status(500).json({ error: 'try again later' });
+    resp.status(500).json({ success:false, error: 'try again later' });
   }
 });
 
