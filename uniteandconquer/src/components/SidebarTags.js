@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/SidebarTags.css';
 
-
+const myStorage = window.sessionStorage;
 function SidebarTags({ tags }) {
   const tagListGenerator = () => tags.map((tag) => (<div className="preference-tag">{tag}</div>));
 
@@ -11,7 +11,8 @@ function SidebarTags({ tags }) {
       <div className="greeting-box">
         <i className="far fa-user-circle fa-2x" />
         {' '}
-        Hi, Jeremy
+        Hi,
+        {myStorage.getItem('firstName') ? myStorage.getItem('firstName') : 'Guest'}
       </div>
 
       <div className="home-box">

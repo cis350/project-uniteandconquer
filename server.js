@@ -283,12 +283,12 @@ webapp.post('/loginUserWithEmail', async (req, resp) => {
     const res = await userlib.loginUserWithEmail(db, req.body);
     // send the response
     if (res) {
-      resp.status(201).json({ success: true, error: null });
+      resp.status(201).json({ success: true, id: res, error: null });
     } else {
-      resp.status(201).json({ success: false, error: null });
+      resp.status(201).json({ success: false, id: res, error: null });
     }
   } catch (err) {
-    resp.status(500).json({ success: false, error: err });
+    resp.status(500).json({ success: false, id: res, error: err });
   }
 });
 
@@ -305,9 +305,9 @@ webapp.post('/loginUserWithPhone', async (req, resp) => {
     const res = await userlib.loginUserWithPhone(db, req.body);
     // send the response
     if (res) {
-      resp.status(201).json({ success: true, error: null });
+      resp.status(201).json({ success: true, id: res, error: null });
     } else {
-      resp.status(201).json({ success: false, error: null });
+      resp.status(201).json({ success: false, id: res, error: null });
     }
   } catch (err) {
     resp.status(500).json({ success: false, error: err });
@@ -328,11 +328,13 @@ webapp.put('/modify', async (req, resp) => {
 // get user details endpoint
 webapp.get('/getUserDetails', async (req, resp) => {
   try {
-    const result = await userlib.getUserDetails(db, req.body);
+    console.log(req.query.id);
+    const id = req.query.id ? req.query.id : '';
+    const result = await userlib.getUserDetails(db, id);
     // send the response
-    resp.status(201).json({ data: result });
+    resp.status(201).json({ success: true, data: result, error: null});
   } catch (err) {
-    resp.status(500).json({ error: 'try again later' });
+    resp.status(500).json({ success: true, data: result, error: 'try again later' });
   }
 });
 

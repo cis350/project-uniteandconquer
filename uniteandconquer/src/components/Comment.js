@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../assets/Comment.css';
 
 const postDB = require('../modules/PostDB');
@@ -12,13 +12,13 @@ function Comment(props) {
   useEffect(() => {
     postDB.getPost(postID, (success, details) => {
       if (success) {
-        setComments(details.comments)
+        setComments(details.comments);
       }
     });
   }, [flag]);
 
   const addComment = () => {
-    const authorID = "dummy";
+    const authorID = 'dummy';
     if (commentInput && commentInput.length > 0) {
       postDB.addComment(authorID, postID, commentInput, (success, id, error) => {
         if (success) {

@@ -2,13 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/SidebarSettings.css';
 
+const myStorage = window.sessionStorage;
 function SidebarSettings() {
   return (
     <div className="sidebarSettings">
       <div className="greeting">
         <i className="far fa-user-circle fa-2x" />
         {' '}
-        Hi, Jeremy
+        Hi,
+        {myStorage.getItem('firstName') ? myStorage.getItem('firstName') : 'Guest'}
       </div>
 
       <div className="main-page">

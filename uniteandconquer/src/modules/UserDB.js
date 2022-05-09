@@ -1,5 +1,6 @@
 /* User-related operations */
 import axios from 'axios';
+
 const rootURL = 'http://localhost:8080';
 async function createUser(
   countryCode,
@@ -11,7 +12,7 @@ async function createUser(
   interests,
   callback,
 ) {
-  console.log("entering create user in userdb");
+  console.log('entering create user in userdb');
   const response = await axios.post(`${rootURL}/createUser`, {
     phone: { countryCode: Number(countryCode), phoneNumber: Number(phoneNumber) },
     email: `${email}`,
@@ -19,13 +20,13 @@ async function createUser(
     lastName: `${lastName}`,
     posts: null,
     wishList: null,
-    interests: interests,
+    interests,
     password: `${password}`,
     createdAt: null,
     lastCheckNotification: null,
   });
   const result = response.data;
-  console.log("results", result);
+  console.log('results', result);
   return callback(result.success, result.data, result.error);
 }
 
@@ -42,7 +43,7 @@ async function loginUserWithPhone(
   console.log(response);
   console.log(response.data);
   const result = response.data;
-  return callback(result.success, result.data, result.error);
+  return callback(result.success, result.id, result.error);
 }
 
 async function loginUserWithEmail(
@@ -55,7 +56,7 @@ async function loginUserWithEmail(
     password: `${password}`,
   });
   const result = response.data;
-  return callback(result.success, result.data, result.error);
+  return callback(result.success, result.id, result.error);
 }
 
 async function modifyUser(id, fieldToChange, newValue, oldPassword, callback) {
@@ -77,9 +78,7 @@ async function getUserDetails(
   id,
   callback,
 ) {
-  const response = await axios.get(`${rootURL}/getUserDetails`, {
-    userId: id,
-  });
+  const response = await axios.get(`${rootURL}/getUserDetails?id=${id}`, {});
   const result = response.data;
   return callback(result.success, result.data, result.error);
 }

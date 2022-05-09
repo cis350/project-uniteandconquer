@@ -74,7 +74,7 @@ const loginUserWithPhone = async (
 
   if (password === result.password) {
     console.log('correct password');
-    return true;
+    return result._id;
   }
   console.log('incorrect password');
 
@@ -144,9 +144,9 @@ const getUserDetails = async (
   db,
   user,
 ) => {
-  const { userId } = user;
   try {
-    const result = await db.collection('userDB').findOne({ _id: ObjectId(userId) });
+    const result = await db.collection('userDB').findOne({ _id: ObjectId(user) });
+    console.log(result, user,'from userdboperation get user details');
     return result;
   } catch (e) {
     throw new Error('fail to get user details');

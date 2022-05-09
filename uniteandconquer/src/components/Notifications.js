@@ -45,10 +45,7 @@ function Notifications({
       </div>
       <div className="notifications-title">Notifications</div>
 
-
       {messageGenerator()}
-
-      
 
     </div>
 

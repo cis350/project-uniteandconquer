@@ -24,12 +24,13 @@ function Login() {
 
   // We check whether a user using email or phone number as username
   // by checking whether the username_ include '@'.
-  const getFirstName = async () => {
-    await UserDB.getUserDetails(sessionStorage.UserID, (success, id, err) => {
-      console.log('tomatocake this is the getuserDetails id: ');
+  let firstName;
+
+  const getFirstName = async (userID) => {
+    await UserDB.getUserDetails(userID, (success, data, err) => {
       if (success) {
-        console.log(id);
-        return id.firstName;
+        firstName = data.firstName;
+        return firstName;
       }
       return null;
     });
@@ -39,9 +40,11 @@ function Login() {
     let result;
     if (username_.includes('@')) {
       await UserDB.loginUserWithEmail(username_, password_, (success, id, err) => {
+        console.log(success, id, 'from login');
         if (success) {
+          getFirstName(id);
           myStorage.setItem('UserID', id);
-          myStorage.setItem('firstName', getFirstName());
+          myStorage.setItem('firstName', firstName);
           myStorage.setItem('loginAuth', JSON.stringify({ email: username_ }));
         } else {
           console.log(err);
@@ -50,10 +53,11 @@ function Login() {
       });
     } else {
       await UserDB.loginUserWithPhone(countryCode, username_, password_, (success, id, err) => {
-        console.log(success);
+        console.log(success, id, 'from login');
         if (success) {
+          getFirstName(id);
           myStorage.setItem('UserID', id);
-          myStorage.setItem('firstName', getFirstName());
+          myStorage.setItem('firstName', firstName);
           myStorage.setItem('loginAuth', JSON.stringify({ phone: username_ }));
         } else {
           console.log(err);
