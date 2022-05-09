@@ -245,6 +245,117 @@ webapp.post('/changePostStatus', async (req, resp) => {
   }
 });
 
+// # ---------------------------------------- Below is user db ----------------------- #
+// registration endpoint
+
+webapp.post('/registration', async (req, resp) => {
+  if (!req.body.firstName || req.body.firstName.length === 0) {
+    resp.status(404).json({ error: 'firstName not provided' });
+  } else if (!req.body.phone.countryCode || req.body.phone.countryCode === 0) {
+    resp.status(404).json({ error: 'country code not provided' });
+  } else if (!req.body.phone.phoneNumber || req.body.phone.phoneNumber === 0) {
+    resp.status(404).json({ error: 'phone number not provided' });
+  } else if (!req.body.email || req.body.email === 0) {
+    resp.status(404).json({ error: 'phone number not provided' });
+  } else if (!req.body.password || req.body.password === 0) {
+    resp.status(404).json({ error: 'password not provided' });
+  } else if (!req.body.createdAt || req.body.createdAt === 0) {
+    resp.status(404).json({ error: 'timestamp not provided' });
+  } else if (!req.body.wishList) {
+    resp.status(404).json({ error: 'wish list not provided' });
+  } else if (!req.body.posts) {
+    resp.status(404).json({ error: 'posts not provided' });
+  } else if (!req.body.interests) {
+    resp.status(404).json({ error: 'interests not provided' });
+  } else if (!req.body.chats) {
+    resp.status(404).json({ error: 'chats not provided' });
+  } else if (!req.body.lastCheckNotification) {
+    resp.status(404).json({ error: 'last-check-notification not provided' });
+  }
+  // add the other argument checks
+  try {
+    await userlib.createUser(db, req.body);
+    // send the response
+    resp.status(201).json({ message: 'user join' });
+  } catch (err) {
+    resp.status(500).json({ error: 'try again later' });
+  }
+});
+
+// login with email endpoint
+webapp.get('/loginUserWithEmail', async (req, resp) => {
+  if (!req.body.emailAddress || req.body.emailAddress.length === 0) {
+    resp.status(404).json({ error: 'email not provided' });
+  } else if (!req.body.password || req.body.password.length === 0) {
+    resp.status(404).json({ error: 'password not provided' });
+  }
+  try {
+    await userlib.loginUserWithEmail(db, req.body.emailAddress, req.body.password);
+    // send the response
+    resp.status(201).json({ message: 'user logged in' });
+  } catch (err) {
+    resp.status(500).json({ error: 'try again later' });
+  }
+});
+
+// login with phone endpoint
+webapp.post('/loginUserWithPhone', async (req, resp) => {
+  if (!req.body.phone.countryCode || req.body.phone.countryCode.length === 0) {
+    resp.status(404).json({ error: 'country code not provided' });
+  } else if (!req.body.phone.phoneNumber || req.body.phone.phoneNumber.length === 0) {
+    resp.status(404).json({ error: 'phone number not provided' });
+  } else if (!req.body.password || req.body.password.length === 0) {
+    resp.status(404).json({ error: 'password not provided' });
+  }
+  try {
+    await userlib.loginUserWithPhone(db, req.body);
+    // send the response
+    resp.status(201).json({ message: 'user logged in' });
+  } catch (err) {
+    resp.status(500).json({ error: 'try again later' });
+  }
+});
+
+// modify user endpoint
+webapp.put('/modify', async (req, resp) => {
+  try {
+    await userlib.modifyUser(db, req.body);
+    // send the response
+    resp.status(201).json({ message: 'user modified' });
+  } catch (err) {
+    resp.status(500).json({ error: 'try again later' });
+  }
+});
+
+// get user details endpoint
+webapp.get('/getUserDetails', async (req, resp) => {
+  try {
+    const result = await userlib.getUserDetails(db, req.body);
+    // send the response
+    resp.status(201).json({ data: result });
+  } catch (err) {
+    resp.status(500).json({ error: 'try again later' });
+  }
+});
+
+// get password endpoint
+webapp.get('/getPassword', async (req, resp) => {
+  let result;
+  try {
+    result = await userlib.getPassword(db, req.body);
+    // send the response
+    console.log(result);
+    resp.status(201).json({ data: result });
+  } catch (err) {
+    resp.status(500).json({ error: 'try again later' });
+  }
+});
+
+// Default response for any other request
+webapp.use((_req, res) => {
+  res.status(404);
+});
+
 // Default response for any other request
 webapp.use((_req, res) => {
   res.status(404);
