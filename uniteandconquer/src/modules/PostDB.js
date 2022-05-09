@@ -1,5 +1,6 @@
 /* Post and comment operations */
 import axios from 'axios';
+
 const rootURL = 'http://localhost:8080';
 async function addPost(
   itemName,
@@ -20,7 +21,7 @@ async function addPost(
     itemURL: `${itemURL}`,
     itemDescription: `${itemDescription}`,
     ownerId: `${ownerId}`,
-    tags: tags,
+    tags,
   });
   const result = response.data;
   return callback(result.success, result.data, result.error);
@@ -64,9 +65,7 @@ async function getSortedPostsByTags(startIdx, endIdx, tags, callback) {
 async function getSortedPostBySearch(startIdx, endIdx, keywords, tags, callback) {
   let url = `${rootURL}/getSortedPostBySearch/${startIdx}/${endIdx}/?keywords=${keywords}`;
   console.log(tags);
-  for (const tag of tags) {
-    url = url + `&tags[]=${tag}`;
-  }
+  tags.forEach((tag) => { url += `&tags[]=${tag}`; });
   console.log(url);
   const response = await axios.get(url);
   const result = response.data;
@@ -120,4 +119,3 @@ export {
   changePostStatus,
   getSortedPostBySearch,
 };
-
