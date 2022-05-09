@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom';
 import '../assets/Sidebar.css';
 
 function Sidebar() {
+  const myStorage = window.sessionStorage;
+
   return (
     <div className="sidebar">
       <div className="greeting-box">
         <i className="far fa-user-circle fa-2x" />
         {' '}
-        Hi, Guest
+        Hi,
+        { myStorage.getItem('firstName') ? myStorage.getItem('firstName') : 'Guest'}
       </div>
 
       <div className="profile-box">

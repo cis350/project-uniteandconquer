@@ -24,12 +24,24 @@ function Login() {
 
   // We check whether a user using email or phone number as username
   // by checking whether the username_ include '@'.
+  const getFirstName = async () => {
+    await UserDB.getUserDetails(sessionStorage.UserID, (success, id, err) => {
+      console.log('tomatocake this is the getuserDetails id: ');
+      if (success) {
+        console.log(id);
+        return id.firstName;
+      }
+      return null;
+    });
+  };
+
   const checkPassword = async (username_, password_) => {
     let result;
     if (username_.includes('@')) {
       await UserDB.loginUserWithEmail(username_, password_, (success, id, err) => {
         if (success) {
           myStorage.setItem('UserID', id);
+          myStorage.setItem('firstName', getFirstName());
           myStorage.setItem('loginAuth', JSON.stringify({ email: username_ }));
         } else {
           console.log(err);
@@ -41,6 +53,7 @@ function Login() {
         console.log(success);
         if (success) {
           myStorage.setItem('UserID', id);
+          myStorage.setItem('firstName', getFirstName());
           myStorage.setItem('loginAuth', JSON.stringify({ phone: username_ }));
         } else {
           console.log(err);
@@ -51,7 +64,7 @@ function Login() {
     console.log(result);
     return result;
   };
-  const login = async() => {
+  const login = async () => {
     if (username.length <= 0 || password.length <= 0) {
       throw new Error('Invalid username and password. It cannot be empty');
     } else if (!await checkPassword(username, password)) {

@@ -25,7 +25,7 @@ async function createUser(
     lastCheckNotification: null,
   });
   const result = response.data;
-  console("results", result);
+  console.log("results", result);
   return callback(result.success, result.data, result.error);
 }
 

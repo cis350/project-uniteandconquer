@@ -259,18 +259,8 @@ webapp.post('/createUser', async (req, resp) => {
     resp.status(404).json({ error: 'phone number not provided' });
   } else if (!req.body.password || req.body.password === 0) {
     resp.status(404).json({ error: 'password not provided' });
-  } else if (!req.body.createdAt || req.body.createdAt === 0) {
-    resp.status(404).json({ error: 'timestamp not provided' });
-  } else if (!req.body.wishList) {
-    resp.status(404).json({ error: 'wish list not provided' });
-  } else if (!req.body.posts) {
-    resp.status(404).json({ error: 'posts not provided' });
   } else if (!req.body.interests) {
     resp.status(404).json({ error: 'interests not provided' });
-  } else if (!req.body.chats) {
-    resp.status(404).json({ error: 'chats not provided' });
-  } else if (!req.body.lastCheckNotification) {
-    resp.status(404).json({ error: 'last-check-notification not provided' });
   }
   // add the other argument checks
   try {
