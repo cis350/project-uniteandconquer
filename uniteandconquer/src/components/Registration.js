@@ -72,11 +72,13 @@ function Registration() {
 
   // register the user given the information provided
   // if the password and confimPassword are not correct, then throw an exception
-  const registerUser = () => {
+  const registerUser = async () => {
     if (password !== confirmPassword) {
       throw new Error('password and confirmPassword need to be the same');
     }
-    UserDB.createUser(
+    console.log('here');
+    console.log(countryCode, phone, email, password, firstName, lastName, tags);
+    await UserDB.createUser(
       countryCode,
       phone,
       email,
@@ -85,6 +87,7 @@ function Registration() {
       lastName,
       tags,
       (success, id, err) => {
+        console.log(success);
         if (success) {
           // navigate('/login');
           showModal();

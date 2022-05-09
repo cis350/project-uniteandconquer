@@ -63,6 +63,7 @@ const loginUserWithPhone = async (
   user,
 ) => {
   const { phone, password } = user;
+  console.log(phone, password);
   let result;
   try {
     result = await db.collection('userDB').findOne({ phone });

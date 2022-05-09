@@ -248,7 +248,7 @@ webapp.post('/changePostStatus', async (req, resp) => {
 // # ---------------------------------------- Below is user db ----------------------- #
 // registration endpoint
 
-webapp.post('/registration', async (req, resp) => {
+webapp.post('/createUser', async (req, resp) => {
   if (!req.body.firstName || req.body.firstName.length === 0) {
     resp.status(404).json({ error: 'firstName not provided' });
   } else if (!req.body.phone.countryCode || req.body.phone.countryCode === 0) {
@@ -276,25 +276,29 @@ webapp.post('/registration', async (req, resp) => {
   try {
     await userlib.createUser(db, req.body);
     // send the response
-    resp.status(201).json({ message: 'user join' });
+    resp.status(201).json({ success: true, error: null });
   } catch (err) {
-    resp.status(500).json({ error: 'try again later' });
+    resp.status(500).json({ success: false, error: err });
   }
 });
 
 // login with email endpoint
-webapp.get('/loginUserWithEmail', async (req, resp) => {
-  if (!req.body.emailAddress || req.body.emailAddress.length === 0) {
+webapp.post('/loginUserWithEmail', async (req, resp) => {
+  if (!req.body.email || req.body.email.length === 0) {
     resp.status(404).json({ error: 'email not provided' });
   } else if (!req.body.password || req.body.password.length === 0) {
     resp.status(404).json({ error: 'password not provided' });
   }
   try {
-    await userlib.loginUserWithEmail(db, req.body.emailAddress, req.body.password);
+    const res = await userlib.loginUserWithEmail(db, req.body);
     // send the response
-    resp.status(201).json({ message: 'user logged in' });
+    if (res) {
+      resp.status(201).json({ success: true, error: null });
+    } else {
+      resp.status(201).json({ success: false, error: null });
+    }
   } catch (err) {
-    resp.status(500).json({ error: 'try again later' });
+    resp.status(500).json({ success: false, error: err });
   }
 });
 
@@ -308,11 +312,15 @@ webapp.post('/loginUserWithPhone', async (req, resp) => {
     resp.status(404).json({ error: 'password not provided' });
   }
   try {
-    await userlib.loginUserWithPhone(db, req.body);
+    const res = await userlib.loginUserWithPhone(db, req.body);
     // send the response
-    resp.status(201).json({ message: 'user logged in' });
+    if (res) {
+      resp.status(201).json({ success: true, error: null });
+    } else {
+      resp.status(201).json({ success: false, error: null });
+    }
   } catch (err) {
-    resp.status(500).json({ error: 'try again later' });
+    resp.status(500).json({ success: false, error: err });
   }
 });
 

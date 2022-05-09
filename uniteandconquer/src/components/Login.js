@@ -24,10 +24,10 @@ function Login() {
 
   // We check whether a user using email or phone number as username
   // by checking whether the username_ include '@'.
-  const checkPassword = (username_, password_) => {
+  const checkPassword = async (username_, password_) => {
     let result;
     if (username_.includes('@')) {
-      UserDB.loginUserWithEmail(username_, password_, (success, id, err) => {
+      await UserDB.loginUserWithEmail(username_, password_, (success, id, err) => {
         if (success) {
           myStorage.setItem('UserID', id);
           myStorage.setItem('loginAuth', JSON.stringify({ email: username_ }));
@@ -37,7 +37,8 @@ function Login() {
         result = success;
       });
     } else {
-      UserDB.loginUserWithPhone(countryCode, username_, password_, (success, id, err) => {
+      await UserDB.loginUserWithPhone(countryCode, username_, password_, (success, id, err) => {
+        console.log(success);
         if (success) {
           myStorage.setItem('UserID', id);
           myStorage.setItem('loginAuth', JSON.stringify({ phone: username_ }));
@@ -47,14 +48,15 @@ function Login() {
         result = success;
       });
     }
+    console.log(result);
     return result;
   };
-  const login = () => {
+  const login = async() => {
     if (username.length <= 0 || password.length <= 0) {
       throw new Error('Invalid username and password. It cannot be empty');
-    } else if (!checkPassword(username, password)) {
+    } else if (!await checkPassword(username, password)) {
       throw new Error('Incorrect password or username not exists');
-    } else if (checkPassword(username, password)) {
+    } else if (await checkPassword(username, password)) {
       navigate('/');
     }
   };

@@ -1,8 +1,7 @@
 {
     "env": {
         "browser": true,
-        "es2021": true,
-        "node": true
+        "es2021": true
     },
     "extends": [
         "plugin:react/recommended",
@@ -19,10 +18,5 @@
         "react"
     ],
     "rules": {
-        "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
-        "react/prop-types": 0,
-        "no-unused-vars": [2, {"varsIgnorePattern": "^_$"}],  // suppress unused var rule for wildcard pattern
-        "import/no-named-as-default": 0,
-        "linebreak-style":0
     }
 }

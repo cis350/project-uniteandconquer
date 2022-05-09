@@ -11,6 +11,7 @@ async function createUser(
   interests,
   callback,
 ) {
+  console.log("entering create user in userdb");
   const response = await axios.post(`${rootURL}/createUser`, {
     phone: { countryCode: Number(countryCode), phoneNumber: Number(phoneNumber) },
     email: `${email}`,
@@ -24,6 +25,7 @@ async function createUser(
     lastCheckNotification: null,
   });
   const result = response.data;
+  console("results", result);
   return callback(result.success, result.data, result.error);
 }
 
@@ -37,6 +39,8 @@ async function loginUserWithPhone(
     phone: { countryCode: Number(countryCode), phoneNumber: Number(phoneNumber) },
     password: `${password}`,
   });
+  console.log(response);
+  console.log(response.data);
   const result = response.data;
   return callback(result.success, result.data, result.error);
 }
