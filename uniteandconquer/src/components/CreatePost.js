@@ -6,6 +6,7 @@ import '../assets/App.css';
 import '../assets/CreatePost.css';
 
 const PostDB = require('../modules/PostDB');
+const UserDB = require('../modules/UserDB');
 
 const myStorage = window.sessionStorage;
 function CreatePost() {
@@ -40,11 +41,11 @@ function CreatePost() {
     tags.forEach((tag) => { document.getElementById(tag).className = 'tag_selected'; });
   }, [tags]);
 
-  const createPost = () => {
+  const createPost = async () => {
     if (!item || !price || !quantity || !link || !description || !tags) {
       throw new Error('You need to fill in all the blank');
     } else {
-      PostDB.addPost(
+      await PostDB.addPost(
         item,
         Number(quantity),
         Number(currQuantity),
@@ -55,6 +56,7 @@ function CreatePost() {
         tags,
         (success, id, err) => {
           if (success) {
+            UserDB.modifyUser(userID, 'posts', id, null);
             navigate(`/post-details/${id}`);
           } else {
             console.log(err);
