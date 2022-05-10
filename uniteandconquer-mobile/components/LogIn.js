@@ -76,7 +76,7 @@ function PhoneLogIn({ navigation }) {
   const handleLogIn = async () => {
     if (countryCode && phoneNumber && password) {
       if (phoneNumber.match(/^\d+$/)) {
-        await loginUserWithPhone(countryCode, phoneNumber, password, (success, userId, err) => {
+        await loginUserWithPhone(countryCode, phoneNumber, password, (success, userId) => {
           console.log(success);
           console.log(countryCode, phoneNumber, password);
           if (success) {
@@ -148,7 +148,7 @@ function EmailLogIn({ navigation }) {
   const handleLogIn = async () => {
     if (email && password) {
       if (email.match(emailRegex)) {
-        await loginUserWithEmail(email, password, (success, userId, err) => {
+        await loginUserWithEmail(email, password, (success, userId) => {
           if (success) {
             getFirstName(userId);
             setUserInfoEmail(userId, email);
