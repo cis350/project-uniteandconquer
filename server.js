@@ -22,11 +22,6 @@ webapp.use(cors({ credentials: true, origin: true }));
 const url = 'mongodb+srv://cis350:cis350@cluster0.ivirc.mongodb.net/uniteconquer?retryWrites=true&w=majority';
 webapp.use(express.static(path.join(__dirname, './uniteandconquer/build')));
 
-// Root endpoint
-webapp.get('/', (req, res) => {
-  res.json({ message: 'Welcome to unite and conquer' });
-});
-
 // TODO: define all endpoints as specified in REST API
 // addPlayer endpoint
 
