@@ -106,9 +106,10 @@ function Comment({ route }) {
           setModalVisible(true);
         }
       });
+    } else {
+      setErrorMessage('input must not be empty');
+      setModalVisible(true);
     }
-    setErrorMessage('input must not be empty');
-    setModalVisible(true);
   };
 
   /** create an useInterval hook for looping fetch */
