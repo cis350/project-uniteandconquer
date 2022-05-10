@@ -171,17 +171,6 @@ const getUserDetails = async (
   }
 };
 
-const getChats = async (
-  db,
-  user,
-) => {
-  const { userId } = user;
-  try {
-    return (await db.collection('userDB').findOne({ _id: ObjectId(userId) })).chats;
-  } catch (e) {
-    throw new Error('fail to get chats');
-  }
-};
 
 module.exports = {
   connect,
@@ -191,5 +180,4 @@ module.exports = {
   modifyUser,
   getUserDetails,
   getPassword,
-  getChats,
 };

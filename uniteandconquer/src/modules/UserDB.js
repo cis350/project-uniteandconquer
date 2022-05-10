@@ -27,7 +27,7 @@ async function createUser(
   });
   const result = response.data;
   console.log('results', result);
-  return callback(result.success, result.data, result.error);
+  return callback(result.success, result.error);
 }
 
 async function loginUserWithPhone(
@@ -65,16 +65,14 @@ async function modifyUser(id, fieldToChange, newValue, oldPassword, callback) {
     oldPassword,
   });
   const result = response.data;
-  return callback(result.success, result.id, result.error);
+  return callback(result.success, result.error);
 }
 
 async function getPassword(
   id,
   callback,
 ) {
-  const response = await axios.get(`${rootURL}/getPassword`, {
-    userId: id,
-  });
+  const response = await axios.get(`${rootURL}/getPassword?id=${id}`, {});
   const result = response.data;
   return callback(result.success, result.data, result.error);
 }
@@ -88,17 +86,6 @@ async function getUserDetails(
   return callback(result.success, result.data, result.error);
 }
 
-async function getChats(
-  id,
-  callback,
-) {
-  const response = await axios.get(`${rootURL}/getChats`, {
-    userId: id,
-  });
-  const result = response.data;
-  return callback(result.success, result.data, result.error);
-}
-
 export {
   createUser,
   loginUserWithPhone,
@@ -106,5 +93,4 @@ export {
   modifyUser,
   getUserDetails,
   getPassword,
-  getChats,
 };

@@ -302,12 +302,11 @@ webapp.get('/getUserDetails', async (req, resp) => {
 webapp.get('/getPassword', async (req, resp) => {
   let result;
   try {
-    result = await userlib.getPassword(db, req.body);
-    // send the response
-    console.log(result);
-    resp.status(201).json({ data: result });
+    const id = req.query.id ? req.query.id : '';
+    result = await userlib.getPassword(db, id);
+    resp.status(201).json({ success: true, data: result, error: null });
   } catch (err) {
-    resp.status(500).json({ error: 'try again later' });
+    resp.status(500).json({ success: false, data: null, error: 'try again later' });
   }
 });
 // # ---------------------------------------- Below is notif db ----------------------- #
