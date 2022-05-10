@@ -230,6 +230,16 @@ export default function PostDetails({ navigation }) {
   //   return null;
   // }
 
+  const handleProfile = () => {
+    if (route.params.userId) {
+      navigation.navigate('UserProfile', {
+        userId: route.params.userId,
+      });
+    } else {
+      navigation.navigate('LogIn');
+    }
+  };
+
   // views ---------
 
   return (
@@ -237,26 +247,27 @@ export default function PostDetails({ navigation }) {
       <View style={userStyles.container}>
         <TouchableOpacity
           style={{ alignSelf: 'flex-end' }}
-          onPress={() => navigation.navigate('UserProfile')}
+          onPress={() => handleProfile()}
         >
           <Icon name="user" size={28} style={userStyles.icon} />
         </TouchableOpacity>
         <Text style={userStyles.text}>
-          Hello, guest!
+          {route.params.userId ? (
+            <Text>
+              Hello,
+              {` ${route.params.userId}`}
+              !
+            </Text>
+          ) : <Text>Hello, guest!</Text>}
         </Text>
-        <Text style={userStyles.button}>
-          <Button
-            color="#000"
-            title="My Chats"
-          />
-        </Text>
-        <Text style={userStyles.button}>
-          <Button
-            color="#000"
-            title="Log In"
-            onPress={() => navigation.navigate('LogIn')}
-          />
-        </Text>
+        {route.params.userId ? (
+          <Text style={userStyles.button}>
+            <Button
+              color="#000"
+              title="My Chats"
+            />
+          </Text>
+        ) : <Text />}
       </View>
       {errorMessage && (
         <Text>{errorMessage}</Text>
