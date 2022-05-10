@@ -174,6 +174,16 @@ function HomeScreen({ navigation, route }) {
       return null;
     }, [delay]);
   }
+  useInterval(() => {
+    notifyDB.getNotificationsForUser(route.params?.userId, (success, notifList, err) => {
+      if (success) {
+        setNotifs(notifList);
+        // console.log(notifList);
+      } else {
+        console.log(err);
+      }
+    });
+  }, 5000);
 
   // get all posts when user get into the page
   useEffect(() => {

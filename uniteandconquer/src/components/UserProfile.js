@@ -53,7 +53,7 @@ function UserProfile() {
         console.log(err);
       }
     });
-  }, 15000);
+  }, 5000);
 
   const PostTableGenerator = (postsOrWishList) => {
     const table = postsOrWishList.map((post) => {
