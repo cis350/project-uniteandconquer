@@ -1,0 +1,296 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot post-details 1`] = `
+<div
+  className="post-details-page"
+>
+  <div
+    className="sidebar"
+  >
+    <div
+      className="greeting-box"
+    >
+      <i
+        className="far fa-user-circle fa-2x"
+      />
+       
+      Hi, Jeremy
+    </div>
+    <div
+      className="profile-box"
+      data-testid="profile-header"
+    />
+    <div
+      className="chat-box"
+      data-testid="chat-header"
+    />
+    <div
+      className="logout-box"
+      data-testid="logout-header"
+    />
+    <div
+      className="ad-box"
+      data-testid="ads-header"
+    />
+  </div>
+  <div
+    className="post-details-container"
+  >
+    <div
+      className="item-name"
+    >
+      <h1>
+        Item Name
+      </h1>
+    </div>
+    <div
+      className="post-details-content"
+    >
+      <div
+        className="item-details"
+      >
+        <h3>
+          Item Details
+        </h3>
+        <div
+          className="item-detail"
+        >
+          Target Quantity: 4/5
+        </div>
+        <div
+          className="item-detail"
+        >
+          Price/Item: $10.00
+        </div>
+        <div
+          className="item-detail"
+        >
+          Item Link: exampleurl.com/item
+        </div>
+        <div
+          className="item-detail"
+        >
+          Description:
+           
+          <br />
+           
+          Beautiful fairy lights you can use for your dorm
+        </div>
+      </div>
+      <div
+        className="group-details"
+      >
+        <h3>
+          Group Details
+        </h3>
+        <div
+          className="size"
+        >
+          Group size:
+           
+          2
+        </div>
+        <div
+          className="group-member"
+        >
+          <ul>
+            <div
+              className="group-user"
+            >
+              <div
+                className="name"
+              >
+                 
+                <i
+                  className="far fa-user-circle"
+                />
+                 
+                Anna
+              </div>
+              <div
+                className="quantity"
+              >
+                Quantity:
+                 
+                3
+              </div>
+            </div>
+            <div
+              className="group-user"
+            >
+              <div
+                className="name"
+              >
+                 
+                <i
+                  className="far fa-user-circle"
+                />
+                 
+                John
+              </div>
+              <div
+                className="quantity"
+              >
+                Quantity:
+                 
+                5
+              </div>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      className="comment-section"
+    >
+      <div
+        className="comments"
+      >
+        <div
+          className="comment"
+        >
+          <div
+            className="comment-img"
+          >
+            <i
+              className="far fa-user-circle "
+            />
+          </div>
+          <div
+            className="comment-text"
+          >
+            <div
+              className="comment-name"
+            >
+              user1
+            </div>
+            <div
+              className="comment-content"
+            >
+              I loved using this item
+            </div>
+          </div>
+        </div>
+        <div
+          className="comment"
+        >
+          <div
+            className="comment-img"
+          >
+            <i
+              className="far fa-user-circle "
+            />
+          </div>
+          <div
+            className="comment-text"
+          >
+            <div
+              className="comment-name"
+            >
+              user2
+            </div>
+            <div
+              className="comment-content"
+            >
+              I wonder if I will need this
+            </div>
+          </div>
+        </div>
+        <div
+          className="add-comment"
+        >
+          <i
+            className="far fa-user-circle"
+          />
+          <input
+            className="input-comment"
+            data-testid="comment-input"
+            onChange={[Function]}
+            value=""
+          />
+          <button
+            className="submit-comment"
+            onClick={[Function]}
+            type="button"
+          >
+            <div
+              className="button-text"
+            >
+              Comment
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="post-detail-tags"
+    >
+      <div
+        className="tags-label"
+      >
+        Tags
+      </div>
+      <div
+        className="tags-container"
+      >
+        <button
+          className="tag"
+          type="button"
+        >
+          Appliances
+        </button>
+        <button
+          className="tag"
+          type="button"
+        >
+          Beauty & Care
+        </button>
+        <button
+          className="tag"
+          type="button"
+        >
+          Health & Household
+        </button>
+        <button
+          className="tag"
+          type="button"
+        >
+          Electronics
+        </button>
+      </div>
+    </div>
+    <div
+      className="buttons-container"
+    >
+      <div
+        className="desired-quantity"
+      >
+        <input
+          data-testid="quantity-input"
+          onChange={[Function]}
+          placeholder="desired quantity"
+        />
+      </div>
+      <div
+        className="horizontal-buttons"
+      >
+        <button
+          className="create-button"
+          disabled={true}
+          onClick={[Function]}
+          type="button"
+        >
+          Join
+        </button>
+        <button
+          className="cancel-button"
+          onClick={[Function]}
+          type="button"
+        >
+          Back
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

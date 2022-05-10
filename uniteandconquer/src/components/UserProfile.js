@@ -13,7 +13,7 @@ function UserProfile() {
       <div>
         <div className="profile-title"><h1>My Profile</h1></div>
         <div className="bell-pos">
-          <button className="bell-button" type="button" onClick={() => setShowNotifs(!showNotifs)}>
+          <button data-testid="show-notifications" className="bell-button" type="button" onClick={() => setShowNotifs(!showNotifs)}>
             {' '}
             <i className="fas fa-bell fa-2x" />
           </button>

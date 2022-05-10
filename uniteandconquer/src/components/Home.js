@@ -52,7 +52,7 @@ function Home() {
       myStorage.setItem('PostID', post.id);
 
       return (
-        <div className="post">
+        <div className="post" key={post.itemName}>
           <li>
             <Link className="link" to="/post-details">
               <div className="post-title">This is Post</div>
@@ -115,16 +115,16 @@ function Home() {
             {tagFilter()}
           </div>
           <div className="search-field">
-            <input onChange={(e) => setSearchString(e.target.value)} />
+            <input data-testid="search-input" onChange={(e) => setSearchString(e.target.value)} />
           </div>
           <button className="searchButton" type="button" onClick={handleSearch}>
             Search
           </button>
         </div>
         <div className="all-posts">
-          <list>
+          <ul>
             {postsListGenerator()}
-          </list>
+          </ul>
         </div>
       </div>
     </div>

@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot registration 1`] = `
+<div
+  className="login-page"
+>
+  <div
+    className="logo"
+  >
+    <h1>
+      Unite and Conquer
+    </h1>
+  </div>
+  <div
+    className="login"
+  >
+    <h2>
+      Login to your account
+    </h2>
+    <div
+      className="login-field"
+    >
+      <input
+        className="field"
+        data-testid="email/phone-input"
+        onChange={[Function]}
+        placeholder="phone or email"
+      />
+    </div>
+    <div
+      className="login-field"
+    >
+      <input
+        className="field"
+        data-testid="password-input"
+        onChange={[Function]}
+        placeholder="password"
+      />
+    </div>
+    <br />
+    <button
+      className="submit"
+      onClick={[Function]}
+      type="button"
+    >
+      login
+    </button>
+    <p>
+      Do not already have an account?
+       
+       
+    </p>
+  </div>
+</div>
+`;

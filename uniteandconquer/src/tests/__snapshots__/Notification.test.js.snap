@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot notifications 1`] = `
+<div
+  className="notifications-container"
+>
+  <div
+    className="toggle-notifs"
+  >
+    <button
+      className="notif-button"
+      data-testid="hide-notifications"
+      onClick={[Function]}
+      type="button"
+    >
+       
+      <i
+        className="fas fa-times fa-2x"
+      />
+    </button>
+  </div>
+  <div
+    className="notifications-title"
+  >
+    Notifications
+  </div>
+  <div
+    className="notif-time"
+  >
+    Last Week
+  </div>
+  <div>
+    <div
+      className="notification-box"
+    >
+      [Message] • 2 days ago
+       
+      <i
+        className="fas fa-times"
+      />
+    </div>
+    <div
+      className="notification-box"
+    >
+      [Message] • 3 days ago
+       
+      <i
+        className="fas fa-times"
+      />
+    </div>
+  </div>
+  <div
+    className="notif-time"
+  >
+    22 Feb 2022
+  </div>
+  <div>
+    <div
+      className="notification-box"
+    >
+      [Message] • 7 weeks ago
+       
+      <i
+        className="fas fa-times"
+      />
+    </div>
+    <div
+      className="notification-box"
+    >
+      [Message] • 6 weeks ago
+       
+      <i
+        className="fas fa-times"
+      />
+    </div>
+    <div
+      className="notification-box"
+    >
+      [Message] • 6 weeks ago
+       
+      <i
+        className="fas fa-times"
+      />
+    </div>
+  </div>
+</div>
+`;

@@ -14,17 +14,17 @@ function SidebarTags() {
         Hi, Jeremy
       </div>
 
-      <div className="home-box">
+      <div data-testid="home-header" className="home-box">
         <Link className="link" to="/">
           <div className="text">Home</div>
         </Link>
       </div>
-      <div className="settings-box">
+      <div data-testid="settings-header" className="settings-box">
         <Link className="link" to="/user-settings-personal-information">
           <div className="text">Settings</div>
         </Link>
       </div>
-      <div className="preferences-box">
+      <div data-testid="preferences-header" className="preferences-box">
         <div className="preferences-title">My Preferences</div>
         {tags.current.map((tag) => (
           <button type="button" key={tag} className="preference-tag">{tag}</button>

@@ -11,22 +11,22 @@ function Sidebar() {
         Hi, Jeremy
       </div>
 
-      <div className="profile-box">
+      <div data-testid="profile-header" className="profile-box">
         <Link className="link" to="/user-profile">
           <div className="text">Profile</div>
         </Link>
       </div>
-      <div className="chat-box">
+      <div data-testid="chat-header" className="chat-box">
         <Link className="link" to="/chat">
           <div className="text">Chat</div>
         </Link>
       </div>
-      <div className="logout-box">
+      <div data-testid="logout-header" className="logout-box">
         <Link className="link" to="/login">
           <div className="text">Logout</div>
         </Link>
       </div>
-      <div className="ad-box">
+      <div data-testid="ads-header" className="ad-box">
         <Link className="link" to="/">
           <div className="text-ad">Ads</div>
         </Link>

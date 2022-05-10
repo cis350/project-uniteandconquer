@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot sidebar for tags 1`] = `
+<div
+  className="sidebar"
+>
+  <div
+    className="greeting-box"
+  >
+    <i
+      className="far fa-user-circle fa-2x"
+    />
+     
+    Hi, Jeremy
+  </div>
+  <div
+    className="home-box"
+    data-testid="home-header"
+  />
+  <div
+    className="settings-box"
+    data-testid="settings-header"
+  />
+  <div
+    className="preferences-box"
+    data-testid="preferences-header"
+  >
+    <div
+      className="preferences-title"
+    >
+      My Preferences
+    </div>
+    <button
+      className="preference-tag"
+      type="button"
+    >
+      Appliances
+    </button>
+    <button
+      className="preference-tag"
+      type="button"
+    >
+      Beauty & Care
+    </button>
+    <button
+      className="preference-tag"
+      type="button"
+    >
+      Health & Household
+    </button>
+    <button
+      className="preference-tag"
+      type="button"
+    >
+      Electronics
+    </button>
+  </div>
+</div>
+`;

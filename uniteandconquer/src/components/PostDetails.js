@@ -87,7 +87,7 @@ function PostDetails() {
             <div className="group-member">
               <ul>
                 {groupUsers.map((user) => (
-                  <div className="group-user">
+                  <div key={user.name} className="group-user">
                     <div className="name">
                       {' '}
                       <i className="far fa-user-circle" />
@@ -112,13 +112,14 @@ function PostDetails() {
           <div className="tags-label">Tags</div>
           <div className="tags-container">
             {tags.map((tag) => (
-              <button type="button" className="tag">{tag}</button>
+              <button key={tag} type="button" className="tag">{tag}</button>
             ))}
           </div>
         </div>
         <div className="buttons-container">
           <div className="desired-quantity">
             <input
+              data-testid="quantity-input"
               placeholder="desired quantity"
               onChange={(e) => setDesiredQuantity(e.target.value)}
             />
