@@ -266,12 +266,12 @@ function Registration() {
             </div>
             <div className="registration-field">
               <div className="label">password</div>
-              <input className="password-input" onChange={(e) => setPassword(e.target.value)} />
+              <input type="password" className="password-input" onChange={(e) => setPassword(e.target.value)} />
               {validPassword ? <i className="fas fa-check" /> : <i className="fas fa-times" />}
             </div>
             <div className="registration-field">
               <div className="label">confirm password</div>
-              <input className="confirm-password-input" onChange={(e) => setConfirmPassword(e.target.value)} />
+              <input type="password" className="confirm-password-input" onChange={(e) => setConfirmPassword(e.target.value)} />
               {validConfirmPassword ? <i className="fas fa-check" /> : <i className="fas fa-times" />}
             </div>
           </div>

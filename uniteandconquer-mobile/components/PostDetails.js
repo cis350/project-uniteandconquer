@@ -134,7 +134,7 @@ const postDetailStyles = StyleSheet.create({
 
 // app content --------
 
-export default function PostDetails({ navigation }) {
+export default function PostDetails({ navigation, route }) {
   const [tags, setTags] = useState(['Appliances', 'Books', 'Electronics']);
   // event handlers --------
   const [errorMessage, setErrorMessage] = useState(null);
@@ -147,32 +147,43 @@ export default function PostDetails({ navigation }) {
     });
   };
 
+  const handleProfile = () => {
+    if (route.params.userId) {
+      navigation.navigate('UserProfile', {
+        userId: route.params.userId,
+      });
+    } else {
+      navigation.navigate('LogIn');
+    }
+  };
+
   // views ---------
   return (
     <ScrollView style={styles.container}>
       <View style={userStyles.container}>
         <TouchableOpacity
           style={{ alignSelf: 'flex-end' }}
-          onPress={() => navigation.navigate('UserProfile')}
+          onPress={() => handleProfile()}
         >
           <Icon name="user" size={28} style={userStyles.icon} />
         </TouchableOpacity>
         <Text style={userStyles.text}>
-          Hello, guest!
+          {route.params.userId ? (
+            <Text>
+              Hello,
+              {` ${route.params.userId}`}
+              !
+            </Text>
+          ) : <Text>Hello, guest!</Text>}
         </Text>
-        <Text style={userStyles.button}>
-          <Button
-            color="#000"
-            title="My Chats"
-          />
-        </Text>
-        <Text style={userStyles.button}>
-          <Button
-            color="#000"
-            title="Log In"
-            onPress={() => navigation.navigate('LogIn')}
-          />
-        </Text>
+        {route.params.userId ? (
+          <Text style={userStyles.button}>
+            <Button
+              color="#000"
+              title="My Chats"
+            />
+          </Text>
+        ) : <Text />}
       </View>
       {errorMessage && (
         <Text>{errorMessage}</Text>
@@ -237,12 +248,14 @@ export default function PostDetails({ navigation }) {
             </View>
           </View>
           <View>
-            <View style={postDetailStyles.buttons}>
-              <View style={postDetailStyles.LeftButton}><Button color="#000" title="Join" /></View>
-              <View style={postDetailStyles.LeftButton}><Button color="#000" title="Leave" onPress={leavePressed} /></View>
-              <View style={postDetailStyles.LeftButton}><Button color="#000" title="Comment" onPress={() => navigation.navigate('Comment')} /></View>
-              <View style={postDetailStyles.RightButton}><Button color="#000" title="Back" onPress={() => navigation.navigate('Home')} /></View>
-            </View>
+            {route.params.userId ? (
+              <View style={postDetailStyles.buttons}>
+                <View style={postDetailStyles.LeftButton}><Button color="#000" title="Join" /></View>
+                <View style={postDetailStyles.LeftButton}><Button color="#000" title="Leave" onPress={leavePressed} /></View>
+                <View style={postDetailStyles.LeftButton}><Button color="#000" title="Comment" onPress={() => navigation.navigate('Comment')} /></View>
+                <View style={postDetailStyles.RightButton}><Button color="#000" title="Back" onPress={() => navigation.navigate('Home')} /></View>
+              </View>
+            ) : <Text />}
           </View>
         </View>
       </View>

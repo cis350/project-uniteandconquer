@@ -172,7 +172,10 @@ const createPostStyles = StyleSheet.create({
 
 // app content --------
 
-export default function CreatePost({ navigation }) {
+export default function CreatePost({ navigation, route }) {
+  const {
+    userId,
+  } = route.params;
   const [itemName, setItemName] = React.useState('');
   const [targetQuantity, setTargetQuantity] = React.useState('');
   const [currentQuantity, setCurrentQuantity] = React.useState('');
@@ -261,24 +264,25 @@ export default function CreatePost({ navigation }) {
         <View style={userStyles.container}>
           <TouchableOpacity
             style={{ alignSelf: 'flex-end' }}
-            onPress={() => navigation.navigate('UserProfile')}
+            onPress={() => navigation.navigate('UserProfile', {
+              userId,
+            })}
           >
             <Icon name="user" size={28} style={userStyles.icon} />
           </TouchableOpacity>
           <Text style={userStyles.text}>
-            Hello, guest!
+            {userId ? (
+              <Text>
+                Hello,
+                {` ${userId}`}
+                !
+              </Text>
+            ) : <Text>Hello, guest!</Text>}
           </Text>
           <Text style={userStyles.button}>
             <Button
               color="#000"
               title="My Chats"
-            />
-          </Text>
-          <Text style={userStyles.button}>
-            <Button
-              color="#000"
-              title="Log In"
-              onPress={() => navigation.navigate('LogIn')}
             />
           </Text>
         </View>
