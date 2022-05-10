@@ -65,7 +65,7 @@ function PhoneLogIn({ navigation }) {
   const [phoneNumber, setPhoneNumber] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const countryCodeList = ['+1', '+86'];
+  const countryCodeList = ['1', '86'];
 
   const setUserInfoPhone = async (userId, username_) => {
     await AsyncStorage.setItem('UserID', userId);
@@ -73,16 +73,18 @@ function PhoneLogIn({ navigation }) {
     await AsyncStorage.setItem('loginAuth', JSON.stringify({ phone: username_ }));
   };
 
-  const handleLogIn = () => {
+  const handleLogIn = async () => {
     if (countryCode && phoneNumber && password) {
       if (phoneNumber.match(/^\d+$/)) {
-        loginUserWithPhone(countryCode, phoneNumber, password, (success, userId, err) => {
+        await loginUserWithPhone(countryCode, phoneNumber, password, (success, userId, err) => {
+          console.log(success);
+          console.log(countryCode, phoneNumber, password);
           if (success) {
             getFirstName(userId);
             setUserInfoPhone(userId, phoneNumber);
             navigation.navigate({ name: 'Home', params: { userId }, merge: true });
           } else {
-            showMessage({ message: err, type: 'danger' });
+            showMessage({ message: 'Incorrect password / username', type: 'danger' });
           }
         });
       } else {
@@ -143,16 +145,16 @@ function EmailLogIn({ navigation }) {
     await AsyncStorage.setItem('loginAuth', JSON.stringify({ email: username_ }));
   };
 
-  const handleLogIn = () => {
+  const handleLogIn = async () => {
     if (email && password) {
       if (email.match(emailRegex)) {
-        loginUserWithEmail(email, password, (success, userId, err) => {
+        await loginUserWithEmail(email, password, (success, userId, err) => {
           if (success) {
             getFirstName(userId);
             setUserInfoEmail(userId, email);
             navigation.navigate({ name: 'Home', params: { userId }, merge: true });
           } else {
-            showMessage({ message: err, type: 'danger' });
+            showMessage({ message: 'Incorrect password / username', type: 'danger' });
           }
         });
       } else {
