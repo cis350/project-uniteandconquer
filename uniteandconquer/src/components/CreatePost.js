@@ -56,7 +56,7 @@ function CreatePost() {
         tags,
         (success, id, err) => {
           if (success) {
-            UserDB.modifyUser(userID, 'posts', id, null);
+            // UserDB.modifyUser(userID, 'posts', id, null);
             navigate(`/post-details/${id}`);
           } else {
             console.log(err);

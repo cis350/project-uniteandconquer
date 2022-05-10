@@ -79,7 +79,7 @@ async function modifyUser(id, fieldToChange, newValue, oldPassword, callback) {
     oldPassword,
   });
   const result = response.data;
-  return callback(result.success, result.error);
+  return callback(result.success, result.data, result.error);
 }
 
 async function getPassword(

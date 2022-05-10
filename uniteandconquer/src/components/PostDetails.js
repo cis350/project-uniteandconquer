@@ -35,11 +35,14 @@ function PostDetails() {
         if (myStorage.getItem('loginAuth') == null) {
           setIsOwner(false);
         } else {
-          const loginAuth = JSON.parse(myStorage.getItem('loginAuth')).phone || JSON.parse(myStorage.getItem('loginAuth')).email;
-          const [ownerPhone, onwerEmail] = [details.owner.phone.phoneNumber, details.owner.email];
-          if (loginAuth === onwerEmail || loginAuth === ownerPhone) {
+          /*
+          const loginAuth = JSON.parse(myStorage.getItem('loginAuth')).phone
+          | JSON.parse(myStorage.getItem('loginAuth')).email;
+          const [ownerPhone, ownerEmail] = [details.owner.phone.phoneNumber, details.owner.email];
+          if (loginAuth === ownerEmail || loginAuth === ownerPhone) {
             setIsOwner(true);
           }
+          */
         }
       }
     });
