@@ -145,9 +145,15 @@ function Home() {
         <div className="menu-title"><h1>Unite and Conquer</h1></div>
         <div className="menu-bar">
           <div className="new-post">
-            <Link className="link" to="/create-post">
-              <div className="new-post-text">New Post</div>
-            </Link>
+            {myStorage.getItem('firstName') ? (
+              <Link className="link" to="/create-post">
+                <div className="new-post-text">New Post</div>
+              </Link>
+            ) : (
+              <Link className="link" to="/login">
+                <div className="new-post-text">New Post</div>
+              </Link>
+            )}
           </div>
           <div className="filter">
             {tagFilter()}

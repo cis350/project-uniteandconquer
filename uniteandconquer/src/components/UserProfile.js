@@ -148,9 +148,7 @@ function UserProfile() {
           <table>
             <thead>
               <tr>
-
                 <td>My Active Posts</td>
-
               </tr>
             </thead>
             <tbody>
