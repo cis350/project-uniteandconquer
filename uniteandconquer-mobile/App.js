@@ -125,6 +125,8 @@ const homePageStyles = StyleSheet.create({
 function HomeScreen({ navigation, route }) {
   // const { userId, firstName } = route.params;
   const firstName = React.useRef('');
+  const UserID = React.useRef('');
+
   const [firstNameState, setFirstNameState] = React.useState('');
   const [posts, setPosts] = useState([]);
   // const [selectedTags, setSelectedTags] = useState([]);
@@ -143,6 +145,7 @@ function HomeScreen({ navigation, route }) {
       getUserDetails(route.params?.userId, (success, user, err) => {
         if (success) {
           firstName.current = user.firstName;
+          UserID.current = route.params?.userId;
           setFirstNameState(user.firstName);
         } else {
           showMessage({ message: err, type: 'danger' });
@@ -348,7 +351,7 @@ function HomeScreen({ navigation, route }) {
           <TouchableOpacity
             key={post._id}
             onPress={() => navigation.navigate('PostDetails', {
-              userName: firstName.current, userId: route.params?.userId, postId: post._id,
+              userName: firstName.current, userId: UserID.current, postId: post._id,
             })}
           >
             <View key={post._id} style={homePageStyles.center}>
