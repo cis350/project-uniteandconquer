@@ -11,21 +11,21 @@ function Sidebar() {
         <i className="far fa-user-circle fa-2x" />
         {' '}
         Hi,
-        { myStorage.getItem('firstName') ? myStorage.getItem('firstName') : 'Guest'}
+        { myStorage.getItem('firstName') ? myStorage.getItem('firstName') : ' Guest'}
       </div>
 
       <div className="profile-box">
-        <Link className="link" to="/user-profile">
-          <div className="text">Profile</div>
-        </Link>
+        {myStorage.getItem('firstName') ? (
+          <Link className="link" to="/user-profile">
+            <div className="text">Profile</div>
+          </Link>
+        ) : (
+          <Link className="link" to="/login">
+            <div className="text">Profile</div>
+          </Link>
+        )}
       </div>
-      <div className="chat-box">
-        <Link className="link" to="/chat">
-          <div className="text">Chat</div>
-        </Link>
-      </div>
-      <div className="login_button">
-
+      <div className="logout-box">
         <Link className="link" to="/login">
           <div className="text">Login</div>
         </Link>

@@ -75,4 +75,5 @@ td:hover {
 .table-lists {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
