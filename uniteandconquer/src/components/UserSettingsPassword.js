@@ -34,7 +34,7 @@ function UserSettingsPassword() {
 
   const updatePasswordWithVerify = async (userID) => {
     await UserDB.modifyUser(userID, 'password', password, oldPassword, (success, err) => {
-      if (!success) {
+      if (success) {
         setNote('Password updated successfully');
         showModal();
       } else {
