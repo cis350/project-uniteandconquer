@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ UI+Unit-Tests ]
+    branches: [ unit+ui-tests ]
 
 jobs:
   build:
