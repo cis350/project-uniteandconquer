@@ -66,7 +66,7 @@ const notificationStyles = StyleSheet.create({
 // app content --------
 
 export default function Notification({
-  setShowNotif, showNotif, notifs, setNotifs,
+  setShowNotif, showNotif, notifs, setNotifs, userId,
 }) {
   const messageGenerator = () => notifs.map(
     (notif) => {
@@ -86,8 +86,7 @@ export default function Notification({
     },
   );
   const handleClick = async () => {
-    const userID = await AsyncStorage.getItem('UserID');
-    await notifyDB.deleteNotifications(userID, (success, err) => {
+    await notifyDB.deleteNotifications(userId, (success, err) => {
       if (success) {
         console.log('click');
         setNotifs([]);

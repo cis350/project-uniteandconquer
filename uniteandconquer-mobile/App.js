@@ -244,6 +244,7 @@ function HomeScreen({ navigation, route }) {
         showNotif={showNotif}
         notifs={notifs}
         setNotifs={setNotifs}
+        userId={route.params?.userId}
       />
       )}
       <View style={userStyles.container}>
