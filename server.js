@@ -7,6 +7,7 @@ const userlib = require('./userdbOperation');
 const postlib = require('./postdbOperations');
 const notiflib = require('./notifydbOperation');
 
+require('dotenv').config();
 let db;
 
 webapp.use(express.json());
@@ -19,6 +20,7 @@ webapp.use(
 webapp.use(cors({ credentials: true, origin: true }));
 
 const url = 'mongodb+srv://cis350:cis350@cluster0.ivirc.mongodb.net/uniteconquer?retryWrites=true&w=majority';
+webapp.use(express.static(path.join(__dirname, './uniteandconquer/build')));
 
 // Root endpoint
 webapp.get('/', (req, res) => {
@@ -356,9 +358,9 @@ webapp.delete('/deletNotifForUser/:userId', async (req, resp) => {
   }
 });
 
-// Default response for any other request
-webapp.use((_req, res) => {
-  res.status(404);
+// wildcard endpoint - send react app
+webapp.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './uniteandconquer/build'));
 });
 
 // Default response for any other request
