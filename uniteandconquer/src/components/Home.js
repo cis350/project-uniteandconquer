@@ -153,7 +153,7 @@ function Home() {
             {tagFilter()}
           </div>
           <div className="search-field">
-            <input onChange={(e) => setSearchString(e.target.value)} />
+            <input data-testid="search-input" onChange={(e) => setSearchString(e.target.value)} />
           </div>
           <button className="searchButton" type="button" onClick={handleSearch}>
             Search

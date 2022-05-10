@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot profile 1`] = `
+<div
+  className="user-profile-page"
+>
+  <div
+    className="sidebar"
+  >
+    <div
+      className="greeting-box"
+    >
+      <i
+        className="far fa-user-circle fa-2x"
+      />
+       
+      Hi,
+      Guest
+    </div>
+    <div
+      className="home-box"
+    />
+    <div
+      className="settings-box"
+    />
+    <div
+      className="preferences-box"
+    >
+      <div
+        className="preferences-title"
+      >
+        My Preferences
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      className="profile-title"
+    >
+      <h1>
+        My Profile
+      </h1>
+    </div>
+    <div
+      className="bell-pos"
+    >
+      <button
+        className="bell-button"
+        data-testid="show-notifications"
+        onClick={[Function]}
+        type="button"
+      >
+         
+        <i
+          className="fas fa-bell fa-2x"
+        />
+      </button>
+    </div>
+    <div
+      className="notifications-pos"
+    >
+      
+    </div>
+    <div
+      className="table-lists"
+    >
+      <table>
+        <thead>
+          <tr>
+            <td>
+              My Active Posts
+            </td>
+          </tr>
+        </thead>
+        <tbody />
+      </table>
+      <table>
+        <thead>
+          <tr>
+            <td>
+              My Wishlist
+            </td>
+          </tr>
+        </thead>
+        <tbody />
+      </table>
+    </div>
+  </div>
+</div>
+`;

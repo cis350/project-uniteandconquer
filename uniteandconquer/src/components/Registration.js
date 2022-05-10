@@ -242,12 +242,12 @@ function Registration() {
           <div className="registration-text-fields">
             <div className="registration-field">
               <div className="label">first name</div>
-              <input className="first-name-input" onChange={(e) => setFirstName(e.target.value)} />
+              <input data-testid="first-name-input" className="first-name-input" onChange={(e) => setFirstName(e.target.value)} />
               {validFirstName ? <i className="fas fa-check" /> : <i className="fas fa-times" />}
             </div>
             <div className="registration-field">
               <div className="label">last name</div>
-              <input className="last-name-input" onChange={(e) => setLastName(e.target.value)} />
+              <input data-testid="last-name-input" className="last-name-input" onChange={(e) => setLastName(e.target.value)} />
               {validLastName ? <i className="fas fa-check" /> : <i className="fas fa-times" />}
             </div>
             <div className="registration-field">
@@ -255,28 +255,32 @@ function Registration() {
               <div className="full-phone-input">
 
                 <Dropdown className="area-code" options={options} value={countryCode} onChange={(value) => setCountryCode(value.value)} placeholder="Select an option" />
-                <input className="phone-input" onChange={(e) => setPhone(e.target.value)} />
+                <input data-testid="phone-input" className="phone-input" onChange={(e) => setPhone(e.target.value)} />
               </div>
               {validPhone ? <i className="fas fa-check" /> : <i className="fas fa-times" />}
             </div>
             <div className="registration-field">
               <div className="label">email</div>
-              <input className="email-input" onChange={(e) => setEmail(e.target.value)} />
+              <input data-testid="email-input" className="email-input" onChange={(e) => setEmail(e.target.value)} />
               {validEmail ? <i className="fas fa-check" /> : <i className="fas fa-times" />}
             </div>
             <div className="registration-field">
               <div className="label">password</div>
-              <input className="password-input" onChange={(e) => setPassword(e.target.value)} />
+              <input data-testid="password-input" className="password-input" onChange={(e) => setPassword(e.target.value)} />
               {validPassword ? <i className="fas fa-check" /> : <i className="fas fa-times" />}
             </div>
             <div className="registration-field">
               <div className="label">confirm password</div>
-              <input className="confirm-password-input" onChange={(e) => setConfirmPassword(e.target.value)} />
+              <input
+                data-testid="confirm-password-input"
+                className="confirm-password-input"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
               {validConfirmPassword ? <i className="fas fa-check" /> : <i className="fas fa-times" />}
             </div>
           </div>
           <h3>Tags</h3>
-          <div className="selectedTags">
+          <div data-testid="tags-list" className="selectedTags">
             {tags.map((tag) => (
               <button
                 type="button"

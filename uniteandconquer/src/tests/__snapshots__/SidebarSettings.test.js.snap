@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot sidebar for settings 1`] = `
+<div
+  className="sidebarSettings"
+>
+  <div
+    className="greeting"
+  >
+    <i
+      className="far fa-user-circle fa-2x"
+    />
+     
+    Hi,
+    Guest
+  </div>
+  <div
+    className="main-page"
+    data-testid="main-page-header"
+  />
+  <div
+    className="personal-information"
+    data-testid="personal-information-header"
+  />
+  <div
+    className="password"
+    data-testid="password-header"
+  />
+</div>
+`;

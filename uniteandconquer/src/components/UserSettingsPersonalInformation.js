@@ -67,29 +67,29 @@ function UserSettingsPersonalInformation() {
             <div className="post-fields">
               <div className="post-field">
                 <div className="label">First Name</div>
-                <input onChange={(e) => setUsername(e.target.value)} />
-                <button className="confirm" type="button" onClick={handleFirstName}>
+                <input data-testid="username-input" onChange={(e) => setUsername(e.target.value)} />
+                <button data-testid="username-update" className="confirm" type="button" onClick={handleFirstName}>
                   update
                 </button>
               </div>
               <div className="post-field">
                 <div className="label">Last Name</div>
-                <input onChange={(e) => setFullName(e.target.value)} />
-                <button className="confirm" type="button" onClick={handleLastName}>
+                <input data-testid="name-input" onChange={(e) => setFullName(e.target.value)} />
+                <button data-testid="name-update" className="confirm" type="button" onClick={handleLastName}>
                   update
                 </button>
               </div>
               <div className="post-field">
                 <div className="label">Phone Number</div>
-                <input onChange={(e) => setPhoneNumber(e.target.value)} />
-                <button className="confirm" type="button" onClick={handlePhone}>
+                <input data-testid="phone-input" onChange={(e) => setPhoneNumber(e.target.value)} />
+                <button data-testid="phone-update" className="confirm" type="button" onClick={handlePhone}>
                   update
                 </button>
               </div>
               <div className="post-field">
                 <div className="label">Email</div>
-                <input onChange={(e) => setEmail(e.target.value)} />
-                <button className="confirm" type="button" onClick={handleEmail}>
+                <input data-testid="email-input" onChange={(e) => setEmail(e.target.value)} />
+                <button data-testid="email-update" className="confirm" type="button" onClick={handleEmail}>
                   update
                 </button>
               </div>

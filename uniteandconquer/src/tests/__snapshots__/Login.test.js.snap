@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot registration 1`] = `
+<div
+  className="login-page"
+>
+  <div />
+  <div
+    className="logo"
+  >
+    <h1>
+      Unite and Conquer
+    </h1>
+  </div>
+  <div
+    className="login"
+  >
+    <h2>
+      Login to your account
+    </h2>
+    <div
+      className="dropdown-div"
+    >
+      <div
+        className="Dropdown-root dropdown"
+      >
+        <div
+          aria-haspopup="listbox"
+          className="Dropdown-control"
+          onMouseDown={[Function]}
+          onTouchEnd={[Function]}
+        >
+          <div
+            className="Dropdown-placeholder is-selected"
+          >
+            1
+          </div>
+          <div
+            className="Dropdown-arrow-wrapper"
+          >
+            <span
+              className="Dropdown-arrow"
+            />
+          </div>
+        </div>
+      </div>
+      <input
+        className="phone-field"
+        data-testid="email/phone-input"
+        onChange={[Function]}
+        placeholder="Phone Number"
+      />
+    </div>
+    <div
+      className="login-field"
+    >
+      <input
+        className="field"
+        data-testid="password-input"
+        onChange={[Function]}
+        placeholder="password"
+      />
+    </div>
+    <br />
+    <button
+      className="submit"
+      onClick={[Function]}
+      type="button"
+    >
+      login
+    </button>
+    <p>
+      Do not already have an account?
+       
+       
+    </p>
+    <div
+      className="switchButton"
+    >
+      <button
+        className="switch"
+        onClick={[Function]}
+        type="button"
+      >
+        With Phone
+      </button>
+         
+      <button
+        className="switch"
+        onClick={[Function]}
+        type="button"
+      >
+        With Email
+      </button>
+    </div>
+  </div>
+</div>
+`;
