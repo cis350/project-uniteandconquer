@@ -224,6 +224,11 @@ webapp.post('/createUser', async (req, resp) => {
   }
   // add the other argument checks
   try {
+    const myDate = new Date();
+    const post = {
+      ...req.body,
+      createdAt: myDate,
+    }
     await userlib.createUser(db, req.body);
     // send the response
     resp.status(201).json({ success: true, error: null });
