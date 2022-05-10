@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
   },
 });
 
-function Setting({ navigation }) {
+function Setting({ navigation, route }) {
+  const { userId } = route.params;
   return (
     <ScrollView style={styles.container}>
       <View style={styles.titleContainer}>
@@ -43,19 +44,39 @@ function Setting({ navigation }) {
 
       <View style={styles.buttonContainer}>
         <View style={styles.button}>
-          <Button title="Personal Information" onPress={() => navigation.navigate('UpdateInfo')} />
+          <Button
+            title="Personal Information"
+            onPress={() => navigation.navigate('UpdateInfo', {
+              userId,
+            })}
+          />
         </View>
         <View style={styles.button}>
-          <Button title="Item Preference" onPress={() => navigation.navigate('SettingInterests')} />
+          <Button
+            title="Item Preference"
+            onPress={() => navigation.navigate('SettingInterests', {
+              userId,
+            })}
+          />
         </View>
         <View style={styles.button}>
-          <Button title="Password" onPress={() => navigation.navigate('UpdatePassword')} />
+          <Button
+            title="Password"
+            onPress={() => navigation.navigate('UpdatePassword', {
+              userId,
+            })}
+          />
         </View>
       </View>
 
       <View style={styles.backButtonContainer}>
         <View style={styles.button}>
-          <Button title="Back to the main page" onPress={() => navigation.navigate('Home')} />
+          <Button
+            title="Back to the main page"
+            onPress={() => navigation.navigate('Home', {
+              userId,
+            })}
+          />
         </View>
       </View>
     </ScrollView>

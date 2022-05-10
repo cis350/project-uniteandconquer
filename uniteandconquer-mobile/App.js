@@ -119,14 +119,12 @@ const homePageStyles = StyleSheet.create({
 // app content --------
 
 function HomeScreen({ navigation, route }) {
-  const firstName = React.useRef('');
   const [firstNameState, setFirstNameState] = React.useState('');
 
   useEffect(() => {
     if (route.params?.userId) {
       getUserDetails(route.params?.userId, (success, user, err) => {
         if (success) {
-          firstName.current = user.firstName;
           setFirstNameState(user.firstName);
         } else {
           showMessage({ message: err, type: 'danger' });
@@ -152,7 +150,6 @@ function HomeScreen({ navigation, route }) {
   const handleLogOut = () => {
     navigation.setParams({ userId: '' });
     setFirstNameState('');
-    firstName.current = '';
   };
 
   const handleStartPost = () => {
@@ -172,6 +169,18 @@ function HomeScreen({ navigation, route }) {
       });
     } else {
       navigation.navigate('LogIn');
+    }
+  };
+
+  const handlePostDetails = () => {
+    if (firstNameState) {
+      navigation.navigate('PostDetails', {
+        userId: firstNameState,
+      });
+    } else {
+      navigation.navigate('PostDetails', {
+        userId: '',
+      });
     }
   };
 
@@ -283,9 +292,7 @@ function HomeScreen({ navigation, route }) {
         {posts.map((post) => (
           <TouchableOpacity
             key={post.id}
-            onPress={() => navigation.navigate('PostDetails', {
-              userId: firstName.current,
-            })}
+            onPress={() => handlePostDetails()}
           >
             <View key={post.id} style={homePageStyles.center}>
               <View style={homePageStyles.postContainer}>

@@ -27,9 +27,14 @@ const styles = StyleSheet.create({
   TagArea: {
     backgroundColor: '#FFD9A0',
     width: '80%',
-    height: 150,
     alignSelf: 'center',
     marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    padding: 10,
   },
   TagsContainer: {
     alignItems: 'center',
@@ -52,6 +57,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFAB2D',
     overflow: 'hidden',
     margin: 4,
+  },
+  selectedTag: {
+    borderWidth: 4,
+    borderColor: '#FFFFFF',
+    borderRadius: 20,
+    padding: 6,
+    backgroundColor: '#FFAB2D',
+    overflow: 'hidden',
+    margin: 2,
   },
   backButtonContainer: {
     alignItems: 'center',
@@ -103,7 +117,8 @@ const styles = StyleSheet.create({
   },
 });
 
-function SettingInterests({ navigation }) {
+function SettingInterests({ navigation, route }) {
+  const { userId } = route.params;
   const [tags, setTags] = useState([]);
 
   function addTags(tag) {
@@ -156,9 +171,11 @@ function SettingInterests({ navigation }) {
       <View style={styles.TagAreaContainer}>
         <Text>Choose Your Interests</Text>
         <View style={styles.TagArea}>
-          <Text>
-            {tags.join(' ')}
-          </Text>
+          {tags.map((tag) => (
+            <View key={tag}>
+              <Text style={styles.selectedTag}>{tag}</Text>
+            </View>
+          ))}
         </View>
       </View>
 
@@ -170,7 +187,6 @@ function SettingInterests({ navigation }) {
             onPress={() => addTags(tag.label)}
           >
             {tag.label}
-
           </Text>
         ))}
       </View>
@@ -181,7 +197,12 @@ function SettingInterests({ navigation }) {
 
       <View style={styles.backButtonContainer}>
         <View style={styles.button}>
-          <Button title="Back to the setting page" onPress={() => navigation.navigate('SettingMain')} />
+          <Button
+            title="Back to the setting page"
+            onPress={() => navigation.navigate('SettingMain', {
+              userId,
+            })}
+          />
         </View>
       </View>
     </ScrollView>

@@ -135,12 +135,16 @@ const postDetailStyles = StyleSheet.create({
 // app content --------
 
 export default function PostDetails({ navigation, route }) {
+  let userId = '';
+  if (route) {
+    userId = route.params.userId;
+  }
   const [tags, setTags] = useState(['Appliances', 'Books', 'Electronics']);
   // event handlers --------
   const [errorMessage, setErrorMessage] = useState(null);
 
   const leavePressed = () => {
-    const userId = ''; // dummy, need to get from session once log in routing is set up
+    // const userId = ''; // dummy, need to get from session once log in routing is set up
     const postId = ''; // dummy, need to get from current view
     leaveGroup(userId, postId, (success, err) => {
       setErrorMessage(err); // trigger re-rendering; will display err if err is not null
@@ -148,9 +152,9 @@ export default function PostDetails({ navigation, route }) {
   };
 
   const handleProfile = () => {
-    if (route.params.userId) {
+    if (userId) {
       navigation.navigate('UserProfile', {
-        userId: route.params.userId,
+        userId,
       });
     } else {
       navigation.navigate('LogIn');
@@ -168,15 +172,15 @@ export default function PostDetails({ navigation, route }) {
           <Icon name="user" size={28} style={userStyles.icon} />
         </TouchableOpacity>
         <Text style={userStyles.text}>
-          {route.params.userId ? (
+          {userId ? (
             <Text>
               Hello,
-              {` ${route.params.userId}`}
+              {` ${userId}`}
               !
             </Text>
           ) : <Text>Hello, guest!</Text>}
         </Text>
-        {route.params.userId ? (
+        {userId ? (
           <Text style={userStyles.button}>
             <Button
               color="#000"
@@ -248,7 +252,7 @@ export default function PostDetails({ navigation, route }) {
             </View>
           </View>
           <View>
-            {route.params.userId ? (
+            {userId ? (
               <View style={postDetailStyles.buttons}>
                 <View style={postDetailStyles.LeftButton}><Button color="#000" title="Join" /></View>
                 <View style={postDetailStyles.LeftButton}><Button color="#000" title="Leave" onPress={leavePressed} /></View>
