@@ -363,7 +363,11 @@ export default function PostDetails({ navigation, route }) {
                   <Button color="#000" title={join ? 'Leave' : 'Join'} onPress={handleJoinLeave} />
                 </View>
                 <View style={postDetailStyles.LeftButton}>
-                  <Button color="#000" title="Comment" onPress={() => navigation.navigate('Comment')} />
+                  <Button
+                    color="#000"
+                    title="Comment"
+                    onPress={() => navigation.navigate('Comment', { userId })}
+                  />
                 </View>
                 <View style={postDetailStyles.RightButton}>
                   <Button color="#000" title="Back" onPress={() => navigation.navigate('Home')} />

@@ -68,7 +68,7 @@ const commentStyles = StyleSheet.create({
   },
 });
 function Comment() {
-  const [tempID, setTempID] = useState(3);
+  // const [tempID, setTempID] = useState(3);
   const [commentInput, setCommentInput] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [modalVisible, setModalVisible] = React.useState(false);
