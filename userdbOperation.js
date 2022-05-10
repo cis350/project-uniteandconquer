@@ -42,7 +42,34 @@ const createUser = async (db, newUser) => {
   }
 };
 
-// not needed
+const forgetPassword = async (
+  db,
+  phone,
+  email,
+  newPassword,
+) => {
+  try {
+    const result1 = await db.collection('userDB').findOne({ phone });
+    const result2 = await db.collection('userDB').findOne({ email });
+    if (String(result1._id) === String(result2._id)) {
+      await db.collection('userDB').updateOne(
+        {
+          _id: ObjectId(result1._id),
+        },
+        {
+          $set: {
+            password: newPassword
+          },
+        },
+      );
+      return true;
+    }
+    return false;
+  } catch (e) {
+    return false;
+  }
+};
+
 const getPassword = async (
   db,
   user,
@@ -183,4 +210,5 @@ module.exports = {
   modifyUser,
   getUserDetails,
   getPassword,
+  forgetPassword,
 };

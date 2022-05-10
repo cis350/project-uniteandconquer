@@ -153,6 +153,12 @@ function Login() {
           <Link to="/registration">Sign up</Link>
           {' '}
         </p>
+        <p>
+          Forget password?
+          {' '}
+          <Link to="/resetPassword">Reset Password</Link>
+          {' '}
+        </p>
         <div className="switchButton">
           <button type="button" className="switch" onClick={handleLoginWithPhone}>
             With Phone
