@@ -68,37 +68,28 @@ const commentStyles = StyleSheet.create({
   },
 });
 function Comment({ route }) {
-  const { userid, postid } = route.params;
+  const { userId, postId } = route.params;
   // const [tempID, setTempID] = useState(3);
   const [commentInput, setCommentInput] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [modalVisible, setModalVisible] = React.useState(false);
   const [flag, setFlag] = useState(0);
   const [comments, setComments] = useState([]);
-  /**
-  * how to retrieve the user id is to be decided.
-  */
-  // const userid = 'TBD';
-
-  /**
-     * how to retrieve the user id is to be decided.
-     */
-  // const postid = 'TBD';
 
   useEffect(() => {
-    postDB.getPost(postid, (success, details) => {
+    postDB.getPost(postId, (success, details) => {
       if (success) {
         setComments(details.comments);
       }
     });
-  }, [flag]);
+  }, [flag, postId]);
 
   /**
    * add comment to the post db
    */
   const addComment = () => {
     if (commentInput && commentInput.length > 0) {
-      postDB.addComment(userid, postid, (success, error) => {
+      postDB.addComment(userId, postId, commentInput, (success, error) => {
         if (success) {
           setFlag(flag + 1);
         } else {
@@ -135,7 +126,7 @@ function Comment({ route }) {
   }
 
   useInterval(() => {
-    postDB.getPost(postid, (success, details) => {
+    postDB.getPost(postId, (success, details) => {
       if (success) {
         setComments(details.comments);
       }
