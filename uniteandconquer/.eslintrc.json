@@ -39,6 +39,5 @@
         ], // suppress unused var rule for wildcard pattern
         "import/no-named-as-default": 0,
         "linebreak-style": 0
-        
     }
 }

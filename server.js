@@ -3,10 +3,12 @@ const express = require('express');
 
 const webapp = express();
 const cors = require('cors');
+const path = require('path');
+
 const userlib = require('./userdbOperation');
 const postlib = require('./postdbOperations');
 const notiflib = require('./notifydbOperation');
-
+require('dotenv').config();
 let db;
 
 webapp.use(express.json());
@@ -19,11 +21,7 @@ webapp.use(
 webapp.use(cors({ credentials: true, origin: true }));
 
 const url = 'mongodb+srv://cis350:cis350@cluster0.ivirc.mongodb.net/uniteconquer?retryWrites=true&w=majority';
-
-// Root endpoint
-webapp.get('/', (req, res) => {
-  res.json({ message: 'Welcome to unite and conquer' });
-});
+webapp.use(express.static(path.join(__dirname, './uniteandconquer/build')));
 
 // TODO: define all endpoints as specified in REST API
 // addPlayer endpoint
@@ -381,9 +379,9 @@ webapp.delete('/deletNotifForUser/:userId', async (req, resp) => {
   }
 });
 
-// Default response for any other request
-webapp.use((_req, res) => {
-  res.status(404);
+// wildcard endpoint - send react app
+webapp.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './uniteandconquer/build'));
 });
 
 // Default response for any other request

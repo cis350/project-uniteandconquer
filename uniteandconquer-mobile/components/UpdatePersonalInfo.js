@@ -97,7 +97,8 @@ const styles = StyleSheet.create({
   },
 });
 
-function UpdateInfo({ navigation }) {
+function UpdateInfo({ navigation, route }) {
+  const { userId } = route.params;
   // const [username, setUsername] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
@@ -331,7 +332,12 @@ function UpdateInfo({ navigation }) {
 
         <View style={styles.backButtonContainer}>
           <View style={styles.button}>
-            <Button title="Back to the setting page" onPress={() => navigation.navigate('SettingMain')} />
+            <Button
+              title="Back to the setting page"
+              onPress={() => navigation.navigate('SettingMain', {
+                userId,
+              })}
+            />
           </View>
         </View>
       </View>

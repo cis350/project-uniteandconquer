@@ -217,15 +217,33 @@ export default function UserProfile({ navigation, route }) {
       <View>
         <Text style={profileContainer.header}>My Profile</Text>
         <View style={profileContainer.buttons}>
-          <View style={profileContainer.leftButton}><Button color="#000" title="Settings" onPress={() => navigation.navigate('SettingMain')} /></View>
-          <View style={profileContainer.rightButton}><Button color="#000" title="Main Page" onPress={() => navigation.navigate('Home')} /></View>
+          <View style={profileContainer.leftButton}>
+            <Button
+              color="#000"
+              title="Settings"
+              onPress={() => navigation.navigate('SettingMain', {
+                userId,
+              })}
+            />
+          </View>
+          <View style={profileContainer.rightButton}>
+            <Button
+              color="#000"
+              title="Main Page"
+              onPress={() => navigation.navigate('Home', {
+                userId,
+              })}
+            />
+          </View>
         </View>
         <Text style={profileContainer.subtitle}>My Owned Posts</Text>
         <View style={profileContainer.postContainer}>
           {ownedPosts.map((post) => (
             <TouchableOpacity
               key={post.id}
-              onPress={() => navigation.navigate('PostDetails')}
+              onPress={() => navigation.navigate('PostDetails', {
+                userId,
+              })}
             >
               <View key={post.id} style={profileContainer.post}>
                 <Text style={profileContainer.postHeader}>{post.itemName}</Text>
@@ -250,7 +268,9 @@ export default function UserProfile({ navigation, route }) {
           {joinedPosts.map((post) => (
             <TouchableOpacity
               key={post.id}
-              onPress={() => navigation.navigate('PostDetails')}
+              onPress={() => navigation.navigate('PostDetails', {
+                userId,
+              })}
             >
               <View key={post.id} style={profileContainer.post}>
                 <Text style={profileContainer.postHeader}>{post.item}</Text>

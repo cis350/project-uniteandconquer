@@ -126,7 +126,6 @@ function HomeScreen({ navigation, route }) {
   // const { userId, firstName } = route.params;
   const firstName = React.useRef('');
   const UserID = React.useRef('');
-
   const [firstNameState, setFirstNameState] = React.useState('');
   const [posts, setPosts] = useState([]);
   // const [selectedTags, setSelectedTags] = useState([]);
@@ -211,7 +210,6 @@ function HomeScreen({ navigation, route }) {
   const handleLogOut = () => {
     navigation.setParams({ userId: '' });
     setFirstNameState('');
-    firstName.current = '';
   };
 
   const handleStartPost = () => {
@@ -243,6 +241,18 @@ function HomeScreen({ navigation, route }) {
       });
     } else {
       navigation.navigate('LogIn');
+    }
+  };
+
+  const handlePostDetails = () => {
+    if (firstNameState) {
+      navigation.navigate('PostDetails', {
+        userId: firstNameState,
+      });
+    } else {
+      navigation.navigate('PostDetails', {
+        userId: '',
+      });
     }
   };
 

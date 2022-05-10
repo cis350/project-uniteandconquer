@@ -249,7 +249,6 @@ export default function PostDetails({ navigation, route }) {
         <Text style={postDetailStyles.upperBox}>
           Item Name
         </Text>
-
         <View style={postDetailStyles.container}>
           <View style={postDetailStyles.upper}>
             <View style={postDetailStyles.tags}>
@@ -261,7 +260,6 @@ export default function PostDetails({ navigation, route }) {
               <View>
                 {tags.map((tag) => <Text key={tag} style={postDetailStyles.tag}>{tag}</Text>)}
               </View>
-
             </View>
             <View style={{ flexShrink: 1 }}>
 
