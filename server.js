@@ -3,10 +3,11 @@ const express = require('express');
 
 const webapp = express();
 const cors = require('cors');
+const path = require('path');
+
 const userlib = require('./userdbOperation');
 const postlib = require('./postdbOperations');
 const notiflib = require('./notifydbOperation');
-
 require('dotenv').config();
 let db;
 
