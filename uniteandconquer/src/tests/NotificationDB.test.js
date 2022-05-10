@@ -7,7 +7,7 @@ const axios = require('axios');
 const MockAdapter = require('axios-mock-adapter');
 const api = require('../modules/NotificationDB');
 
-const rootURL = 'http://localhost:8080';
+const rootURL = !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : '';
 let mock;
 
 beforeAll(() => {
