@@ -1,17 +1,29 @@
 /* Notification operations */
-function createNotification(userIds, content, callback) {
-  return callback(true, '507f1f7789076cd799439011', null);
+import axios from 'axios';
+
+const rootURL = 'http://localhost:8080';
+
+async function createNotification(userIds, content, callback) {
+  const response = await axios.post(`${rootURL}/addNotification`, {
+    userIds,
+    content: `${content}`,
+  });
+  const result = response.data;
+  return callback(result.success, result.error);
 }
 
-function getNotificationsForUser(userId, callback) {
-  return callback(true, [{
-    content: 'Your group for [AA Batteries] has a new member!',
-    createdAt: '2022-03-14T13:14:14.925Z',
-  },
-  {
-    content: 'Your group for [AA Batteries] has reached its goal!',
-    createdAt: '2022-03-15T14:53:17.926Z',
-  }], null);
+async function getNotificationsForUser(userId, callback) {
+  const response = await axios.get(`${rootURL}/getNotificationForUser/${userId}`, {
+  });
+  const result = response.data;
+  console.log(result, 'notification');
+  return callback(result.success, result.data, result.error);
+}
+async function deleteNotifications(userId, callback) {
+  const response = await axios.delete(`${rootURL}/deletNotifForUser/${userId}`, {
+  });
+  const result = response.data;
+  return callback(result.success, result.error);
 }
 
 function getNotificationsForUserInRange(userId, startIdx, endIdx, callback) {
@@ -21,4 +33,6 @@ function getNotificationsForUserInRange(userId, startIdx, endIdx, callback) {
 export {
   createNotification,
   getNotificationsForUserInRange,
+  getNotificationsForUser,
+  deleteNotifications,
 };
