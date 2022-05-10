@@ -119,19 +119,21 @@ const homePageStyles = StyleSheet.create({
 // app content --------
 
 function HomeScreen({ navigation, route }) {
-  const [firstName, setFirstName] = useState('');
+  const firstName = React.useRef('');
+  const [firstNameState, setFirstNameState] = React.useState('');
 
   useEffect(() => {
     if (route.params?.userId) {
       getUserDetails(route.params?.userId, (success, user, err) => {
         if (success) {
-          setFirstName(user.firstName);
+          firstName.current = user.firstName;
+          setFirstNameState(user.firstName);
         } else {
           showMessage({ message: err, type: 'danger' });
         }
       });
     }
-  }, [route.params?.userId, firstName]);
+  }, [route.params?.userId, firstNameState]);
 
   // eslint-disable-next-line no-unused-vars
   const [posts, setPosts] = React.useState([
@@ -149,7 +151,28 @@ function HomeScreen({ navigation, route }) {
 
   const handleLogOut = () => {
     navigation.setParams({ userId: '' });
-    setFirstName('');
+    setFirstNameState('');
+    firstName.current = '';
+  };
+
+  const handleStartPost = () => {
+    if (firstNameState) {
+      navigation.navigate('CreatePost', {
+        userId: firstNameState,
+      });
+    } else {
+      navigation.navigate('LogIn');
+    }
+  };
+
+  const handleProfile = () => {
+    if (firstNameState) {
+      navigation.navigate('UserProfile', {
+        userId: firstNameState,
+      });
+    } else {
+      navigation.navigate('LogIn');
+    }
   };
 
   return (
@@ -158,15 +181,15 @@ function HomeScreen({ navigation, route }) {
       <View style={userStyles.container}>
         <TouchableOpacity
           style={homePageStyles.iconProfile}
-          onPress={() => navigation.navigate('UserProfile')}
+          onPress={() => handleProfile()}
         >
           <Icon name="user" size={28} style={userStyles.icon} />
         </TouchableOpacity>
         <Text style={userStyles.text}>
-          {firstName ? (
+          {firstNameState ? (
             <Text>
               Hello,
-              {` ${firstName}`}
+              {` ${firstNameState}`}
               !
             </Text>
           ) : <Text>Hello, guest!</Text>}
@@ -178,7 +201,7 @@ function HomeScreen({ navigation, route }) {
           />
         </Text>
         <Text style={userStyles.button}>
-          {!firstName ? (
+          {!firstNameState ? (
             <Button
               color="#000"
               title="Log In"
@@ -194,20 +217,22 @@ function HomeScreen({ navigation, route }) {
         </Text>
       </View>
       <View style={homePageStyles.showButton}>
-        <TouchableOpacity
-          onPress={() => setShowNotif(!showNotif)}
-        >
-          <Icon
-            name="bell"
-            size={25}
-          />
-        </TouchableOpacity>
+        {firstNameState ? (
+          <TouchableOpacity
+            onPress={() => setShowNotif(!showNotif)}
+          >
+            <Icon
+              name="bell"
+              size={25}
+            />
+          </TouchableOpacity>
+        ) : <Text />}
       </View>
       <View style={postButton.container}>
         <Button
           color="#000"
           title="Start a Post"
-          onPress={() => navigation.navigate('CreatePost')}
+          onPress={() => handleStartPost()}
         />
       </View>
       <View style={homePageStyles.searchContainer}>
@@ -258,7 +283,9 @@ function HomeScreen({ navigation, route }) {
         {posts.map((post) => (
           <TouchableOpacity
             key={post.id}
-            onPress={() => navigation.navigate('PostDetails')}
+            onPress={() => navigation.navigate('PostDetails', {
+              userId: firstName.current,
+            })}
           >
             <View key={post.id} style={homePageStyles.center}>
               <View style={homePageStyles.postContainer}>
