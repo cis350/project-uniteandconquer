@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import '../assets/Comment.css';
 
 const postDB = require('../modules/PostDB');
@@ -31,6 +31,36 @@ function Comment(props) {
       });
     }
   };
+
+  /** create an useInterval hook for looping fetch */
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
+
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        const id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+      return null;
+    }, [delay]);
+  }
+
+  useInterval(() => {
+    postDB.getPost(postID, (success, details) => {
+      if (success) {
+        setComments(details.comments);
+      }
+    });
+  }, 15000);
 
   if (comments) {
     return (
