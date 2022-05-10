@@ -277,9 +277,12 @@ webapp.post('/loginUserWithPhone', async (req, resp) => {
 // modify user endpoint
 webapp.put('/modify', async (req, resp) => {
   try {
-    await userlib.modifyUser(db, req.body);
+    const res = await userlib.modifyUser(db, req.body);
     // send the response
-    resp.status(201).json({ success:true, error: null });
+    if (res) {
+      resp.status(201).json({ success: true, error: null }); 
+    }
+    return resp.status(201).json({ success: false, error: null }); 
   } catch (err) {
     resp.status(500).json({ success:false, error: 'try again later' });
   }

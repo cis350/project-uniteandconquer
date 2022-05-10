@@ -127,6 +127,7 @@ const modifyUser = async (
             },
           },
         );
+        return true;
       }
     }
     if (fieldToChange === 'email') {
@@ -136,6 +137,7 @@ const modifyUser = async (
         },
         { $set: { email: newValue } },
       );
+      return true;
     }
     if (fieldToChange === 'phone') {
       await db.collection('userDB').updateOne(
@@ -144,6 +146,7 @@ const modifyUser = async (
         },
         { $set: { phone: newValue } },
       );
+      return true;
     }
     if (fieldToChange === 'posts') {
       await db.collection('userDB').updateOne(
@@ -152,7 +155,9 @@ const modifyUser = async (
         },
         { $push: { posts: newValue } },
       );
+      return true;
     }
+    return false;
   } catch (e) {
     throw new Error('fail to modify user');
   }
