@@ -73,15 +73,8 @@ function Comment() {
   const [errorMessage, setErrorMessage] = useState('');
   const [modalVisible, setModalVisible] = React.useState(false);
   const [flag, setFlag] = useState(0);
-  const [comments, setComments] = useState([
-    {
-      author: 1, authorName: 'user1', content: 'I loved using this item', createdAt: new Date().toLocaleString(),
-    },
-    {
-      author: 2, authorName: 'user2', content: 'I wonder if I will need this', createdAt: new Date().toLocaleString(),
-    },
-  ]);
-    /**
+  const [comments, setComments] = useState([]);
+  /**
   * how to retrieve the user id is to be decided.
   */
   const userid = 'TBD';
