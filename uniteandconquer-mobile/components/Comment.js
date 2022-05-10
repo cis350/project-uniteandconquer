@@ -140,7 +140,7 @@ function Comment({ route }) {
         setComments(details.comments);
       }
     });
-  }, 15000);
+  }, 5000);
 
   return (
     <ScrollView style={styles.container}>
