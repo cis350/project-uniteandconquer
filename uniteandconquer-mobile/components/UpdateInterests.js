@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   TagArea: {
     backgroundColor: '#FFD9A0',
     width: '80%',
+    minHeight: 50,
     alignSelf: 'center',
     marginBottom: 10,
     alignItems: 'center',
