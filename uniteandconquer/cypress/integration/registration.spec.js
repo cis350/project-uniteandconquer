@@ -19,11 +19,10 @@ describe('Tests user registration', () => {
       cy.get('button').contains('Register').click();
       cy.get('button.modalButton').should('be.visible');
       cy.get('button.modalButton').click();
-      cy.reload();
       cy.get('input.phone-field').type('0011001110').should('have.value', '0011001110');
       cy.get('input.field').type('Baby.123').should('have.value', 'Baby.123');
       cy.get('button.submit').should('be.visible');
       cy.get('button.submit').click();
-      cy.reload();
+      cy.window().its('sessionStorage').invoke('getItem', 'firstName').should('equal', 'Agera');
     });
 });
