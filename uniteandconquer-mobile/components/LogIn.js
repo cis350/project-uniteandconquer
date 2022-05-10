@@ -1,5 +1,4 @@
 import React from 'react';
-import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import {
   StyleSheet, View, Text, Button, TextInput,
 } from 'react-native';
@@ -9,8 +8,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { showMessage } from 'react-native-flash-message';
 
 import { loginUserWithPhone, loginUserWithEmail } from '../modules/UserDB';
-
-const UserDB = require('../modules/UserDB');
 
 // styling ---------
 
@@ -49,16 +46,6 @@ const styles = StyleSheet.create({
 });
 
 // app content --------
-let firstName;
-const getFirstName = async (userID) => {
-  await UserDB.getUserDetails(userID, (success, data) => {
-    if (success) {
-      firstName = data.firstName;
-      return firstName;
-    }
-    return null;
-  });
-};
 
 function PhoneLogIn({ navigation }) {
   const [countryCode, setCountryCode] = React.useState('');
@@ -74,8 +61,7 @@ function PhoneLogIn({ navigation }) {
           console.log(success);
           console.log(countryCode, phoneNumber, password);
           if (success) {
-            getFirstName(userId);
-            navigation.navigate({ name: 'Home', params: { userId, firstName }, merge: true });
+            navigation.navigate({ name: 'Home', params: { userId }, merge: true });
           } else {
             showMessage({ message: 'Incorrect password / username', type: 'danger' });
           }
@@ -137,8 +123,7 @@ function EmailLogIn({ navigation }) {
       if (email.match(emailRegex)) {
         await loginUserWithEmail(email, password, (success, userId) => {
           if (success) {
-            getFirstName(userId);
-            navigation.navigate({ name: 'Home', params: { userId, firstName }, merge: true });
+            navigation.navigate({ name: 'Home', params: { userId }, merge: true });
           } else {
             showMessage({ message: 'Incorrect password / username', type: 'danger' });
           }
