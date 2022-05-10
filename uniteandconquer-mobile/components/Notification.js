@@ -1,9 +1,11 @@
 import React from 'react';
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import {
   StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+const notifyDB = require('../modules/NotificationDB');
 // styling ---------
 
 const styles = StyleSheet.create({
@@ -63,10 +65,42 @@ const notificationStyles = StyleSheet.create({
 
 // app content --------
 
-export default function Notification({ setShowNotif, showNotif }) {
+export default function Notification({
+  setShowNotif, showNotif, notifs, setNotifs,
+}) {
+  const messageGenerator = () => notifs.map(
+    (notif) => {
+      const message = notif.content;
+      const date = new Date(notif.createdAt).toLocaleString('en-US', { timeZone: 'America/New_York' });
+      return (
+        <View style={notificationStyles.notifMsgContainer}>
+          <Text style={notificationStyles.notifMsg}>
+            {message}
+            {' '}
+            -
+            {' '}
+            {date}
+          </Text>
+        </View>
+      );
+    },
+  );
+  const handleClick = async () => {
+    const userID = await AsyncStorage.getItem('UserID');
+    await notifyDB.deleteNotifications(userID, (success, err) => {
+      if (success) {
+        console.log('click');
+        setNotifs([]);
+      } else {
+        console.log(err);
+      }
+    });
+    setShowNotif(!showNotif);
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => setShowNotif(!showNotif)}>
+      <TouchableOpacity onPress={handleClick}>
         <Icon
           style={notificationStyles.cancelButton}
           name="times"
@@ -74,60 +108,7 @@ export default function Notification({ setShowNotif, showNotif }) {
         />
       </TouchableOpacity>
       <Text style={notificationStyles.header}>Notifications</Text>
-      <View>
-        <Text style={notificationStyles.date}>28 February 2022</Text>
-        <View style={notificationStyles.notifMsgContainer}>
-          <TouchableOpacity>
-            <Icon
-              style={notificationStyles.notifCancelButton}
-              name="times"
-              size={15}
-            />
-          </TouchableOpacity>
-          <Text style={notificationStyles.notifMsg}>[message] - 2 days ago</Text>
-        </View>
-        <View style={notificationStyles.notifMsgContainer}>
-          <TouchableOpacity>
-            <Icon
-              style={notificationStyles.notifCancelButton}
-              name="times"
-              size={15}
-            />
-          </TouchableOpacity>
-          <Text style={notificationStyles.notifMsg}>[message] - 4 days ago</Text>
-        </View>
-        <View style={notificationStyles.notifMsgContainer}>
-          <TouchableOpacity>
-            <Icon
-              style={notificationStyles.notifCancelButton}
-              name="times"
-              size={15}
-            />
-          </TouchableOpacity>
-          <Text style={notificationStyles.notifMsg}>[message] - 5 days ago</Text>
-        </View>
-        <Text style={notificationStyles.date}>2 February 2022</Text>
-        <View style={notificationStyles.notifMsgContainer}>
-          <TouchableOpacity>
-            <Icon
-              style={notificationStyles.notifCancelButton}
-              name="times"
-              size={15}
-            />
-          </TouchableOpacity>
-          <Text style={notificationStyles.notifMsg}>[message] - 22 days ago</Text>
-        </View>
-        <View style={notificationStyles.notifMsgContainer}>
-          <TouchableOpacity>
-            <Icon
-              style={notificationStyles.notifCancelButton}
-              name="times"
-              size={15}
-            />
-          </TouchableOpacity>
-          <Text style={notificationStyles.notifMsg}>[message] - 25 days ago</Text>
-        </View>
-      </View>
+      {messageGenerator()}
     </View>
   );
 }
