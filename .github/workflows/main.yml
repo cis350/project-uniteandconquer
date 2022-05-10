@@ -4,7 +4,6 @@ on:
   push:
     branches: 
       - main
-      - unit+ui-tests
   
   pull_request:
     branches:
