@@ -67,7 +67,8 @@ const commentStyles = StyleSheet.create({
     padding: 10,
   },
 });
-function Comment() {
+function Comment({ route }) {
+  const { userid, postid } = route.params;
   // const [tempID, setTempID] = useState(3);
   const [commentInput, setCommentInput] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -77,12 +78,12 @@ function Comment() {
   /**
   * how to retrieve the user id is to be decided.
   */
-  const userid = 'TBD';
+  // const userid = 'TBD';
 
   /**
      * how to retrieve the user id is to be decided.
      */
-  const postid = 'TBD';
+  // const postid = 'TBD';
 
   useEffect(() => {
     postDB.getPost(postid, (success, details) => {

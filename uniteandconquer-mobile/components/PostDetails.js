@@ -366,7 +366,7 @@ export default function PostDetails({ navigation, route }) {
                   <Button
                     color="#000"
                     title="Comment"
-                    onPress={() => navigation.navigate('Comment', { userId })}
+                    onPress={() => navigation.navigate('Comment', { userId, postId })}
                   />
                 </View>
                 <View style={postDetailStyles.RightButton}>
