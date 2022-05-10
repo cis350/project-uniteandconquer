@@ -207,7 +207,8 @@ function HomeScreen({ navigation, route }) {
   const handleStartPost = () => {
     if (firstNameState) {
       navigation.navigate('CreatePost', {
-        userId: firstNameState,
+        userName: firstName.current,
+        userId: UserID.current,
       });
     } else {
       navigation.navigate('LogIn');
