@@ -23,9 +23,6 @@ webapp.use(cors({ credentials: true, origin: true }));
 const url = 'mongodb+srv://cis350:cis350@cluster0.ivirc.mongodb.net/uniteconquer?retryWrites=true&w=majority';
 webapp.use(express.static(path.join(__dirname, './uniteandconquer/build')));
 
-// TODO: define all endpoints as specified in REST API
-// addPlayer endpoint
-
 webapp.post('/addPost', async (req, resp) => {
   // check the name was provided
   if (!req.body.itemName || req.body.itemName.length === 0) {
@@ -307,8 +304,9 @@ webapp.put('/modify', async (req, resp) => {
     // send the response
     if (res) {
       resp.status(201).json({ success: true, error: null }); 
+    } else {
+      resp.status(201).json({ success: false, error: null });
     }
-    return resp.status(201).json({ success: false, error: null }); 
   } catch (err) {
     resp.status(500).json({ success:false, error: 'try again later' });
   }
