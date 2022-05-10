@@ -12,7 +12,6 @@ async function createUser(
   interests,
   callback,
 ) {
-  console.log('entering create user in userdb');
   const response = await axios.post(`${rootURL}/createUser`, {
     phone: { countryCode: `${countryCode}`, phoneNumber: `${phoneNumber}` },
     email: `${email}`,
@@ -26,7 +25,22 @@ async function createUser(
     lastCheckNotification: null,
   });
   const result = response.data;
-  console.log('results', result);
+  return callback(result.success, result.error);
+}
+
+async function forgetPassword(
+  countryCode,
+  phoneNumber,
+  email,
+  newPassword,
+  callback,
+) {
+  const response = await axios.post(`${rootURL}/forget`, {
+    phone: { countryCode: `${countryCode}`, phoneNumber: `${phoneNumber}` },
+    email: `${email}`,
+    newPassword: `${newPassword}`,
+  });
+  const result = response.data;
   return callback(result.success, result.error);
 }
 
@@ -93,4 +107,5 @@ export {
   modifyUser,
   getUserDetails,
   getPassword,
+  forgetPassword,
 };

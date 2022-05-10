@@ -60,7 +60,7 @@ function Comment(props) {
         setComments(details.comments);
       }
     });
-  }, 15000);
+  }, 5000);
 
   if (comments) {
     return (

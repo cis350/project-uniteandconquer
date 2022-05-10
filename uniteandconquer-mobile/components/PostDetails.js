@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
 import {
-  StyleSheet, View, ScrollView, Text, Button, TouchableOpacity,
+  React, useState, useEffect,
+} from 'react';
+import {
+  StyleSheet, View, ScrollView, Text, Button, TouchableOpacity, TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { leaveGroup } from '../modules/PostDB';
+
+const PostDB = require('../modules/PostDB');
 
 // styling ---------
 
@@ -135,23 +138,72 @@ const postDetailStyles = StyleSheet.create({
 // app content --------
 
 export default function PostDetails({ navigation, route }) {
-  let userId = '';
-  if (route) {
-    userId = route.params.userId;
-  }
-  const [tags, setTags] = useState(['Appliances', 'Books', 'Electronics']);
-  // event handlers --------
+  const { userName, userId, postId } = route.params;
+  const tags = useState(['Appliances', 'Books', 'Electronics']);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [join, setJoin] = useState(false);
+  const [members, setMembers] = useState([]);
+  const [quantity, setQuantity] = useState(0);
+  const [postDetails, setPostDetails] = useState(null);
 
-  const leavePressed = () => {
-    // const userId = ''; // dummy, need to get from session once log in routing is set up
-    const postId = ''; // dummy, need to get from current view
-    leaveGroup(userId, postId, (success, err) => {
-      setErrorMessage(err); // trigger re-rendering; will display err if err is not null
+  useEffect(() => {
+    async function getPost() {
+      await PostDB.getPost(postId, (success, details) => {
+        if (success) {
+          setPostDetails(details);
+          setMembers(details.group);
+        }
+      });
+    }
+    getPost();
+  }, [join, postId]);
+
+  const leavePressed = async () => {
+    await PostDB.leaveGroup(userId, postId, (success, err) => {
+      if (success) {
+        console.log(success, 'from leave group');
+      } else {
+        setErrorMessage(err);
+      }
+    });
+    setJoin(false);
+  };
+
+  const handleJoin = async () => {
+    console.log(userId, postId, quantity);
+    await PostDB.joinGroup(userId, postId, quantity, (success, err) => {
+      if (success) {
+        setJoin(true);
+      } else { setErrorMessage(err); }
     });
   };
 
-  const handleProfile = () => {
+  const handleJoinLeave = () => {
+    if (join) {
+      leavePressed();
+    } else {
+      handleJoin();
+    }
+  };
+
+  // useEffect(() => {
+  //   const fetch = async () => {
+  //     const userId = await AsyncStorage.getItem('UserID');
+  //     PostDB.getPostMembers(postId, (success, memberList, err) => {
+  //       if (success) {
+  //         setMembers(memberList);
+  //         if (memberList.some((e) => e.id === userId)) {
+  //           setJoin(true);
+  //         }
+  //       } else {
+  //         setErrorMessage(err);
+  //       }
+  //     });
+  //   };
+  //   fetch().catch(console.error);
+  // }, [postId]);
+
+  const handleProfile = async () => {
     if (userId) {
       navigation.navigate('UserProfile', {
         userId,
@@ -162,67 +214,110 @@ export default function PostDetails({ navigation, route }) {
   };
 
   // views ---------
-  return (
-    <ScrollView style={styles.container}>
-      <View style={userStyles.container}>
-        <TouchableOpacity
-          style={{ alignSelf: 'flex-end' }}
-          onPress={() => handleProfile()}
-        >
-          <Icon name="user" size={28} style={userStyles.icon} />
-        </TouchableOpacity>
-        <Text style={userStyles.text}>
-          {userId ? (
-            <Text>
-              Hello,
-              {` ${userId}`}
-              !
-            </Text>
-          ) : <Text>Hello, guest!</Text>}
-        </Text>
-        {userId ? (
-          <Text style={userStyles.button}>
-            <Button
-              color="#000"
-              title="My Chats"
-            />
-          </Text>
-        ) : <Text />}
-      </View>
-      {errorMessage && (
-        <Text>{errorMessage}</Text>
-      )}
-      <Text style={postDetailStyles.upperBox}>Item Name</Text>
-      <View style={postDetailStyles.container}>
-        <View style={postDetailStyles.upper}>
-          <View style={postDetailStyles.tags}>
-            <Text style={postDetailStyles.tagsHeader}>Tags</Text>
-            <View>
-              {tags.map((tag) => <Text key={tag} style={postDetailStyles.tag}>{tag}</Text>)}
-            </View>
-          </View>
-          <View style={{ flexShrink: 1 }}>
-            <Text style={postDetailStyles.detailsHeader}>Item Details</Text>
-            <View>
-              <Text style={postDetailStyles.details}>Target Quantity: 4/5</Text>
-              <Text style={postDetailStyles.details}>Price/Item: $10.00</Text>
-              <Text style={postDetailStyles.details}>Item Link example.com/item</Text>
-              <Text style={postDetailStyles.details}>
-                Description: Beautiful fairy lights to use for your dorm
+  if (postDetails) {
+    return (
+      <ScrollView style={styles.container}>
+        <View style={userStyles.container}>
+          <TouchableOpacity
+            style={{ alignSelf: 'flex-end' }}
+            onPress={() => handleProfile()}
+          >
+            <Icon name="user" size={28} style={userStyles.icon} />
+          </TouchableOpacity>
+          <Text style={userStyles.text}>
+            {userName ? (
+              <Text>
+                Hello,
+                {` ${userName}`}
+                !
               </Text>
+            ) : <Text>Hello, guest!</Text>}
+          </Text>
+          {userId ? (
+            <Text style={userStyles.button}>
+              <Button
+                color="#000"
+                title="My Chats"
+              />
+            </Text>
+          ) : <Text />}
+        </View>
+        {errorMessage && (
+          <Text>{errorMessage}</Text>
+        )}
+
+        <Text style={postDetailStyles.upperBox}>
+          Item Name
+        </Text>
+        <View style={postDetailStyles.container}>
+          <View style={postDetailStyles.upper}>
+            <View style={postDetailStyles.tags}>
+
+              <Text style={postDetailStyles.tagsHeader}>
+                Tags
+              </Text>
+
+              <View>
+                {tags.map((tag) => <Text key={tag} style={postDetailStyles.tag}>{tag}</Text>)}
+              </View>
+            </View>
+            <View style={{ flexShrink: 1 }}>
+
+              <Text style={postDetailStyles.detailsHeader}>
+                Item Details
+              </Text>
+
+              <View>
+                <Text style={postDetailStyles.details}>
+                  Target Quantity:
+                  {' '}
+                  {postDetails.itemNumTarget}
+                </Text>
+
+                <Text style={postDetailStyles.details}>
+                  Current Quantity:
+                  {' '}
+                  {postDetails.itemNumCurrent}
+                </Text>
+
+                <Text style={postDetailStyles.details}>
+                  Price/Item: $
+                  {postDetails.pricePerItem}
+                </Text>
+
+                <Text style={postDetailStyles.details}>
+                  Item Link:
+                  {' '}
+                  {postDetails.itemURL}
+                </Text>
+
+                <Text style={postDetailStyles.details}>
+                  Description:
+                  {' '}
+                  {postDetails.itemDescription}
+                </Text>
+
+              </View>
             </View>
           </View>
-        </View>
-        <View style={postDetailStyles.groupDetailsContainer}>
-          <Text style={postDetailStyles.groupHeader}>Group Details</Text>
-          <Text style={postDetailStyles.details}>Group size: 2</Text>
-          <View>
-            <View style={postDetailStyles.groupUser}>
-              <View>
-                {[{ key: 'Johnny', quantity: 5 },
-                  { key: 'Yuying', quantity: 3 },
-                  { key: 'Zhihang', quantity: 4 }].map((item) => (
-                    <View key={item.key} style={postDetailStyles.groupUserContent}>
+
+          <View style={postDetailStyles.groupDetailsContainer}>
+
+            <Text style={postDetailStyles.groupHeader}>
+              Group Details
+            </Text>
+
+            <Text style={postDetailStyles.details}>
+              Group size:
+              {' '}
+              {members.length}
+            </Text>
+
+            <View>
+              <View style={postDetailStyles.groupUser}>
+                <View>
+                  {members.map((item) => (
+                    <View key={item.name} style={postDetailStyles.groupUserContent}>
                       <View>
                         <Icon
                           style={postDetailStyles.groupUserIcon}
@@ -231,13 +326,16 @@ export default function PostDetails({ navigation, route }) {
                         />
                       </View>
                       <View>
+
                         <Text
                           style={postDetailStyles.groupUserName}
                         >
-                          {item.key}
+                          {item.name}
                         </Text>
+
                       </View>
                       <View>
+
                         <Text
                           style={postDetailStyles.groupUserQuantity}
                         >
@@ -245,24 +343,40 @@ export default function PostDetails({ navigation, route }) {
                           {' '}
                           {item.quantity}
                         </Text>
+
                       </View>
                     </View>
-                ))}
+                  ))}
+                </View>
+              </View>
+            </View>
+            <View>
+              <TextInput
+                placeholder="quantity"
+                onChangeText={setQuantity}
+                value={String(quantity)}
+              />
+              <View style={postDetailStyles.buttons}>
+                <View style={postDetailStyles.LeftButton}>
+                  <Button color="#000" title={join ? 'Leave' : 'Join'} onPress={handleJoinLeave} />
+                </View>
+                <View style={postDetailStyles.LeftButton}>
+                  <Button
+                    color="#000"
+                    title="Comment"
+                    onPress={() => navigation.navigate('Comment', { userId, postId })}
+                  />
+                </View>
+                <View style={postDetailStyles.RightButton}>
+                  <Button color="#000" title="Back" onPress={() => navigation.navigate('Home')} />
+                </View>
+
               </View>
             </View>
           </View>
-          <View>
-            {userId ? (
-              <View style={postDetailStyles.buttons}>
-                <View style={postDetailStyles.LeftButton}><Button color="#000" title="Join" /></View>
-                <View style={postDetailStyles.LeftButton}><Button color="#000" title="Leave" onPress={leavePressed} /></View>
-                <View style={postDetailStyles.LeftButton}><Button color="#000" title="Comment" onPress={() => navigation.navigate('Comment')} /></View>
-                <View style={postDetailStyles.RightButton}><Button color="#000" title="Back" onPress={() => navigation.navigate('Home')} /></View>
-              </View>
-            ) : <Text />}
-          </View>
         </View>
-      </View>
-    </ScrollView>
-  );
+      </ScrollView>
+    );
+  }
+  return null;
 }

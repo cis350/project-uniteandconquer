@@ -230,6 +230,31 @@ webapp.post('/createUser', async (req, resp) => {
   }
 });
 
+webapp.post('/forget', async (req, resp) => {
+  if (!req.body.email || req.body.email.length === 0) {
+    resp.status(404).json({ error: 'firstName not provided' });
+  } else if (!req.body.phone.countryCode || req.body.phone.countryCode === 0) {
+    resp.status(404).json({ error: 'country code not provided' });
+  } else if (!req.body.phone.phoneNumber || req.body.phone.phoneNumber === 0) {
+    resp.status(404).json({ error: 'phone number not provided' });
+  } else if (!req.body.newPassword || req.body.newPassword.length === 0) {
+    resp.status(404).json({ error: 'new password not provided' });
+  }
+
+  try {
+    const res = await userlib.forgetPassword(db, req.body.phone, req.body.email, req.body.newPassword);
+    // send the response
+    if (res) {
+      resp.status(201).json({ success: true, error: null });
+    } else {
+      resp.status(201).json({ success: false, error: null });
+    }
+  } catch (err) {
+    console.log(err);
+    resp.status(500).json({ success: false, error: err });
+  }
+
+})
 // login with email endpoint
 webapp.post('/loginUserWithEmail', async (req, resp) => {
   console.log('login with email');

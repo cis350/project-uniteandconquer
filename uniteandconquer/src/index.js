@@ -12,6 +12,7 @@ import UserProfile from './components/UserProfile';
 import UserSettingsPassword from './components/UserSettingsPassword';
 import UserSettingsPersonalInformation from './components/UserSettingsPersonalInformation';
 import reportWebVitals from './reportWebVitals';
+import ResetPassword from './components/ResetPassword';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -26,6 +27,7 @@ ReactDOM.render(
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/user-settings-password" element={<UserSettingsPassword />} />
         <Route path="/user-settings-personal-information" element={<UserSettingsPersonalInformation />} />
+        <Route path="/resetPassword" element={<ResetPassword />} />
       </Routes>
     </Router>
   </React.StrictMode>,

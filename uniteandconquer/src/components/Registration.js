@@ -76,8 +76,6 @@ function Registration() {
     if (password !== confirmPassword) {
       throw new Error('password and confirmPassword need to be the same');
     }
-    console.log('here');
-    console.log(countryCode, phone, email, password, firstName, lastName, tags);
     await UserDB.createUser(
       countryCode,
       phone,
@@ -87,9 +85,7 @@ function Registration() {
       lastName,
       tags,
       (success, id, err) => {
-        console.log(success);
         if (success) {
-          // navigate('/login');
           showModal();
         } else {
           console.log(err);

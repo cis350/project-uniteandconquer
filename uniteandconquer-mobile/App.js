@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-underscore-dangle */
+import React, { useEffect, useState, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FlashMessage, { showMessage } from 'react-native-flash-message';
@@ -20,6 +21,9 @@ import UpdatePassword from './components/UpdatePassword';
 import SettingInterests from './components/UpdateInterests';
 import { getUserDetails } from './modules/UserDB';
 import tagsList from './data/tags.json';
+
+const notifyDB = require('./modules/NotificationDB');
+const PostDB = require('./modules/PostDB');
 
 // styling ---------
 
@@ -119,12 +123,28 @@ const homePageStyles = StyleSheet.create({
 // app content --------
 
 function HomeScreen({ navigation, route }) {
+  // const { userId, firstName } = route.params;
+  const firstName = React.useRef('');
+  const UserID = React.useRef('');
   const [firstNameState, setFirstNameState] = React.useState('');
+  const [posts, setPosts] = useState([]);
+  // const [selectedTags, setSelectedTags] = useState([]);
+  const [searchKeyWord, setSearchKeyWord] = React.useState('');
+  const [showNotif, setShowNotif] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState([]);
+  const [items, setItems] = React.useState(tagsList);
+  const [notifs, setNotifs] = useState([]);
+  const search = () => {
+
+  };
 
   useEffect(() => {
     if (route.params?.userId) {
       getUserDetails(route.params?.userId, (success, user, err) => {
         if (success) {
+          firstName.current = user.firstName;
+          UserID.current = route.params?.userId;
           setFirstNameState(user.firstName);
         } else {
           showMessage({ message: err, type: 'danger' });
@@ -132,20 +152,60 @@ function HomeScreen({ navigation, route }) {
       });
     }
   }, [route.params?.userId, firstNameState]);
+  // time interval hook
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
 
-  // eslint-disable-next-line no-unused-vars
-  const [posts, setPosts] = React.useState([
-    { id: 1, item: 'item', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat ex vel arcu eleifend, vestibulum lacinia libero scelerisque.' },
-    { id: 2, item: 'item', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat ex vel arcu eleifend, vestibulum lacinia libero scelerisque.' },
-    { id: 3, item: 'item', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat ex vel arcu eleifend, vestibulum lacinia libero scelerisque.' }]);
-  const [searchKeyWord, setSearchKeyWord] = React.useState('');
-  const [showNotif, setShowNotif] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState([]);
-  const [items, setItems] = React.useState(tagsList);
-  const search = () => {
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
 
-  };
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        const id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+      return null;
+    }, [delay]);
+  }
+  useInterval(() => {
+    notifyDB.getNotificationsForUser(route.params?.userId, (success, notifList, err) => {
+      if (success) {
+        setNotifs(notifList);
+        // console.log(notifList);
+      } else {
+        console.log(err);
+      }
+    });
+  }, 5000);
+
+  // get all posts when user get into the page
+  useEffect(() => {
+    PostDB.getSortedPostBySearch(0, 19, '', [], (success, postInfo, err) => {
+      if (success) {
+        setPosts(postInfo);
+      } else {
+        console.log(err);
+      }
+    });
+  }, []);
+
+  useInterval(() => {
+    const tagList = value.map((tag) => (tag.value));
+    PostDB.getSortedPostBySearch(0, 19, searchKeyWord, tagList, (success, postInfo, err) => {
+      if (success) {
+        console.log(searchKeyWord, tagList);
+        setPosts(postInfo);
+      } else {
+        console.log(err);
+      }
+    });
+  }, 5000);
 
   const handleLogOut = () => {
     navigation.setParams({ userId: '' });
@@ -155,11 +215,23 @@ function HomeScreen({ navigation, route }) {
   const handleStartPost = () => {
     if (firstNameState) {
       navigation.navigate('CreatePost', {
-        userId: firstNameState,
+        userName: firstName.current,
+        userId: UserID.current,
       });
     } else {
       navigation.navigate('LogIn');
     }
+  };
+
+  const handleNotifClick = async () => {
+    await notifyDB.getNotificationsForUser(route.params?.userId, (success, notifList, err) => {
+      if (success) {
+        setNotifs(notifList);
+        setShowNotif(!showNotif);
+      } else {
+        console.log(err);
+      }
+    });
   };
 
   const handleProfile = () => {
@@ -186,7 +258,15 @@ function HomeScreen({ navigation, route }) {
 
   return (
     <ScrollView style={styles.container}>
-      {showNotif && <Notification setShowNotif={setShowNotif} showNotif={showNotif} />}
+      {showNotif && (
+      <Notification
+        setShowNotif={setShowNotif}
+        showNotif={showNotif}
+        notifs={notifs}
+        setNotifs={setNotifs}
+        userId={route.params?.userId}
+      />
+      )}
       <View style={userStyles.container}>
         <TouchableOpacity
           style={homePageStyles.iconProfile}
@@ -228,7 +308,7 @@ function HomeScreen({ navigation, route }) {
       <View style={homePageStyles.showButton}>
         {firstNameState ? (
           <TouchableOpacity
-            onPress={() => setShowNotif(!showNotif)}
+            onPress={handleNotifClick}
           >
             <Icon
               name="bell"
@@ -291,13 +371,26 @@ function HomeScreen({ navigation, route }) {
       <View style={homePageStyles.posts}>
         {posts.map((post) => (
           <TouchableOpacity
-            key={post.id}
-            onPress={() => handlePostDetails()}
+            key={post._id}
+            onPress={() => navigation.navigate('PostDetails', {
+              userName: firstName.current, userId: UserID.current, postId: post._id,
+            })}
           >
-            <View key={post.id} style={homePageStyles.center}>
+            <View key={post._id} style={homePageStyles.center}>
               <View style={homePageStyles.postContainer}>
-                <Text style={homePageStyles.postTitle}>{post.item}</Text>
-                <Text>{post.description}</Text>
+                <Text style={homePageStyles.postTitle}>{post.itemName}</Text>
+                <Text>
+                  This post has
+                  {' '}
+                  {post.itemNumCurrent}
+                  {' '}
+                  currently,
+                  prince is $
+                  {' '}
+                  {post.pricePerItem}
+                  {' '}
+                  each
+                </Text>
               </View>
             </View>
           </TouchableOpacity>

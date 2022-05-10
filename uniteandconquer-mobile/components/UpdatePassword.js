@@ -1,4 +1,5 @@
 import { React, useState } from 'react';
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import {
   StyleSheet, View, ScrollView, Text, TextInput, Button,
 } from 'react-native';
@@ -90,7 +91,7 @@ function UpdatePassword({ navigation, route }) {
   /**
    * how to retrieve the user id is to be decided.
    */
-  const userid = 'TBD';
+  // const userid = 'TBD';
 
   /**
    *
@@ -104,9 +105,10 @@ function UpdatePassword({ navigation, route }) {
    * change the user's password to a new one, only if
    * the user's old password matches
    */
-  function handleUpdate() {
+  async function handleUpdate() {
+    const userid = await AsyncStorage.getItem('UserID');
     if (checkValidInput(newPassword) && checkValidInput(currentPassword)) {
-      userDB.modifyUser(userid, 2, newPassword, currentPassword, (success, error) => {
+      userDB.modifyUser(userid, 'password', newPassword, currentPassword, (success, error) => {
         if (!success) {
           showMessage({
             message: error,

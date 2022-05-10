@@ -52,16 +52,18 @@ function PhoneLogIn({ navigation }) {
   const [phoneNumber, setPhoneNumber] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const countryCodeList = ['+1', '+86'];
+  const countryCodeList = ['1', '86'];
 
-  const handleLogIn = () => {
+  const handleLogIn = async () => {
     if (countryCode && phoneNumber && password) {
       if (phoneNumber.match(/^\d+$/)) {
-        loginUserWithPhone(countryCode, phoneNumber, password, (success, userId, err) => {
+        await loginUserWithPhone(countryCode, phoneNumber, password, (success, userId) => {
+          console.log(success);
+          console.log(countryCode, phoneNumber, password);
           if (success) {
             navigation.navigate({ name: 'Home', params: { userId }, merge: true });
           } else {
-            showMessage({ message: err, type: 'danger' });
+            showMessage({ message: 'Incorrect password / username', type: 'danger' });
           }
         });
       } else {
@@ -116,14 +118,14 @@ function EmailLogIn({ navigation }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const handleLogIn = () => {
+  const handleLogIn = async () => {
     if (email && password) {
       if (email.match(emailRegex)) {
-        loginUserWithEmail(email, password, (success, userId, err) => {
+        await loginUserWithEmail(email, password, (success, userId) => {
           if (success) {
             navigation.navigate({ name: 'Home', params: { userId }, merge: true });
           } else {
-            showMessage({ message: err, type: 'danger' });
+            showMessage({ message: 'Incorrect password / username', type: 'danger' });
           }
         });
       } else {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   StyleSheet, View, ScrollView, Text, TextInput, Button, Modal,
 } from 'react-native';
@@ -67,52 +67,71 @@ const commentStyles = StyleSheet.create({
     padding: 10,
   },
 });
-function Comment() {
-  const [tempID, setTempID] = useState(3);
+function Comment({ route }) {
+  const { userId, postId } = route.params;
+  // const [tempID, setTempID] = useState(3);
   const [commentInput, setCommentInput] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [modalVisible, setModalVisible] = React.useState(false);
-  const [comments, setComments] = useState([
-    {
-      author: 1, authorName: 'user1', content: 'I loved using this item', createdAt: new Date().toLocaleString(),
-    },
-    {
-      author: 2, authorName: 'user2', content: 'I wonder if I will need this', createdAt: new Date().toLocaleString(),
-    },
-  ]);
+  const [flag, setFlag] = useState(0);
+  const [comments, setComments] = useState([]);
 
-  /**
-  * how to retrieve the user id is to be decided.
-  */
-  const userid = 'TBD';
-
-  /**
-  * how to retrieve the user id is to be decided.
-  */
-  const postid = 'TBD';
+  useEffect(() => {
+    postDB.getPost(postId, (success, details) => {
+      if (success) {
+        setComments(details.comments);
+      }
+    });
+  }, [flag, postId]);
 
   /**
    * add comment to the post db
    */
   const addComment = () => {
     if (commentInput && commentInput.length > 0) {
-      postDB.addComment(userid, postid, (success, error) => {
+      postDB.addComment(userId, postId, commentInput, (success, error) => {
         if (success) {
-          const newComment = {
-            author: tempID, authorName: `user${3}`, content: commentInput, createdAt: new Date().toLocaleString(),
-          };
-          setComments([...comments, newComment]);
-          setTempID(tempID + 1);
-          setCommentInput('');
+          setFlag(flag + 1);
         } else {
           setErrorMessage(error);
           setModalVisible(true);
         }
       });
+    } else {
+      setErrorMessage('input must not be empty');
+      setModalVisible(true);
     }
-    setErrorMessage('input must not be empty');
-    setModalVisible(true);
   };
+
+  /** create an useInterval hook for looping fetch */
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
+
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        const id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+      return null;
+    }, [delay]);
+  }
+
+  useInterval(() => {
+    postDB.getPost(postId, (success, details) => {
+      if (success) {
+        setComments(details.comments);
+      }
+    });
+  }, 5000);
 
   return (
     <ScrollView style={styles.container}>

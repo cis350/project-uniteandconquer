@@ -198,7 +198,7 @@ const createPostStyles = StyleSheet.create({
 
 export default function CreatePost({ navigation, route }) {
   const {
-    userId,
+    userName, userId,
   } = route.params;
   const [itemName, setItemName] = React.useState('');
   const [targetQuantity, setTargetQuantity] = React.useState('');
@@ -241,6 +241,17 @@ export default function CreatePost({ navigation, route }) {
   }
 
   function handlePost() {
+    console.log(
+      itemName,
+      targetQuantity,
+      currentQuantity,
+      price,
+      link,
+      description,
+      userId,
+      tags,
+      userName,
+    );
     if (checkValidInput()) {
       postDB.addPost(
         itemName,
@@ -249,22 +260,24 @@ export default function CreatePost({ navigation, route }) {
         price,
         link,
         description,
+        userId,
         tags,
         (success, id, error) => {
+          console.log(success, id);
           if (success) {
-          // should place navigation here
+            navigation.navigate('PostDetails', {
+              userName, userId, postId: id,
+            });
           } else {
             setErrorMessage(error);
             setModalVisible(true);
           }
         },
       );
+    } else {
+      setErrorMessage('input must not be empty');
+      setModalVisible(true);
     }
-    // we need to move the navigation inside the addPost, once it is successfully created, but I was
-    // wondering how to redirect to a certain page?
-    navigation.navigate('PostDetails');
-    // setErrorMessage('input must not be empty');
-    // setModalVisible(true);
   }
 
   return (
@@ -298,7 +311,7 @@ export default function CreatePost({ navigation, route }) {
             {userId ? (
               <Text>
                 Hello,
-                {` ${userId}`}
+                {` ${userName}`}
                 !
               </Text>
             ) : <Text>Hello, guest!</Text>}

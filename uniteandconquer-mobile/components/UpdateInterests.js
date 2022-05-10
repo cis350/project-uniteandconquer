@@ -1,4 +1,5 @@
 import { React, useState } from 'react';
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import {
   StyleSheet, View, ScrollView, Text, Button,
 } from 'react-native';
@@ -133,13 +134,14 @@ function SettingInterests({ navigation, route }) {
   /**
   * how to retrieve the user id is to be decided.
   */
-  const userid = 'TBD';
+  // const userid = 'TBD';
 
   /**
    * update the interests list of the user
    * I assume that the user can add an empty array to the database.
    */
-  function handleUpdate() {
+  async function handleUpdate() {
+    const userid = await AsyncStorage.getItem('UserID');
     userDB.modifyUser(userid, 5, tags, null, (success, error) => {
       if (!success) {
         showMessage({
