@@ -140,7 +140,7 @@ function Login() {
         )}
 
         <div className="login-field">
-          <input className="field" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
+          <input type="password" className="field" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
         </div>
 
         <br />

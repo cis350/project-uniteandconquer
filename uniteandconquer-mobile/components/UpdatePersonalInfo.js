@@ -1,4 +1,5 @@
 import { React, useState } from 'react';
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import {
   StyleSheet, View, ScrollView, Text, TextInput, Button,
 } from 'react-native';
@@ -108,18 +109,23 @@ function UpdateInfo({ navigation }) {
   /**
    * how to retrieve the user id is to be decided.
    */
-  const userid = 'TBD';
+  // const userid = 'TBD';
 
   /**
    * Fetch the user information from the user DB and store
    * the user information into an object - userInfo
    */
   let userInfo;
-  userDB.getUserDetails(userid, (success, user) => {
-    if (success) {
-      userInfo = user;
-    }
-  });
+
+  async function getUserDetails() {
+    const userid = await AsyncStorage.getItem('UserID');
+    await userDB.getUserDetails(userid, (success, user) => {
+      if (success) {
+        userInfo = user;
+      }
+    });
+  }
+  getUserDetails();
 
   /**
    *
@@ -152,9 +158,10 @@ function UpdateInfo({ navigation }) {
   /**
    * update the personal information if the input is valid
    */
-  function handleUpdate() {
+  async function handleUpdate() {
     let isChanged = false;
     let isSuccess = true;
+    const userid = await AsyncStorage.getItem('UserID');
     // Update first name
     if (checkValidInput(firstName, userInfo.firstName)) {
       userDB.modifyUser(userid, 3, firstName, null, (success, error) => {

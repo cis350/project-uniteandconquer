@@ -114,6 +114,7 @@ function PhoneLogIn({ navigation }) {
         />
       </View>
       <TextInput
+        secureTextEntry
         style={styles.input}
         onChangeText={setPassword}
         value={password}

@@ -129,7 +129,8 @@ const tagStyles = StyleSheet.create({
 
 // app content --------
 
-export default function UserProfile({ navigation }) {
+export default function UserProfile({ navigation, route }) {
+  const { userId } = route.params;
   const [showNotif, setShowNotif] = React.useState(false);
   const [tags, setTags] = React.useState([
     'Appliances', 'Books', 'Electronics',
@@ -148,24 +149,22 @@ export default function UserProfile({ navigation }) {
       <View style={userStyles.container}>
         <TouchableOpacity
           style={{ alignSelf: 'flex-end' }}
-          onPress={() => navigation.navigate('UserProfile')}
         >
           <Icon name="user" size={28} style={userStyles.icon} />
         </TouchableOpacity>
         <Text style={userStyles.text}>
-          Hello, guest!
+          {userId ? (
+            <Text>
+              Hello,
+              {` ${userId}`}
+              !
+            </Text>
+          ) : <Text>Hello, guest!</Text>}
         </Text>
         <Text style={userStyles.button}>
           <Button
             color="#000"
             title="My Chats"
-          />
-        </Text>
-        <Text style={userStyles.button}>
-          <Button
-            color="#000"
-            title="Log In"
-            onPress={() => navigation.navigate('LogIn')}
           />
         </Text>
       </View>

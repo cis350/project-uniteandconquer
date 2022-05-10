@@ -1,6 +1,7 @@
 import {
   React, useState, useEffect,
 } from 'react';
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import {
   StyleSheet, View, ScrollView, Text, Button, TouchableOpacity, TextInput,
 } from 'react-native';
@@ -147,22 +148,21 @@ export default function PostDetails({ navigation }) {
   // const [ownerID, setOwnerID] = useState('');
   const [quantity, setQuantity] = useState(0);
   // const [memberId, setMemberId] = useState('');
-  const postId = '1';// need to be change.
-  const userId = '5087901e810c109679e860ea';
+  const postId = window.location.href.split('/').pop();
 
-  const leavePressed = () => {
+  const leavePressed = async () => {
     // const userId = ''; // dummy, need to get from session once log in routing is set up
     // const postId = ''; // dummy, need to get from current view
+    const userId = await AsyncStorage.getItem('UserID');
     leaveGroup(userId, postId, (success, err) => {
       setErrorMessage(err); // trigger re-rendering; will display err if err is not null
     });
     setJoin(false);
   };
-  const handleJoin = () => {
-    const userID = 'bababababa';
-    const postID = 0;
+  const handleJoin = async () => {
+    const userId = await AsyncStorage.getItem('UserID');
     // const quantity = 2;
-    PostDB.joinGroup(userID, postID, quantity, (success, err) => {
+    PostDB.joinGroup(userId, postId, quantity, (success, err) => {
       if (success) {
         setJoin(true);
         PostDB.getPostMembers(postId, (success2, memberList, err2) => {
@@ -185,15 +185,18 @@ export default function PostDetails({ navigation }) {
   };
 
   useEffect(() => {
-    PostDB.getPostMembers(postId, (success, memberList, err) => {
-      if (success) {
-        setMembers(memberList);
-        if (memberList.some((e) => e.id === userId)) {
-          setJoin(true);
+    const fetch = async () => {
+      const userId = await AsyncStorage.getItem('UserID');
+      PostDB.getPostMembers(postId, (success, memberList, err) => {
+        if (success) {
+          setMembers(memberList);
+          if (memberList.some((e) => e.id === userId)) {
+            setJoin(true);
+          }
+        } else {
+          setErrorMessage(err);
         }
-      } else {
-        setErrorMessage(err);
-      }
+      });
       // PostDB.getOwner(postId, (success2, owner, err2) => {
       //   if (success2) {
       //     setOwnerID(owner);
@@ -201,7 +204,8 @@ export default function PostDetails({ navigation }) {
       //     setErrorMessage(err2);
       //   }
       // });
-    });
+    };
+    fetch().catch(console.error);
   }, []);
   /* kick function */
   // const handleKick = (memberID) => {
@@ -226,6 +230,16 @@ export default function PostDetails({ navigation }) {
   //   return null;
   // }
 
+  const handleProfile = () => {
+    if (route.params.userId) {
+      navigation.navigate('UserProfile', {
+        userId: route.params.userId,
+      });
+    } else {
+      navigation.navigate('LogIn');
+    }
+  };
+
   // views ---------
 
   return (
@@ -233,26 +247,27 @@ export default function PostDetails({ navigation }) {
       <View style={userStyles.container}>
         <TouchableOpacity
           style={{ alignSelf: 'flex-end' }}
-          onPress={() => navigation.navigate('UserProfile')}
+          onPress={() => handleProfile()}
         >
           <Icon name="user" size={28} style={userStyles.icon} />
         </TouchableOpacity>
         <Text style={userStyles.text}>
-          Hello, guest!
+          {route.params.userId ? (
+            <Text>
+              Hello,
+              {` ${route.params.userId}`}
+              !
+            </Text>
+          ) : <Text>Hello, guest!</Text>}
         </Text>
-        <Text style={userStyles.button}>
-          <Button
-            color="#000"
-            title="My Chats"
-          />
-        </Text>
-        <Text style={userStyles.button}>
-          <Button
-            color="#000"
-            title="Log In"
-            onPress={() => navigation.navigate('LogIn')}
-          />
-        </Text>
+        {route.params.userId ? (
+          <Text style={userStyles.button}>
+            <Button
+              color="#000"
+              title="My Chats"
+            />
+          </Text>
+        ) : <Text />}
       </View>
       {errorMessage && (
         <Text>{errorMessage}</Text>
