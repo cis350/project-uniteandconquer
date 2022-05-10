@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -345,15 +346,26 @@ function HomeScreen({ navigation, route }) {
       <View style={homePageStyles.posts}>
         {posts.map((post) => (
           <TouchableOpacity
-            key={post.id}
+            key={post._id}
             onPress={() => navigation.navigate('PostDetails', {
-              userName: firstName.current, userId: route.params?.userId, postId: post.id,
+              userName: firstName.current, userId: route.params?.userId, postId: post._id,
             })}
           >
-            <View key={post.id} style={homePageStyles.center}>
+            <View key={post._id} style={homePageStyles.center}>
               <View style={homePageStyles.postContainer}>
-                <Text style={homePageStyles.postTitle}>{post.item}</Text>
-                <Text>{post.description}</Text>
+                <Text style={homePageStyles.postTitle}>{post.itemName}</Text>
+                <Text>
+                  This post has
+                  {' '}
+                  {post.itemNumCurrent}
+                  {' '}
+                  currently,
+                  prince is $
+                  {' '}
+                  {post.pricePerItem}
+                  {' '}
+                  each
+                </Text>
               </View>
             </View>
           </TouchableOpacity>

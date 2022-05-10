@@ -240,7 +240,6 @@ export default function UserProfile({ navigation, route }) {
                   {post.pricePerItem}
                   {' '}
                   each
-                  {post.description}
                 </Text>
               </View>
             </TouchableOpacity>
