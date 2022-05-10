@@ -16,8 +16,6 @@ const connect = async (url) => {
 };
 
 const createUser = async (db, newUser) => {
-  console.log('db: add user');
-  console.log(newUser);
   try {
     await db.collection('userDB').updateOne(
       {
@@ -63,21 +61,20 @@ const loginUserWithPhone = async (
   user,
 ) => {
   const { phone, password } = user;
-  console.log(phone, password);
   let result;
   try {
     result = await db.collection('userDB').findOne({ phone });
-    console.log('user', result);
   } catch (e) {
     throw new Error('failed to login with phone');
   }
 
+  if (result === null) {
+    return false;
+  }
+
   if (password === result.password) {
-    console.log('correct password');
     return result._id;
   }
-  console.log('incorrect password');
-
   return false;
 };
 
@@ -93,7 +90,9 @@ const loginUserWithEmail = async (
     throw new Error('failed to login with email');
   }
 
-  console.log(result);
+  if (result === null) {
+    return false;
+  }
 
   if (password === result.password) {
     return result._id;
@@ -169,7 +168,6 @@ const getUserDetails = async (
 ) => {
   try {
     const result = await db.collection('userDB').findOne({ _id: ObjectId(user) });
-    console.log(result, user,'from userdboperation get user details');
     return result;
   } catch (e) {
     throw new Error('fail to get user details');

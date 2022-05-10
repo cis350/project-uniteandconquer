@@ -1,11 +1,24 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
+import Modal from 'react-modal';
 import { Link, useNavigate } from 'react-router-dom';
 import Dropdown from 'react-dropdown';
 import '../assets/Login.css';
 import '../assets/App.css';
 
 const UserDB = require('../modules/UserDB');
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    background: '#FFD9A0',
+  },
+};
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -18,6 +31,16 @@ function Login() {
   const options = [
     '1', '44', '1684',
   ];
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [note, setNote] = useState(null);
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const showModal = () => {
+    setIsOpen(true);
+  };
   // We need to ensure that the username and password are not null
   // And the username and password are in good format, if any.
   // And compare whether the username and password match.
@@ -70,9 +93,11 @@ function Login() {
   };
   const login = async () => {
     if (username.length <= 0 || password.length <= 0) {
-      throw new Error('Invalid username and password. It cannot be empty');
+      setNote('Invalid username and password. It cannot be empty');
+      showModal();
     } else if (!await checkPassword(username, password)) {
-      throw new Error('Incorrect password or username not exists');
+      setNote('Incorrect password or username not exists');
+      showModal();
     } else if (await checkPassword(username, password)) {
       navigate('/');
     }
@@ -88,6 +113,20 @@ function Login() {
 
   return (
     <div className="login-page">
+      <div>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+          ariaHideApp={false}
+        >
+          <div className="modalContent">
+            <h2>{note}</h2>
+            <button className="modalButton" type="button" onClick={closeModal}>Close</button>
+          </div>
+        </Modal>
+      </div>
       <div className="logo"><h1>Unite and Conquer</h1></div>
       <div className="login">
         <h2>Login to your account</h2>

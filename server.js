@@ -234,6 +234,7 @@ webapp.post('/createUser', async (req, resp) => {
 
 // login with email endpoint
 webapp.post('/loginUserWithEmail', async (req, resp) => {
+  console.log('login with email');
   if (!req.body.email || req.body.email.length === 0) {
     resp.status(404).json({ error: 'email not provided' });
   } else if (!req.body.password || req.body.password.length === 0) {
@@ -242,6 +243,7 @@ webapp.post('/loginUserWithEmail', async (req, resp) => {
   try {
     const res = await userlib.loginUserWithEmail(db, req.body);
     // send the response
+    console.log(res);
     if (res) {
       resp.status(201).json({ success: true, id: res, error: null });
     } else {
@@ -264,6 +266,7 @@ webapp.post('/loginUserWithPhone', async (req, resp) => {
   try {
     const res = await userlib.loginUserWithPhone(db, req.body);
     // send the response
+    console.log(res);
     if (res) {
       resp.status(201).json({ success: true, id: res, error: null });
     } else {
