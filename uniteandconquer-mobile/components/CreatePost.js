@@ -105,6 +105,30 @@ const createPostStyles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 15,
   },
+  selectedTag: {
+    borderWidth: 5,
+    borderColor: '#FFFFFF',
+    borderRadius: 15,
+    padding: 3,
+    backgroundColor: '#FFAB2D',
+    overflow: 'hidden',
+    margin: 3,
+    textAlign: 'center',
+    fontSize: 15,
+  },
+  tagsArea: {
+    backgroundColor: '#FFD9A0',
+    width: 350,
+    minHeight: 50,
+    alignSelf: 'center',
+    marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    padding: 6,
+  },
   details: {
     marginBottom: 15,
     marginTop: 7,
@@ -357,10 +381,12 @@ export default function CreatePost({ navigation, route }) {
           </View>
           <View style={createPostStyles.tagsContainer}>
             <Text style={createPostStyles.fieldName}>Tags</Text>
-            <View style={createPostStyles.description}>
-              <Text>
-                {tags.join(' ')}
-              </Text>
+            <View style={createPostStyles.tagsArea}>
+              {tags.map((tag) => (
+                <View key={tag}>
+                  <Text style={createPostStyles.selectedTag}>{tag}</Text>
+                </View>
+              ))}
             </View>
           </View>
           <View>
