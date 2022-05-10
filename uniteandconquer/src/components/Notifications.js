@@ -37,7 +37,7 @@ function Notifications({
   return (
     <div className="notifications-container">
       <div className="toggle-notifs">
-        <button className="notif-button" type="button" onClick={handleClick}>
+        <button data-testid="hide-notifications" className="notif-button" type="button" onClick={handleClick}>
           {' '}
           <i className="fas fa-times fa-2x" />
         </button>
