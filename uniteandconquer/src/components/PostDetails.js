@@ -182,6 +182,9 @@ function PostDetails() {
           </div>
           <div className="comment-section">
             <Comment postID={postID} />
+            <form encType="multipart/form-data" action="/upload/image" method="post">
+              <input id="image-file" type="file" />
+            </form>
           </div>
           <div className="post-detail-tags">
             <div className="tags-label">Tags</div>
