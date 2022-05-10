@@ -1,10 +1,13 @@
-import React from 'react';
+import { React, useEffect, useState } from 'react';
 import {
   StyleSheet, View, Button, Text, ScrollView, TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Notification from './Notification';
 
+const UserDB = require('../modules/UserDB');
+const PostDB = require('../modules/PostDB');
+const notifyDB = require('../modules/NotificationDB');
 // styling ---------
 
 const styles = StyleSheet.create({
@@ -135,17 +138,50 @@ export default function UserProfile({ navigation, route }) {
   const [tags, setTags] = React.useState([
     'Appliances', 'Books', 'Electronics',
   ]);
-  const [ownedPosts, setOwnedPosts] = React.useState([
-    { id: 1, item: 'item', description: 'This post is led by Jeremy and trades [ITEM] for $[VALUE] with maturity [DATE]' },
-    { id: 2, item: 'item', description: 'This post is led by Jeremy and trades [ITEM] for $[VALUE] with maturity [DATE]' },
-    { id: 3, item: 'item', description: 'This post is led by Jeremy and trades [ITEM] for $[VALUE] with maturity [DATE]' }]);
-  const [joinedPosts, setJoinedPosts] = React.useState([
-    { id: 1, item: 'item', description: 'This post is led by Jeremy and trades [ITEM] for $[VALUE] with maturity [DATE]' },
-    { id: 2, item: 'item', description: 'This post is led by Jeremy and trades [ITEM] for $[VALUE] with maturity [DATE]' },
-    { id: 3, item: 'item', description: 'This post is led by Jeremy and trades [ITEM] for $[VALUE] with maturity [DATE]' }]);
+  const [ownedPosts, setOwnedPosts] = useState([]);
+  const [notifs, setNotifs] = useState([]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(async () => {
+    await UserDB.getUserDetails(userId, (success, userInfo, err) => {
+      if (success) {
+        setTags(userInfo.interests);
+        userInfo.posts.forEach((post) => {
+          PostDB.getPost(post, (success2, postInfo, err2) => {
+            if (success2) {
+              setOwnedPosts((arr) => [...arr, postInfo]);
+            } else {
+              console.log(err2);
+            }
+          });
+        });
+      } else {
+        console.log(err);
+      }
+    });
+  }, []);
+
+  const handleNotifClick = async () => {
+    await notifyDB.getNotificationsForUser(userId, (success, notifList, err) => {
+      if (success) {
+        setNotifs(notifList);
+        setShowNotif(!showNotif);
+      } else {
+        console.log(err);
+      }
+    });
+  };
+
   return (
     <ScrollView style={styles.container}>
-      {showNotif && <Notification setShowNotif={setShowNotif} showNotif={showNotif} />}
+      {showNotif && (
+      <Notification
+        setShowNotif={setShowNotif}
+        showNotif={showNotif}
+        notifs={notifs}
+        setNotifs={setNotifs}
+      />
+      )}
       <View style={userStyles.container}>
         <TouchableOpacity
           style={{ alignSelf: 'flex-end' }}
@@ -170,7 +206,7 @@ export default function UserProfile({ navigation, route }) {
       </View>
       <View style={profileContainer.showButton}>
         <TouchableOpacity
-          onPress={() => setShowNotif(!showNotif)}
+          onPress={handleNotifClick}
         >
           <Icon
             name="bell"
@@ -192,8 +228,18 @@ export default function UserProfile({ navigation, route }) {
               onPress={() => navigation.navigate('PostDetails')}
             >
               <View key={post.id} style={profileContainer.post}>
-                <Text style={profileContainer.postHeader}>{post.item}</Text>
+                <Text style={profileContainer.postHeader}>{post.itemName}</Text>
                 <Text style={profileContainer.postContent}>
+                  This post has
+                  {' '}
+                  {post.itemNumCurrent}
+                  {' '}
+                  currently,
+                  prince is $
+                  {' '}
+                  {post.pricePerItem}
+                  {' '}
+                  each
                   {post.description}
                 </Text>
               </View>
@@ -201,7 +247,7 @@ export default function UserProfile({ navigation, route }) {
           ))}
         </View>
         <Text style={profileContainer.subtitle}>My Joined Posts</Text>
-        <View style={profileContainer.postContainer}>
+        {/* <View style={profileContainer.postContainer}>
           {joinedPosts.map((post) => (
             <TouchableOpacity
               key={post.id}
@@ -215,7 +261,7 @@ export default function UserProfile({ navigation, route }) {
               </View>
             </TouchableOpacity>
           ))}
-        </View>
+        </View> */}
         <View style={tagStyles.position}>
           <View style={tagStyles.container}>
             <Text style={tagStyles.header}>My Interests</Text>

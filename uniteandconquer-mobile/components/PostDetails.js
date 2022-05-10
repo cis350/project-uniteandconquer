@@ -230,10 +230,11 @@ export default function PostDetails({ navigation }) {
   //   return null;
   // }
 
-  const handleProfile = () => {
-    if (route.params.userId) {
+  const handleProfile = async () => {
+    const userId = await AsyncStorage.getItem('UserID');
+    if (userId) {
       navigation.navigate('UserProfile', {
-        userId: route.params.userId,
+        userId,
       });
     } else {
       navigation.navigate('LogIn');
