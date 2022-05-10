@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Dropdown from 'react-dropdown';
+import Modal from 'react-modal';
 import 'react-dropdown/style.css';
 import tagsList from '../data/tags.json';
 
@@ -10,6 +11,17 @@ import '../assets/Registration.css';
 
 const UserDB = require('../modules/UserDB');
 
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    background: '#FFD9A0',
+  },
+};
 function Registration() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -18,6 +30,7 @@ function Registration() {
   const finalPhone = React.useRef('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [countryCode, setCountryCode] = useState('1');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [validFirstName, setValidFirstName] = useState(false);
   const [validLastName, setValidLastName] = useState(false);
@@ -28,20 +41,45 @@ function Registration() {
   const [validConfirmPassword, setValidConfirmPassword] = useState(false);
   const [tags, setTags] = useState([]);
   const options = [
-    { label: 'US (+1)', value: 1 },
-    { label: 'UK (+44)', value: 44 },
-    { label: 'AS (+1684)', value: 1684 },
+    '1', '44', '1684',
   ];
   const [areaCode, setAreaCode] = useState(options[0].value);
   const navigate = useNavigate();
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  const closeModal = () => {
+    setIsOpen(false);
+    navigate('/login');
+  };
+
+  const showModal = () => {
+    setIsOpen(true);
+  };
+
+  function addTags(tag) {
+    if (tags.includes(tag)) {
+      const newList = tags.filter((item) => item !== tag);
+      setTags(newList);
+    } else {
+      setTags((arr) => [...arr, tag]);
+    }
+  }
+  useEffect(() => {
+    const allTags = tagsList.map((tag) => tag.label);
+    allTags.forEach((tag) => { document.getElementById(tag).className = 'tag'; });
+    tags.forEach((tag) => { document.getElementById(tag).className = 'tag_selected'; });
+  }, [tags]);
 
   // register the user given the information provided
   // if the password and confimPassword are not correct, then throw an exception
-  const registerUser = () => {
+  const registerUser = async () => {
     if (password !== confirmPassword) {
       throw new Error('password and confirmPassword need to be the same');
     }
-    UserDB.createUser(
+    console.log('here');
+    console.log(countryCode, phone, email, password, firstName, lastName, tags);
+    await UserDB.createUser(
+      countryCode,
       phone,
       email,
       password,
@@ -49,8 +87,10 @@ function Registration() {
       lastName,
       tags,
       (success, id, err) => {
+        console.log(success);
         if (success) {
-          navigate('/login');
+          // navigate('/login');
+          showModal();
         } else {
           console.log(err);
         }
@@ -135,15 +175,6 @@ function Registration() {
     }
   };
 
-  const updateTags = (currTag) => {
-    if (!tags.includes(currTag)) {
-      setTags([currTag, ...tags]);
-    } else {
-      setTags(tags.filter((curr) => curr !== currTag));
-    }
-    console.log('tags:', tags);
-  };
-
   useEffect(() => {
     firstNameValidation();
     LastNameValidation();
@@ -156,6 +187,21 @@ function Registration() {
 
   return (
     <div className="registration-page">
+      <div>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+          ariaHideApp={false}
+        >
+          <div className="modalContent">
+            <h2>Resgistration Successfully!</h2>
+            <button className="modalButton" type="button" onClick={closeModal}>Go to Login</button>
+          </div>
+        </Modal>
+      </div>
+
       <div className="registration">
         <div className="registration-tags">
           <div className="headers">
@@ -168,7 +214,8 @@ function Registration() {
                 type="button"
                 key={tag.label}
                 className="tag"
-                onClick={() => updateTags(tag.label)}
+                onClick={() => addTags(tag.label)}
+                id={tag.label}
               >
                 {tag.label}
 
@@ -206,9 +253,9 @@ function Registration() {
             <div className="registration-field">
               <div className="label">phone</div>
               <div className="full-phone-input">
-                <Dropdown className="area-code" onChange={(e) => setAreaCode(e.value)} options={options} value={options[0].label} placeholder="Select an option" />
-                <input className="phone-input" onChange={(e) => setPhone(e.target.value)} />
 
+                <Dropdown className="area-code" options={options} value={countryCode} onChange={(value) => setCountryCode(value.value)} placeholder="Select an option" />
+                <input className="phone-input" onChange={(e) => setPhone(e.target.value)} />
               </div>
               {validPhone ? <i className="fas fa-check" /> : <i className="fas fa-times" />}
             </div>

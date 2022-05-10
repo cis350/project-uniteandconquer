@@ -1,17 +1,18 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/SidebarTags.css';
 
-function SidebarTags() {
-  const tags = useRef([
-    'Appliances', 'Beauty & Care', 'Health & Household', 'Electronics',
-  ]);
+const myStorage = window.sessionStorage;
+function SidebarTags({ tags }) {
+  const tagListGenerator = () => tags.map((tag) => (<div className="preference-tag">{tag}</div>));
+
   return (
     <div className="sidebar">
       <div className="greeting-box">
         <i className="far fa-user-circle fa-2x" />
         {' '}
-        Hi, Jeremy
+        Hi,
+        {myStorage.getItem('firstName') ? myStorage.getItem('firstName') : 'Guest'}
       </div>
 
       <div className="home-box">
@@ -26,9 +27,9 @@ function SidebarTags() {
       </div>
       <div className="preferences-box">
         <div className="preferences-title">My Preferences</div>
-        {tags.current.map((tag) => (
-          <button type="button" key={tag} className="preference-tag">{tag}</button>
-        ))}
+
+        {tagListGenerator()}
+
       </div>
     </div>
   );

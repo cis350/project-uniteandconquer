@@ -64,33 +64,32 @@ function UserSettingsPersonalInformation() {
         <div className="menu-title"><h1>Personal Information</h1></div>
         <div className="post-input">
           <div className="all-fields">
-            {' '}
             <div className="post-fields">
               <div className="post-field">
-                <div className="label">Username</div>
+                <div className="label">First Name</div>
                 <input onChange={(e) => setUsername(e.target.value)} />
-                <button className="confirm" type="button" onClick={setUsername}>
+                <button className="confirm" type="button" onClick={handleFirstName}>
                   update
                 </button>
               </div>
               <div className="post-field">
-                <div className="label">Full Name</div>
+                <div className="label">Last Name</div>
                 <input onChange={(e) => setFullName(e.target.value)} />
-                <button className="confirm" type="button" onClick={setFullName}>
+                <button className="confirm" type="button" onClick={handleLastName}>
                   update
                 </button>
               </div>
               <div className="post-field">
                 <div className="label">Phone Number</div>
                 <input onChange={(e) => setPhoneNumber(e.target.value)} />
-                <button className="confirm" type="button" onClick={setPhoneNumber}>
+                <button className="confirm" type="button" onClick={handlePhone}>
                   update
                 </button>
               </div>
               <div className="post-field">
                 <div className="label">Email</div>
                 <input onChange={(e) => setEmail(e.target.value)} />
-                <button className="confirm" type="button" onClick={setEmail}>
+                <button className="confirm" type="button" onClick={handleEmail}>
                   update
                 </button>
               </div>

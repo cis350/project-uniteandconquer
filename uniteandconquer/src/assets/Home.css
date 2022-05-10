@@ -110,6 +110,7 @@ textarea {
 .post-content-home {
   font-size: 17px;
   min-width: 700px;
+  white-space: pre-wrap;
 }
 
 .post-id {

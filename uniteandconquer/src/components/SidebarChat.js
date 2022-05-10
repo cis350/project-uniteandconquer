@@ -2,13 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/SidebarChat.css';
 
+const myStorage = window.sessionStorage;
 function SidebarChat() {
   return (
     <div className="sidebar">
       <div className="greeting">
         <i className="far fa-user-circle fa-2x" />
         {' '}
-        Hi, Jeremy
+        Hi,
+        {myStorage.getItem('firstName') ? myStorage.getItem('firstName') : 'Guest'}
       </div>
 
       <div className="main-page">

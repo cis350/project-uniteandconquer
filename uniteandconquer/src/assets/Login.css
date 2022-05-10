@@ -54,3 +54,33 @@ input:hover {
   background-color: grey;
   transition-duration: 0.4s;
 }
+
+.switch {
+  border: none;
+  background: #FFCB7D;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.switch:hover {
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+  background-color: grey;
+  transition-duration: 0.4s;
+}
+
+.dropdown {
+  width: auto;
+  margin-left: 60%;
+}
+
+.dropdown-div {
+  display:grid;
+  grid-template-columns: 1fr 3fr
+}
+
+.phone-field {
+  /* width: auto; */
+  width: 65%;
+  margin-right: 26%;
+}

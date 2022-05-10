@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable no-underscore-dangle */
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.css';
 // import Dropdown from 'react-dropdown';
@@ -24,8 +25,32 @@ function Home() {
   const [posts, setPosts] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const myStorage = window.sessionStorage;
+
+  // time interval hook
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
+
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        const id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+      return null;
+    }, [delay]);
+  }
+
+  // get all posts when user get into the page
   useEffect(() => {
-    PostDB.getSortedPostsInRange(0, 19, (success, postInfo, err) => {
+    PostDB.getSortedPostBySearch(0, 19, '', [], (success, postInfo, err) => {
       if (success) {
         setPosts(postInfo);
       } else {
@@ -34,9 +59,21 @@ function Home() {
     });
   }, []);
 
+  useInterval(() => {
+    const tagList = selectedTags.map((tag) => (tag.value));
+    PostDB.getSortedPostBySearch(0, 19, searchString, tagList, (success, postInfo, err) => {
+      if (success) {
+        console.log(searchString, tagList);
+        setPosts(postInfo);
+      } else {
+        console.log(err);
+      }
+    });
+  }, 5000);
+
   const handleSearch = () => {
     const tagList = selectedTags.map((tag) => (tag.value));
-    PostDB.getSortedPostsBySearch(0, 19, tagList, searchString, (success, postInfo, err) => {
+    PostDB.getSortedPostBySearch(0, 19, searchString, tagList, (success, postInfo, err) => {
       if (success) {
         console.log(tagList, searchString);
         setPosts(postInfo);
@@ -48,35 +85,36 @@ function Home() {
 
   const postsListGenerator = () => posts.map(
     (post) => {
-      // const url = `/post-details/${post.id}`;
-      myStorage.setItem('PostID', post.id);
+      const url = `/post-details/${post._id}`;
+      myStorage.setItem('PostID', post._id);
+      const date = new Date(post.createdAt).toLocaleString('en-US', { timeZone: 'America/New_York' });
 
       return (
-        <div className="post">
-          <li>
-            <Link className="link" to="/post-details">
-              <div className="post-title">This is Post</div>
-              <div className="post-content">
-                This post is led by Jeremy and trades
-                {' '}
-                {post.itemName}
-                {' '}
-                for $
-                {post.pricePerItem}
-                {' '}
-                with
-                maturity
-                {' '}
-                {post.createdAt}
-                {' '}
-                <span className="post-id">
-                  post ID:
-                  {post.id}
-                </span>
-              </div>
-            </Link>
-          </li>
-        </div>
+
+        <li>
+          <Link className="link" to={url}>
+            <div className="post-title">{post.itemName}</div>
+            <div className="post-content-home">
+              This post is led by
+              {' '}
+              {post.ownerInfo.firstName}
+              {' '}
+              {post.ownerInfo.lastName}
+              {' '}
+              for
+              {' '}
+              {post.itemName}
+              {' '}
+              with price $
+              {' '}
+              {post.pricePerItem}
+              {' '}
+              {'\n'}
+              {date}
+            </div>
+          </Link>
+        </li>
+
       );
     },
   );
