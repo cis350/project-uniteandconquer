@@ -27,12 +27,6 @@ test('sidebar header (profile) content', () => {
   expect(headerElement).toBeInTheDocument();
 });
 
-test('sidebar header (Chat) content', () => {
-  render(<Sidebar />);
-  const headerElement = screen.getByTestId('chat-header');
-  expect(headerElement).toBeInTheDocument();
-});
-
 test('sidebar header (Logout) content', () => {
   render(<Sidebar />);
   const headerElement = screen.getByTestId('logout-header');

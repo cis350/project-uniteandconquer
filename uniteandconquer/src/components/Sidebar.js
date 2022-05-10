@@ -16,11 +16,6 @@ function Sidebar() {
           <div className="text">Profile</div>
         </Link>
       </div>
-      <div data-testid="chat-header" className="chat-box">
-        <Link className="link" to="/chat">
-          <div className="text">Chat</div>
-        </Link>
-      </div>
       <div data-testid="logout-header" className="logout-box">
         <Link className="link" to="/login">
           <div className="text">Logout</div>

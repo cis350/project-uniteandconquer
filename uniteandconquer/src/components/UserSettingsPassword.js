@@ -39,15 +39,15 @@ function UserSettingsPassword() {
             <div className="post-fields">
               <div className="post-field">
                 <div className="label">Old Password</div>
-                <input onChange={(e) => setOldPassword(e.target.value)} />
+                <input data-testid="old-pw-input" onChange={(e) => setOldPassword(e.target.value)} />
               </div>
               <div className="post-field">
                 <div className="label">New Password</div>
-                <input onChange={(e) => setPassword(e.target.value)} />
+                <input data-testid="new-pw-input" onChange={(e) => setPassword(e.target.value)} />
               </div>
               <div className="post-field">
                 <div className="label">Confirm New Password</div>
-                <input onChange={(e) => setPassword(e.target.value)} />
+                <input data-testid="confirm-new-pw-input" onChange={(e) => setPassword(e.target.value)} />
               </div>
               <button className="update" type="button" onClick={updatePassword}>
                 Change Password

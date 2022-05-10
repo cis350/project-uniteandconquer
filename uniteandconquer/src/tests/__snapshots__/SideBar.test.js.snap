@@ -18,10 +18,6 @@ exports[`snapshot sidebar 1`] = `
     data-testid="profile-header"
   />
   <div
-    className="chat-box"
-    data-testid="chat-header"
-  />
-  <div
     className="logout-box"
     data-testid="logout-header"
   />

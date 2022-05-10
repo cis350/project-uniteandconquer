@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`snapshot create-post 1`] = `
+exports[`snapshot user settings for personal information 1`] = `
 <div
-  className="create-post-page"
+  className="user-settings-personal-information"
 >
   <div
-    className="sidebar"
+    className="sidebarSettings"
   >
     <div
-      className="greeting-box"
+      className="greeting"
     >
       <i
         className="far fa-user-circle fa-2x"
@@ -17,30 +17,33 @@ exports[`snapshot create-post 1`] = `
       Hi, Jeremy
     </div>
     <div
-      className="profile-box"
-      data-testid="profile-header"
+      className="main-page"
+      data-testid="main-page-header"
     />
     <div
-      className="logout-box"
-      data-testid="logout-header"
+      className="personal-information"
+      data-testid="personal-information-header"
     />
     <div
-      className="ad-box"
-      data-testid="ads-header"
+      className="password"
+      data-testid="password-header"
     />
   </div>
-  <div
-    className="create-post"
-  >
+  <div>
+    <div
+      className="menu-title"
+    >
+      <h1>
+        Personal Information
+      </h1>
+    </div>
     <div
       className="post-input"
     >
-      <h3>
-        Create a Post
-      </h3>
       <div
         className="all-fields"
       >
+         
         <div
           className="post-fields"
         >
@@ -50,12 +53,20 @@ exports[`snapshot create-post 1`] = `
             <div
               className="label"
             >
-              Item Name
+              Username
             </div>
             <input
-              data-testid="item-name-input"
+              data-testid="username-input"
               onChange={[Function]}
             />
+            <button
+              className="confirm"
+              data-testid="username-update"
+              onClick={[Function]}
+              type="button"
+            >
+              update
+            </button>
           </div>
           <div
             className="post-field"
@@ -63,12 +74,20 @@ exports[`snapshot create-post 1`] = `
             <div
               className="label"
             >
-              Price/Item
+              Full Name
             </div>
             <input
-              data-testid="price-input"
+              data-testid="name-input"
               onChange={[Function]}
             />
+            <button
+              className="confirm"
+              data-testid="name-update"
+              onClick={[Function]}
+              type="button"
+            >
+              update
+            </button>
           </div>
           <div
             className="post-field"
@@ -76,12 +95,20 @@ exports[`snapshot create-post 1`] = `
             <div
               className="label"
             >
-              Target Quantity
+              Phone Number
             </div>
             <input
-              data-testid="quantity-input"
+              data-testid="phone-input"
               onChange={[Function]}
             />
+            <button
+              className="confirm"
+              data-testid="phone-update"
+              onClick={[Function]}
+              type="button"
+            >
+              update
+            </button>
           </div>
           <div
             className="post-field"
@@ -89,27 +116,21 @@ exports[`snapshot create-post 1`] = `
             <div
               className="label"
             >
-              Item Link
+              Email
             </div>
             <input
-              data-testid="link-input"
+              data-testid="email-input"
               onChange={[Function]}
             />
+            <button
+              className="confirm"
+              data-testid="email-update"
+              onClick={[Function]}
+              type="button"
+            >
+              update
+            </button>
           </div>
-        </div>
-        <div
-          className="description"
-        >
-          <div
-            className="desc-label"
-          >
-            Description
-          </div>
-          <textarea
-            className="desc"
-            data-testid="description-input"
-            onChange={[Function]}
-          />
         </div>
         <div
           className="create-post-tags"
@@ -154,18 +175,11 @@ exports[`snapshot create-post 1`] = `
         className="create-post-bottom"
       >
         <button
-          className="create"
+          className="update-tags"
           onClick={[Function]}
           type="button"
         >
-          Post
-        </button>
-        <button
-          className="cancel"
-          onClick={[Function]}
-          type="button"
-        >
-          Cancel
+          Update Tags
         </button>
       </div>
     </div>
