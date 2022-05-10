@@ -139,12 +139,12 @@ const postDetailStyles = StyleSheet.create({
 // app content --------
 
 export default function PostDetails({ navigation }) {
-  const [tags, setTags] = useState(['Appliances', 'Books', 'Electronics']);
+  const tags = useState(['Appliances', 'Books', 'Electronics']);
   // event handlers --------
   const [errorMessage, setErrorMessage] = useState(null);
   const [join, setJoin] = useState(false);
   const [members, setMembers] = useState([]);
-  const [ownerID, setOwnerID] = useState('');
+  // const [ownerID, setOwnerID] = useState('');
   const [quantity, setQuantity] = useState(0);
   // const [memberId, setMemberId] = useState('');
   const postId = '1';// need to be change.
@@ -194,36 +194,37 @@ export default function PostDetails({ navigation }) {
       } else {
         setErrorMessage(err);
       }
-      PostDB.getOwner(postId, (success2, owner, err2) => {
-        if (success2) {
-          setOwnerID(owner);
-        } else {
-          setErrorMessage(err2);
-        }
-      });
+      // PostDB.getOwner(postId, (success2, owner, err2) => {
+      //   if (success2) {
+      //     setOwnerID(owner);
+      //   } else {
+      //     setErrorMessage(err2);
+      //   }
+      // });
     });
   }, []);
-  const handleKick = (memberID) => {
-    PostDB.kickMembers(memberID, postId, (success, err) => {
-      if (success) {
-        //
-        setMembers(members.filter((item) => item.id !== memberID));
-      } else {
-        setErrorMessage(err);
-      }
-    });
-  };
-  function kickButton(memberID) {
-    //
-    if (ownerID === userId && ownerID !== memberID) {
-      return (
-        <View style={postDetailStyles.LeftButton}>
-          <Button color="#000" title="Kick" onPress={() => handleKick(memberID)} />
-        </View>
-      );
-    }
-    return null;
-  }
+  /* kick function */
+  // const handleKick = (memberID) => {
+  //   PostDB.kickMembers(memberID, postId, (success, err) => {
+  //     if (success) {
+  //       //
+  //       setMembers(members.filter((item) => item.id !== memberID));
+  //     } else {
+  //       setErrorMessage(err);
+  //     }
+  //   });
+  // };
+  // function kickButton(memberID) {
+  //   //
+  //   if (ownerID === userId && ownerID !== memberID) {
+  //     return (
+  //       <View style={postDetailStyles.LeftButton}>
+  //         <Button color="#000" title="Kick" onPress={() => handleKick(memberID)} />
+  //       </View>
+  //     );
+  //   }
+  //   return null;
+  // }
 
   // views ---------
 
@@ -312,7 +313,7 @@ export default function PostDetails({ navigation }) {
                         {item.quantity}
                       </Text>
                     </View>
-                    {kickButton(item.id)}
+                    {/* {kickButton(item.id)} */}
                   </View>
                 ))}
               </View>
