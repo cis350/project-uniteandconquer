@@ -56,7 +56,7 @@ webapp.post('/addPost', async (req, resp) => {
     const myDate = new Date();
     console.log(req.body.ownerId);
     const userDetails = await userlib.getUserDetails(db, req.body.ownerId);
-    console.log(userDetails, "from server");
+    console.log(userDetails, 'from server');
     const member = {
       userId: req.body.ownerId,
       firstName: userDetails.firstName,
@@ -306,11 +306,11 @@ webapp.put('/modify', async (req, resp) => {
     const res = await userlib.modifyUser(db, req.body);
     // send the response
     if (res) {
-      resp.status(201).json({ success: true, error: null }); 
+      resp.status(201).json({ success: true, error: null });
     }
-    return resp.status(201).json({ success: false, error: null }); 
+    resp.status(201).json({ success: false, error: null });
   } catch (err) {
-    resp.status(500).json({ success:false, error: 'try again later' });
+    resp.status(500).json({ success: false, error: 'try again later' });
   }
 });
 
@@ -321,7 +321,7 @@ webapp.get('/getUserDetails', async (req, resp) => {
     const id = req.query.id ? req.query.id : '';
     const result = await userlib.getUserDetails(db, id);
     // send the response
-    resp.status(201).json({ success: true, data: result, error: null});
+    resp.status(201).json({ success: true, data: result, error: null });
   } catch (err) {
     resp.status(500).json({ success: true, data: null, error: 'try again later' });
   }
@@ -344,13 +344,13 @@ webapp.post('/addNotification', async (req, resp) => {
     resp.status(404).json({ error: 'userIds not provided' });
   } else if (!req.body.content || req.body.content.length === 0) {
     resp.status(404).json({ error: 'content not provided' });
-  } 
+  }
   try {
     const res = await notiflib.addNotif(db, req.body.userIds, req.body.content);
     // send the response
     if (res) {
       resp.status(201).json({ success: true, data: res, error: null });
-    } 
+    }
   } catch (err) {
     resp.status(500).json({ success: false, id: null, error: err });
   }
@@ -373,7 +373,7 @@ webapp.delete('/deletNotifForUser/:userId', async (req, resp) => {
   try {
     await notiflib.deletNotifForUser(db, userId);
     // send the response
-    resp.status(201).json({ success: true,  error: null });
+    resp.status(201).json({ success: true, error: null });
   } catch (err) {
     resp.status(500).json({ success: false, error: err });
   }
