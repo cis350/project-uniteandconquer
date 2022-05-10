@@ -1,6 +1,9 @@
 const { MongoClient, ObjectId } = require('mongodb');
 // Connect to the DB and return the connection object
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 const connect = async (url) => {
   try {
     const conn = (await MongoClient.connect(
@@ -15,31 +18,37 @@ const connect = async (url) => {
   }
 };
 
-const createUser = async (db, newUser) => {
-  try {
-    await db.collection('userDB').updateOne(
-      {
-        _id: ObjectId(newUser.userId),
-      },
-      {
-        $setOnInsert: {
-          phone: newUser.phone,
-          email: newUser.email,
-          firstName: newUser.firstName,
-          lastName: newUser.lastName,
-          posts: newUser.posts,
-          wishList: newUser.wishList,
-          interests: newUser.interests,
-          password: newUser.password,
-          createdAt: newUser.createdAt,
-          lastCheckNotification: newUser.lastCheckNotification,
-        },
-      },
-      { upsert: true },
-    );
-  } catch (e) {
-    throw new Error('fail to add a new user');
-  }
+const createUser = (db, newUser) => {
+  bcrypt.hash(newUser.password, saltRounds, async function(err, hash) {
+    if (err) {
+      throw new Error('Failed to create a user');
+    } else {
+      try {
+        await db.collection('userDB').updateOne(
+          {
+            _id: ObjectId(newUser.userId),
+          },
+          {
+            $setOnInsert: {
+              phone: newUser.phone,
+              email: newUser.email,
+              firstName: newUser.firstName,
+              lastName: newUser.lastName,
+              posts: newUser.posts,
+              wishList: newUser.wishList,
+              interests: newUser.interests,
+              password: hash,
+              createdAt: newUser.createdAt,
+              lastCheckNotification: newUser.lastCheckNotification,
+            },
+          },
+          { upsert: true },
+        );
+      } catch (e) {
+        throw new Error('fail to add a new user');
+      }
+    }
+  });
 };
 
 const forgetPassword = async (
@@ -52,16 +61,22 @@ const forgetPassword = async (
     const result1 = await db.collection('userDB').findOne({ phone });
     const result2 = await db.collection('userDB').findOne({ email });
     if (String(result1._id) === String(result2._id)) {
-      await db.collection('userDB').updateOne(
-        {
-          _id: ObjectId(result1._id),
-        },
-        {
-          $set: {
-            password: newPassword
-          },
-        },
-      );
+      bcrypt.hash(newPassword, saltRounds, async function(err, hash) {
+        if (err) {
+          return false;
+        } else {
+          await db.collection('userDB').updateOne(
+            {
+              _id: ObjectId(result1._id),
+            },
+            {
+              $set: {
+                password: hash
+              },
+            },
+          );
+        }
+      });
       return true;
     }
     return false;
@@ -83,10 +98,7 @@ const getPassword = async (
   }
 };
 
-const loginUserWithPhone = async (
-  db,
-  user,
-) => {
+const loginUserWithPhone = async (db, user) => {
   const { phone, password } = user;
   let result;
   try {
@@ -99,16 +111,15 @@ const loginUserWithPhone = async (
     return false;
   }
 
-  if (password === result.password) {
+  const match = await bcrypt.compare(password, result.password);
+  if (match) {
     return result._id;
+  } else {
+    return false;
   }
-  return false;
 };
 
-const loginUserWithEmail = async (
-  db,
-  user,
-) => {
+const loginUserWithEmail = async (db, user) => {
   const { email, password } = user;
   let result;
   try {
@@ -121,10 +132,12 @@ const loginUserWithEmail = async (
     return false;
   }
 
-  if (password === result.password) {
+  const match = await bcrypt.compare(password, result.password);
+  if (match) {
     return result._id;
+  } else {
+    return false;
   }
-  return false;
 };
 
 const modifyUser = async (
@@ -141,19 +154,26 @@ const modifyUser = async (
     if (fieldToChange === 'password') {
       const result = await db.collection('userDB').findOne({ _id: ObjectId(userId) })
       const pswd = String(result.password);
-      if (pswd === oldPassword) {
-
-        await db.collection('userDB').updateOne(
-          {
-            _id: ObjectId(userId),
-          },
-          {
-            $set: {
-              password: newValue
+      const match = await bcrypt.compare(oldPassword, pswd);
+      if (match) {
+        const hash = await bcrypt.hash(newValue, saltRounds);
+        if (hash) {
+          await db.collection('userDB').updateOne(
+            {
+              _id: ObjectId(userId),
             },
-          },
-        );
-        return true;
+            {
+              $set: {
+                password: hash
+              },
+            },
+          );
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
       }
     }
     if (fieldToChange === 'email') {
