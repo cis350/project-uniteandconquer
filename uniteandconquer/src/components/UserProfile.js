@@ -47,17 +47,18 @@ function UserProfile() {
   useInterval(() => {
     notifyDB.getNotificationsForUser(userID, (success, notifList, err) => {
       if (success) {
-        console.log(notifs);
         setNotifs(notifList);
+        // console.log(notifList);
       } else {
         console.log(err);
       }
     });
-  }, 5000);
+  }, 15000);
 
   const PostTableGenerator = (postsOrWishList) => {
     const table = postsOrWishList.map((post) => {
-      const url = `/post-details/${post.id}`;
+      // eslint-disable-next-line no-underscore-dangle
+      const url = `/post-details/${post._id}`;
       return (
         <div>
           <tr className="table-post">
@@ -120,8 +121,8 @@ function UserProfile() {
     });
   }, []);
 
-  const handleNotifClick = () => {
-    notifyDB.getNotificationsForUser(userID, (success, notifList, err) => {
+  const handleNotifClick = async () => {
+    await notifyDB.getNotificationsForUser(userID, (success, notifList, err) => {
       if (success) {
         setNotifs(notifList);
         setShowNotifs(!showNotifs);

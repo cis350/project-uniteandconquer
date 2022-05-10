@@ -22,8 +22,8 @@ function Notifications({
       );
     },
   );
-  const handleClick = () => {
-    notifyDB.deleteNotifications(userID, notifs, (success, err) => {
+  const handleClick = async () => {
+    await notifyDB.deleteNotifications(userID, (success, err) => {
       if (success) {
         console.log('click');
         setNotifs([]);

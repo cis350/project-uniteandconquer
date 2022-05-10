@@ -12,20 +12,18 @@ async function createNotification(userIds, content, callback) {
   return callback(result.success, result.error);
 }
 
-function getNotificationsForUser(userId, callback) {
-  return callback(true, [{
-    _id: '123',
-    content: 'Your group for [AA Batteries] has a new member!',
-    createdAt: '2022-03-14T13:14:14.925Z',
-  },
-  {
-    _id: '345',
-    content: 'Your group for [AA Batteries] has reached its goal!',
-    createdAt: '2022-03-15T14:53:17.926Z',
-  }], null);
+async function getNotificationsForUser(userId, callback) {
+  const response = await axios.get(`${rootURL}/getNotificationForUser/${userId}`, {
+  });
+  const result = response.data;
+  console.log(result, 'notification');
+  return callback(result.success, result.data, result.error);
 }
-function deleteNotifications(userId, notifList, callback) {
-  return callback(true, null);
+async function deleteNotifications(userId, callback) {
+  const response = await axios.delete(`${rootURL}/deletNotifForUser/${userId}`, {
+  });
+  const result = response.data;
+  return callback(result.success, result.error);
 }
 
 function getNotificationsForUserInRange(userId, startIdx, endIdx, callback) {

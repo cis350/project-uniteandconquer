@@ -328,6 +328,29 @@ webapp.post('/addNotification', async (req, resp) => {
   }
 });
 
+webapp.get('/getNotificationForUser/:userId', async (req, resp) => {
+  const { userId } = req.params;
+  try {
+    const result = await notiflib.getNotifForUser(db, userId);
+    // send the response
+    console.log(result);
+    resp.status(201).json({ success: true, data: result, error: null });
+  } catch (err) {
+    resp.status(500).json({ success: false, data: null, error: err });
+  }
+});
+
+webapp.delete('/deletNotifForUser/:userId', async (req, resp) => {
+  const { userId } = req.params;
+  try {
+    await notiflib.deletNotifForUser(db, userId);
+    // send the response
+    resp.status(201).json({ success: true,  error: null });
+  } catch (err) {
+    resp.status(500).json({ success: false, error: err });
+  }
+});
+
 // Default response for any other request
 webapp.use((_req, res) => {
   res.status(404);
