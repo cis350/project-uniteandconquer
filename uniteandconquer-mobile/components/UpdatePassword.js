@@ -82,7 +82,8 @@ const styles = StyleSheet.create({
   },
 });
 
-function UpdatePassword({ navigation }) {
+function UpdatePassword({ navigation, route }) {
+  const { userId } = route.params;
   const [currentPassword, setCurrentPassword] = useState();
   const [newPassword, setNewPassword] = useState();
 
@@ -166,7 +167,12 @@ function UpdatePassword({ navigation }) {
 
         <View style={styles.backButtonContainer}>
           <View style={styles.button}>
-            <Button title="Back to the setting page" onPress={() => navigation.navigate('SettingMain')} />
+            <Button
+              title="Back to the setting page"
+              onPress={() => navigation.navigate('SettingMain', {
+                userId,
+              })}
+            />
           </View>
         </View>
       </View>
