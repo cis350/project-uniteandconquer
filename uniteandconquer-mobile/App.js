@@ -145,6 +145,7 @@ function HomeScreen({ navigation, route }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState([]);
   const [items, setItems] = React.useState(tagsList);
+  const [notifs, setNotifs] = useState([]);
   const search = () => {
 
   };
@@ -165,6 +166,17 @@ function HomeScreen({ navigation, route }) {
     }
   };
 
+  const handleNotifClick = async () => {
+    await notifyDB.getNotificationsForUser(userId, (success, notifList, err) => {
+      if (success) {
+        setNotifs(notifList);
+        setShowNotif(!showNotif);
+      } else {
+        console.log(err);
+      }
+    });
+  };
+
   const handleProfile = () => {
     if (firstNameState) {
       navigation.navigate('UserProfile', {
@@ -177,7 +189,14 @@ function HomeScreen({ navigation, route }) {
 
   return (
     <ScrollView style={styles.container}>
-      {showNotif && <Notification setShowNotif={setShowNotif} showNotif={showNotif} />}
+      {showNotif && (
+      <Notification
+        setShowNotif={setShowNotif}
+        showNotif={showNotif}
+        notifs={notifs}
+        setNotifs={setNotifs}
+      />
+      )}
       <View style={userStyles.container}>
         <TouchableOpacity
           style={homePageStyles.iconProfile}

@@ -67,20 +67,13 @@ function PhoneLogIn({ navigation }) {
 
   const countryCodeList = ['+1', '+86'];
 
-  const setUserInfoPhone = async (userId, username_) => {
-    await AsyncStorage.setItem('UserID', userId);
-    await AsyncStorage.setItem('firstName', firstName);
-    await AsyncStorage.setItem('loginAuth', JSON.stringify({ phone: username_ }));
-  };
-
   const handleLogIn = () => {
     if (countryCode && phoneNumber && password) {
       if (phoneNumber.match(/^\d+$/)) {
         loginUserWithPhone(countryCode, phoneNumber, password, (success, userId, err) => {
           if (success) {
             getFirstName(userId);
-            setUserInfoPhone(userId, phoneNumber);
-            navigation.navigate({ name: 'Home', params: { userId }, merge: true });
+            navigation.navigate({ name: 'Home', params: { userId, firstName }, merge: true });
           } else {
             showMessage({ message: err, type: 'danger' });
           }
@@ -137,20 +130,13 @@ function EmailLogIn({ navigation }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const setUserInfoEmail = async (userId, username_) => {
-    await AsyncStorage.setItem('UserID', userId);
-    await AsyncStorage.setItem('firstName', firstName);
-    await AsyncStorage.setItem('loginAuth', JSON.stringify({ email: username_ }));
-  };
-
   const handleLogIn = () => {
     if (email && password) {
       if (email.match(emailRegex)) {
         loginUserWithEmail(email, password, (success, userId, err) => {
           if (success) {
             getFirstName(userId);
-            setUserInfoEmail(userId, email);
-            navigation.navigate({ name: 'Home', params: { userId }, merge: true });
+            navigation.navigate({ name: 'Home', params: { userId, firstName }, merge: true });
           } else {
             showMessage({ message: err, type: 'danger' });
           }

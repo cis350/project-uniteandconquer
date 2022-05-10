@@ -107,7 +107,7 @@ function UpdatePassword({ navigation }) {
   async function handleUpdate() {
     const userid = await AsyncStorage.getItem('UserID');
     if (checkValidInput(newPassword) && checkValidInput(currentPassword)) {
-      userDB.modifyUser(userid, 2, newPassword, currentPassword, (success, error) => {
+      userDB.modifyUser(userid, 'password', newPassword, currentPassword, (success, error) => {
         if (!success) {
           showMessage({
             message: error,
