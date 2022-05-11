@@ -28,5 +28,5 @@ jobs:
         run: npm install --save-dev jest
       - working-directory: ./uniteandconquer
         run: npm test
-      - working-directory: ./uniteandconquer
+      - working-directory: ./project-uniteandconquer
         run: npm run build --if-present
