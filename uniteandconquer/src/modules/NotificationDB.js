@@ -25,13 +25,8 @@ async function deleteNotifications(userId, callback) {
   return callback(result.success, result.error);
 }
 
-function getNotificationsForUserInRange(userId, startIdx, endIdx, callback) {
-  return getNotificationsForUser(userId, callback);
-}
-
 export {
   createNotification,
-  getNotificationsForUserInRange,
   getNotificationsForUser,
   deleteNotifications,
 };

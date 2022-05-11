@@ -124,3 +124,22 @@ test('getUserDetails returns an user information', async () => {
     console.log(err);
   }
 });
+
+test('forgetPassword resets an user password', async () => {
+  // mock the axios response- new user 201
+  mock.onPost(`${rootURL}/forget`).reply(201, { success: true, error: null });
+  try {
+    await api.forgetPassword(
+      'countryCode',
+      'phoneNumber',
+      'email',
+      'newPassword',
+      (success, error) => {
+        expect(success).toBe(true);
+        expect(error).toBe(null);
+      },
+    );
+  } catch (err) {
+    console.log(err);
+  }
+});
