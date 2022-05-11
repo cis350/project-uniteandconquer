@@ -165,6 +165,7 @@ test('complete registration', () => {
   const confirm = screen.getByTestId('confirm-password-input');
   fireEvent.change(confirm, { target: { value: 'aAb123#abc' } });
   expect(confirm.value).toBe('aAb123#abc');
+  fireEvent.click(screen.getByText('Appliances'));
   fireEvent.click(screen.getByText('Register'));
   // const linkElement = screen.getByText('Notifications');
   // expect(linkElement).toBeInTheDocument();
