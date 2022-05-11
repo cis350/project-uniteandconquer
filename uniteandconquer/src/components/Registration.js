@@ -88,7 +88,7 @@ function Registration() {
         if (success) {
           showModal();
         } else {
-          console.log(err);
+          //
         }
       },
     );
