@@ -44,9 +44,13 @@ function Home() {
       function tick() {
         savedCallback.current();
       }
-      if (delay !== null) {
-        const id = setInterval(tick, delay);
-        return () => clearInterval(id);
+      try {
+        if (delay !== null) {
+          const id = setInterval(tick, delay);
+          return () => clearInterval(id);
+        }
+      } catch (err) {
+        //
       }
       return null;
     }, [delay]);
