@@ -105,7 +105,9 @@ function UserProfile() {
     await UserDB.getUserDetails(userID, (success, userInfo, err) => {
       if (success) {
         setTags(userInfo.interests);
+        myStorage.setItem('numberOfPostsOwned', 0);
         userInfo.posts.forEach((post) => {
+          myStorage.setItem('numberOfPostsOwned', parseInt(myStorage.getItem('numberOfPostsOwned'), 10) + 1);
           PostDB.getPost(post, (success2, postInfo, err2) => {
             if (success2) {
               setPosts((arr) => [...arr, postInfo]);
@@ -149,7 +151,13 @@ function UserProfile() {
             <thead>
               <tr>
 
-                <td>My Active Posts</td>
+                <td>
+                  My Active Posts:
+                  { ' ' }
+                  { myStorage.getItem('numberOfPostsOwned') }
+                  {' '}
+
+                </td>
 
               </tr>
             </thead>
