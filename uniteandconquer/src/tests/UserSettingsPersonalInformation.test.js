@@ -43,14 +43,6 @@ test('update name', () => {
   fireEvent.click(screen.getByTestId('name-update'));
 });
 
-test('update number', () => {
-  render(<UserSettingsPersonalInformation />);
-  const phone = screen.getByTestId('phone-input');
-  fireEvent.change(phone, { target: { value: '1231231234' } });
-  expect(phone.value).toBe('1231231234');
-  fireEvent.click(screen.getByTestId('phone-update'));
-});
-
 test('update email', () => {
   render(<UserSettingsPersonalInformation />);
   const email = screen.getByTestId('email-input');
