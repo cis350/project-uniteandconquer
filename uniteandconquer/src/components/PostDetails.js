@@ -27,26 +27,33 @@ function PostDetails() {
   const [isOwner, setIsOwner] = useState(false);
 
   const postID = window.location.href.split('/').pop();
+  const userID = myStorage.getItem('UserID');
 
   useEffect(() => {
     PostDB.getPost(postID, (success, details) => {
       if (success) {
         setPostDetails(details);
-        if (myStorage.getItem('loginAuth') == null) {
+        if (userID !== details.ownerId) {
           setIsOwner(false);
         } else {
-          const loginAuth = JSON.parse(myStorage.getItem('loginAuth')).phone || JSON.parse(myStorage.getItem('loginAuth')).email;
-          const [ownerPhone, onwerEmail] = [details.owner.phone.phoneNumber, details.owner.email];
-          if (loginAuth === onwerEmail || loginAuth === ownerPhone) {
-            setIsOwner(true);
-          }
+          setIsOwner(true);
         }
       }
     });
   }, [joined]);
 
-  const kickUser = () => {
+  const kickUser = async (kickId) => {
     // finish it when the backend is ready
+    console.log('kick', kickId);
+    await PostDB.leaveGroup(kickId, postID, (success, error) => {
+      if (success) {
+        const userIds = postDetails.group.map((member) => (member.userId));
+        const content = `${myStorage.getItem('firstName')} leave the post ${postID}`;
+        NotifDB.createNotification(userIds, content);
+      } else {
+        console.log(error);
+      }
+    });
   };
 
   const handleDelete = () => {
@@ -54,7 +61,6 @@ function PostDetails() {
   };
 
   const joinGroup = () => {
-    const userID = myStorage.getItem('UserID');
     PostDB.joinGroup(userID, postID, desiredQuantity, (success, err) => {
       if (success) {
         setJoined(true);
@@ -68,7 +74,6 @@ function PostDetails() {
   };
 
   const leaveGroup = () => {
-    const userID = myStorage.getItem('UserID');
     PostDB.leaveGroup(userID, postID, (success, error) => {
       if (success) {
         setJoined(false);
@@ -169,7 +174,7 @@ function PostDetails() {
                         {isOwner
                           ? (
                             <div className="cross-sign-wrapper">
-                              <button className="cross-sign" type="button" onClick={kickUser}> kick </button>
+                              <button className="cross-sign" type="button" onClick={() => kickUser(user.userId)}> kick </button>
                             </div>
                           )
                           : null}

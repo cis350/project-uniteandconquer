@@ -40,6 +40,7 @@ const createUser = (db, newUser) => {
               password: hash,
               createdAt: newUser.createdAt,
               lastCheckNotification: newUser.lastCheckNotification,
+              lock: []
             },
           },
           { upsert: true },
@@ -110,11 +111,25 @@ const loginUserWithPhone = async (db, user) => {
   if (result === null) {
     return false;
   }
+  const now = new Date();
+  const previous = now - (1000 * 60 * 60);
+  const sortLock = result.lock.sort((a, b) => a.date - b.date)
+  //in one hour range and length>=3,lock return false
+  if (sortLock.length >= 3 && sortLock[0] >= previous) {
+    return false;
+  }
 
   const match = await bcrypt.compare(password, result.password);
   if (match) {
     return result._id;
   } else {
+    // in one hour time range but number of try not reach 3
+    if (sortLock.length === 0 || sortLock[0] >= previous) {
+      await db.collection('userDB').updateOne({ email }, { $push: { lock: now } });
+    //out of one hour time range, reset lock
+    } else if (sortLock[0] < previous) {
+      await db.collection('userDB').updateOne({ email },{$set: { lock: [now] }});
+    }
     return false;
   }
 };
@@ -127,8 +142,15 @@ const loginUserWithEmail = async (db, user) => {
   } catch (e) {
     throw new Error('failed to login with email');
   }
-
+  
   if (result === null) {
+    return false;
+  }
+  const now = new Date();
+  const previous = now - (1000 * 60 * 60);
+  const sortLock = result.lock.sort((a, b) => a.date - b.date)
+  //in one hour range and length>=3,lock return false
+  if (sortLock.length >= 3 && sortLock[0] >= previous) {
     return false;
   }
 
@@ -136,6 +158,13 @@ const loginUserWithEmail = async (db, user) => {
   if (match) {
     return result._id;
   } else {
+    // in one hour time range but number of try not reach 3
+    if (sortLock.length === 0 || sortLock[0] >= previous) {
+      await db.collection('userDB').updateOne({ email }, { $push: { lock: now } });
+    //out of one hour time range, reset lock
+    } else if (sortLock[0] < previous) {
+      await db.collection('userDB').updateOne({ email },{$set: { lock: [now] }});
+    }
     return false;
   }
 };
