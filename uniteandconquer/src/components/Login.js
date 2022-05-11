@@ -96,7 +96,7 @@ function Login() {
       setNote('Invalid username and password. It cannot be empty');
       showModal();
     } else if (!await checkPassword(username, password)) {
-      setNote('Incorrect password or username not exists');
+      setNote('Incorrect password or username not exists or if you input wrong password 3 times, you are lock out');
       showModal();
     } else if (await checkPassword(username, password)) {
       navigate('/');
