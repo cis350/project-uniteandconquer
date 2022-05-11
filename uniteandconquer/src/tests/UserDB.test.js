@@ -16,8 +16,8 @@ beforeAll(() => {
 
 test('createUser creates a new player', async () => {
   // mock the axios response- new user 201
+  mock.onPost(`${rootURL}/createUser`).reply(201, { success: true, error: null });
   try {
-    mock.onPost(`${rootURL}/createUser`).reply(201, { success: true, error: null });
     await api.createUser(
       '1',
       '4452219194',
@@ -37,8 +37,8 @@ test('createUser creates a new player', async () => {
 });
 
 test('loginUserWithPhone logins an user', async () => {
+  mock.onPost(`${rootURL}/loginUserWithPhone`).reply(201, { success: true, id: 'objectID', error: null });
   try {
-    mock.onPost(`${rootURL}/loginUserWithPhone`).reply(201, { success: true, id: 'objectID', error: null });
     await api.loginUserWithPhone(
       '1',
       '4452219194',
@@ -56,8 +56,8 @@ test('loginUserWithPhone logins an user', async () => {
 
 test('loginUserWithEmail logins an user', async () => {
   // mock the axios response- new user 201
+  mock.onPost(`${rootURL}/loginUserWithEmail`).reply(201, { success: true, id: 'objectID', error: null });
   try {
-    mock.onPost(`${rootURL}/loginUserWithEmail`).reply(201, { success: true, id: 'objectID', error: null });
     await api.loginUserWithEmail(
       'zhyuan1@seas.upenn.edu',
       'Zhihang311@',
@@ -74,8 +74,8 @@ test('loginUserWithEmail logins an user', async () => {
 
 test('modifyUser modifies an user information', async () => {
   // mock the axios response- new user 201
+  mock.onPut(`${rootURL}/modify`).reply(201, { success: true, error: null });
   try {
-    mock.onPut(`${rootURL}/modify`).reply(201, { success: true, error: null });
     await api.modifyUser(
       'ObjectID',
       'password',
@@ -93,8 +93,8 @@ test('modifyUser modifies an user information', async () => {
 
 test('getPassword returns an user password', async () => {
   // mock the axios response- new user 201
+  mock.onGet(`${rootURL}/getPassword?id=ObjectID`).reply(201, { success: true, data: 'password', error: null });
   try {
-    mock.onGet(`${rootURL}/getPassword?id=ObjectID`).reply(201, { success: true, data: 'password', error: null });
     await api.getPassword(
       'ObjectID',
       (success, data, error) => {
@@ -110,8 +110,8 @@ test('getPassword returns an user password', async () => {
 
 test('getUserDetails returns an user information', async () => {
   // mock the axios response- new user 201
+  mock.onGet(`${rootURL}/getUserDetails?id=ObjectID`).reply(201, { success: true, data: 'userInfo', error: null });
   try {
-    mock.onGet(`${rootURL}/getUserDetails?id=ObjectID`).reply(201, { success: true, data: 'userInfo', error: null });
     await api.getUserDetails(
       'ObjectID',
       (success, data, error) => {
