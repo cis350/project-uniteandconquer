@@ -44,6 +44,14 @@ jest.mock('react-router-dom', () => ({
 //   expect(tree).toMatchSnapshot();
 // });
 
+const notifs = [{ content: 'content', createdAt: 'createdAt' }];
+test('snapshot notifications', () => {
+  const component = renderer.create(<Notifications
+    notifs={notifs}
+  />);
+  const tree = component.toJSON();
+  expect(tree).toMatchSnapshot();
+});
 test('snapshot profile', () => {
   const component = renderer.create(<UserProfile />);
   const tree = component.toJSON();
