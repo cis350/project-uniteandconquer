@@ -65,20 +65,20 @@ function ResetPassword() {
           </div>
         </Modal>
       </div>
-      <div className="registration-field">
+      <div data-testid="registration-input" className="registration-field">
         <div className="label">phone</div>
         <div className="full-phone-input">
           <Dropdown className="area-code" options={options} value={countryCode} onChange={(value) => setCountryCode(value.value)} placeholder="Select an option" />
-          <input className="phone-input" onChange={(e) => setPhone(e.target.value)} />
+          <input data-testid="phone-input" className="phone-input" onChange={(e) => setPhone(e.target.value)} />
         </div>
       </div>
       <div className="registration-field">
         <div className="label">email</div>
-        <input className="email-input" onChange={(e) => setEmail(e.target.value)} />
+        <input data-testid="email-input" className="email-input" onChange={(e) => setEmail(e.target.value)} />
       </div>
       <div className="registration-field">
         <div className="label">password</div>
-        <input className="password-input" onChange={(e) => setPassword(e.target.value)} />
+        <input data-testid="password-input" className="password-input" onChange={(e) => setPassword(e.target.value)} />
       </div>
       <div className="reg-bottom">
         <button className="submit" type="button" onClick={handleSubmit}>

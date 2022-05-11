@@ -14,23 +14,17 @@ function Sidebar() {
         { myStorage.getItem('firstName') ? myStorage.getItem('firstName') : 'Guest'}
       </div>
 
-      <div className="profile-box">
+      <div data-testid="profile-header" className="profile-box">
         <Link className="link" to="/user-profile">
           <div className="text">Profile</div>
         </Link>
       </div>
-      <div className="chat-box">
-        <Link className="link" to="/chat">
-          <div className="text">Chat</div>
-        </Link>
-      </div>
-      <div className="login_button">
-
+      <div data-testid="logout-header" className="login_button">
         <Link className="link" to="/login">
           <div className="text">Login</div>
         </Link>
       </div>
-      <div className="ad-box">
+      <div data-testid="ads-header" className="ad-box">
         <Link className="link" to="/">
           <div className="text-ad">Ads</div>
         </Link>

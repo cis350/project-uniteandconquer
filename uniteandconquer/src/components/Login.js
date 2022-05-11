@@ -133,14 +133,14 @@ function Login() {
         {loginWithPhone ? (
           <div className="dropdown-div">
             <Dropdown className="dropdown" options={options} value={countryCode} onChange={(value) => setCountryCode(value.value)} />
-            <input className="phone-field" placeholder="Phone Number" onChange={(e) => setUsername(e.target.value)} />
+            <input data-testid="email/phone-input" className="phone-field" placeholder="Phone Number" onChange={(e) => setUsername(e.target.value)} />
           </div>
         ) : (
-          <input className="field" placeholder="Email" onChange={(e) => setUsername(e.target.value)} />
+          <input data-testid="email/phone-input" className="field" placeholder="Email" onChange={(e) => setUsername(e.target.value)} />
         )}
 
         <div className="login-field">
-          <input type="password" className="field" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
+          <input data-testid="password-input" type="password" className="field" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
         </div>
 
         <br />
