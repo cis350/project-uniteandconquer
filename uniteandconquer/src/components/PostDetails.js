@@ -22,24 +22,15 @@ function PostDetails() {
   ]);
   const navigate = useNavigate();
   const myStorage = window.sessionStorage;
-  const [postDetails, setPostDetails] = useState({
-    itemName: 'itemName',
-    itemNumTarget: 2,
-    itemNumCurrent: 2,
-    pricePerItem: 3,
-    itemURL: 'url',
-    itemDescription: 'description',
-    group: [{ userId: 'id', firstName: 'john', quantity: 3 }],
-    tags: ['tag1', 'tag2'],
-  });
+  const [postDetails, setPostDetails] = useState('');
   const [joined, setJoined] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
 
   const postID = window.location.href.split('/').pop();
   const userID = myStorage.getItem('UserID');
 
-  useEffect(() => {
-    PostDB.getPost(postID, (success, details) => {
+  useEffect(async () => {
+    await PostDB.getPost(postID, (success, details) => {
       if (success) {
         setPostDetails(details);
         if (userID !== details.ownerId) {
@@ -68,8 +59,8 @@ function PostDetails() {
     // finish it when the backend is ready
   };
 
-  const joinGroup = () => {
-    PostDB.joinGroup(userID, postID, desiredQuantity, (success, err) => {
+  const joinGroup = async () => {
+    await PostDB.joinGroup(userID, postID, desiredQuantity, (success, err) => {
       if (success) {
         setJoined(true);
         const userIds = postDetails.group.map((member) => (member.userId));
@@ -81,8 +72,8 @@ function PostDetails() {
     });
   };
 
-  const leaveGroup = () => {
-    PostDB.leaveGroup(userID, postID, (success, error) => {
+  const leaveGroup = async () => {
+    await PostDB.leaveGroup(userID, postID, (success, error) => {
       if (success) {
         setJoined(false);
         const userIds = postDetails.group.map((member) => (member.userId));
