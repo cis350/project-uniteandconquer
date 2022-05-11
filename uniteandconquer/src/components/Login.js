@@ -63,32 +63,29 @@ function Login() {
     let result;
     if (username_.includes('@')) {
       await UserDB.loginUserWithEmail(username_, password_, (success, id, err) => {
-        console.log(success, id, 'from login');
         if (success) {
           getFirstName(id);
           myStorage.setItem('UserID', id);
           myStorage.setItem('firstName', firstName);
           myStorage.setItem('loginAuth', JSON.stringify({ email: username_ }));
         } else {
-          console.log(err);
+          //
         }
         result = success;
       });
     } else {
       await UserDB.loginUserWithPhone(countryCode, username_, password_, (success, id, err) => {
-        console.log(success, id, 'from login');
         if (success) {
           getFirstName(id);
           myStorage.setItem('UserID', id);
           myStorage.setItem('firstName', firstName);
           myStorage.setItem('loginAuth', JSON.stringify({ phone: username_ }));
         } else {
-          console.log(err);
+          //
         }
         result = success;
       });
     }
-    console.log(result);
     return result;
   };
   const login = async () => {

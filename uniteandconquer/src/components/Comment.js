@@ -22,11 +22,11 @@ function Comment(props) {
   const addComment = () => {
     const authorID = myStorage.getItem('UserID');
     if (commentInput && commentInput.length > 0) {
-      postDB.addComment(authorID, postID, commentInput, (success, id, error) => {
+      postDB.addComment(authorID, postID, commentInput, (success) => {
         if (success) {
           setFlag(flag + 1);
         } else {
-          console.log(error);
+          //
         }
       });
     }

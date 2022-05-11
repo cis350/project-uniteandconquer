@@ -44,14 +44,13 @@ function PostDetails() {
 
   const kickUser = async (kickId) => {
     // finish it when the backend is ready
-    console.log('kick', kickId);
     await PostDB.leaveGroup(kickId, postID, (success, error) => {
       if (success) {
         const userIds = postDetails.group.map((member) => (member.userId));
         const content = `${myStorage.getItem('firstName')} leave the post ${postID}`;
         NotifDB.createNotification(userIds, content);
       } else {
-        console.log(error);
+        //
       }
     });
   };
@@ -68,7 +67,7 @@ function PostDetails() {
         const content = `${myStorage.getItem('firstName')} is join the post ${postID}`;
         NotifDB.createNotification(userIds, content);
       } else {
-        console.log(err);
+        //
       }
     });
   };
@@ -81,7 +80,7 @@ function PostDetails() {
         const content = `${myStorage.getItem('firstName')} leave the post ${postID}`;
         NotifDB.createNotification(userIds, content);
       } else {
-        console.log(error);
+        //
       }
     });
   };

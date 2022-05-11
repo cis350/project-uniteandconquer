@@ -45,12 +45,11 @@ function UserProfile() {
   }
 
   useInterval(() => {
-    notifyDB.getNotificationsForUser(userID, (success, notifList, err) => {
+    notifyDB.getNotificationsForUser(userID, (success, notifList) => {
       if (success) {
         setNotifs(notifList);
-        // console.log(notifList);
       } else {
-        console.log(err);
+        //
       }
     });
   }, 5000);
@@ -102,32 +101,32 @@ function UserProfile() {
   };
 
   useEffect(async () => {
-    await UserDB.getUserDetails(userID, (success, userInfo, err) => {
+    await UserDB.getUserDetails(userID, (success, userInfo) => {
       if (success) {
         setTags(userInfo.interests);
         userInfo.posts.forEach((post) => {
-          PostDB.getPost(post, (success2, postInfo, err2) => {
+          PostDB.getPost(post, (success2, postInfo) => {
             if (success2) {
               setPosts((arr) => [...arr, postInfo]);
             } else {
-              console.log(err2);
+              //
             }
           });
         });
         // setWishList(userInfo.wishList);
       } else {
-        console.log(err);
+        //
       }
     });
   }, []);
 
   const handleNotifClick = async () => {
-    await notifyDB.getNotificationsForUser(userID, (success, notifList, err) => {
+    await notifyDB.getNotificationsForUser(userID, (success, notifList) => {
       if (success) {
         setNotifs(notifList);
         setShowNotifs(!showNotifs);
       } else {
-        console.log(err);
+        //
       }
     });
   };

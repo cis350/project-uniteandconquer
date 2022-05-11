@@ -59,11 +59,11 @@ function Home() {
   // get all posts when user get into the page
   useEffect(() => {
     try {
-      PostDB.getSortedPostBySearch(0, 19, '', [], (success, postInfo, err) => {
+      PostDB.getSortedPostBySearch(0, 19, '', [], (success, postInfo) => {
         if (success) {
           setPosts(postInfo);
         } else {
-          console.log(err);
+          //
         }
       });
     } catch (err) {
@@ -74,12 +74,12 @@ function Home() {
   useInterval(() => {
     const tagList = selectedTags.map((tag) => (tag.value));
     try {
-      PostDB.getSortedPostBySearch(0, 19, searchString, tagList, (success, postInfo, err) => {
+      PostDB.getSortedPostBySearch(0, 19, searchString, tagList, (success, postInfo) => {
         if (success) {
-          console.log(searchString, tagList);
+          //
           setPosts(postInfo);
         } else {
-          console.log(err);
+          //
         }
       });
     } catch (err) {
@@ -90,12 +90,12 @@ function Home() {
   const handleSearch = () => {
     const tagList = selectedTags.map((tag) => (tag.value));
     try {
-      PostDB.getSortedPostBySearch(0, 19, searchString, tagList, (success, postInfo, err) => {
+      PostDB.getSortedPostBySearch(0, 19, searchString, tagList, (success, postInfo) => {
         if (success) {
-          console.log(tagList, searchString);
+          //
           setPosts(postInfo);
         } else {
-          console.log(err);
+          //
         }
       });
     } catch (err) {
