@@ -63,6 +63,17 @@ test('log in with email', () => {
   expect(() => fireEvent.click(screen.getByText('login')).toThrow('Incorrect password or username not exists'));
 });
 
+test('log in with phone', () => {
+  render(<Login />);
+  const user = screen.getByTestId('email/phone-input');
+  fireEvent.change(user, { target: { value: '1231231234' } });
+  expect(user.value).toBe('1231231234');
+  const input = screen.getByTestId('password-input');
+  fireEvent.change(input, { target: { value: 'Aa3#bcad' } });
+  expect(input.value).toBe('Aa3#bcad');
+  expect(() => fireEvent.click(screen.getByText('login')).toThrow('Incorrect password or username not exists'));
+});
+
 // test('log in with email', () => {
 //   render(<Login />);
 //   try {

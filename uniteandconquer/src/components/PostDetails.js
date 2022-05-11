@@ -22,7 +22,16 @@ function PostDetails() {
   ]);
   const navigate = useNavigate();
   const myStorage = window.sessionStorage;
-  const [postDetails, setPostDetails] = useState(null);
+  const [postDetails, setPostDetails] = useState({
+    itemName: 'itemName',
+    itemNumTarget: 2,
+    itemNumCurrent: 2,
+    pricePerItem: 3,
+    itemURL: 'url',
+    itemDescription: 'description',
+    group: [{ userId: 'id', firstName: 'john', quantity: 3 }],
+    tags: ['tag1', 'tag2'],
+  });
   const [joined, setJoined] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
 

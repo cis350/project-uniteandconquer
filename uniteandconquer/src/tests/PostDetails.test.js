@@ -21,11 +21,11 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockedUsedNavigate,
 }));
 
-// test('post details title header', () => {
-//   render(<PostDetails />);
-//   const titleElement = screen.getByText('Item Name');
-//   expect(titleElement).toBeInTheDocument();
-// });
+test('post details title header', () => {
+  render(<PostDetails />);
+  const titleElement = screen.getByText('Item Details');
+  expect(titleElement).toBeInTheDocument();
+});
 
 // test('go back and not join group', () => {
 //   render(<PostDetails />);
