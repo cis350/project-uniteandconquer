@@ -23,12 +23,11 @@ function Notifications({
     },
   );
   const handleClick = async () => {
-    await notifyDB.deleteNotifications(userID, (success, err) => {
+    await notifyDB.deleteNotifications(userID, (success) => {
       if (success) {
-        console.log('click');
         setNotifs([]);
       } else {
-        console.log(err);
+        //
       }
     });
     setShowNotifs(!showNotifs);

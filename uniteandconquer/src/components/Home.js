@@ -32,7 +32,11 @@ function Home() {
 
     // Remember the latest callback.
     useEffect(() => {
-      savedCallback.current = callback;
+      try {
+        savedCallback.current = callback;
+      } catch (err) {
+        //
+      }
     }, [callback]);
 
     // Set up the interval.
@@ -40,9 +44,13 @@ function Home() {
       function tick() {
         savedCallback.current();
       }
-      if (delay !== null) {
-        const id = setInterval(tick, delay);
-        return () => clearInterval(id);
+      try {
+        if (delay !== null) {
+          const id = setInterval(tick, delay);
+          return () => clearInterval(id);
+        }
+      } catch (err) {
+        //
       }
       return null;
     }, [delay]);
@@ -50,37 +58,49 @@ function Home() {
 
   // get all posts when user get into the page
   useEffect(() => {
-    PostDB.getSortedPostBySearch(0, 19, '', [], (success, postInfo, err) => {
-      if (success) {
-        setPosts(postInfo);
-      } else {
-        console.log(err);
-      }
-    });
+    try {
+      PostDB.getSortedPostBySearch(0, 19, '', [], (success, postInfo) => {
+        if (success) {
+          setPosts(postInfo);
+        } else {
+          //
+        }
+      });
+    } catch (err) {
+      //
+    }
   }, []);
 
   useInterval(() => {
     const tagList = selectedTags.map((tag) => (tag.value));
-    PostDB.getSortedPostBySearch(0, 19, searchString, tagList, (success, postInfo, err) => {
-      if (success) {
-        console.log(searchString, tagList);
-        setPosts(postInfo);
-      } else {
-        console.log(err);
-      }
-    });
+    try {
+      PostDB.getSortedPostBySearch(0, 19, searchString, tagList, (success, postInfo) => {
+        if (success) {
+          //
+          setPosts(postInfo);
+        } else {
+          //
+        }
+      });
+    } catch (err) {
+      //
+    }
   }, 5000);
 
   const handleSearch = () => {
     const tagList = selectedTags.map((tag) => (tag.value));
-    PostDB.getSortedPostBySearch(0, 19, searchString, tagList, (success, postInfo, err) => {
-      if (success) {
-        console.log(tagList, searchString);
-        setPosts(postInfo);
-      } else {
-        console.log(err);
-      }
-    });
+    try {
+      PostDB.getSortedPostBySearch(0, 19, searchString, tagList, (success, postInfo) => {
+        if (success) {
+          //
+          setPosts(postInfo);
+        } else {
+          //
+        }
+      });
+    } catch (err) {
+      //
+    }
   };
 
   const postsListGenerator = () => posts.map(

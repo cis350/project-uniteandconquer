@@ -64,9 +64,7 @@ async function getSortedPostsByTags(startIdx, endIdx, tags, callback) {
 
 async function getSortedPostBySearch(startIdx, endIdx, keywords, tags, callback) {
   let url = `${rootURL}/getSortedPostBySearch/${startIdx}/${endIdx}/?keywords=${keywords}`;
-  console.log(tags);
   tags.forEach((tag) => { url += `&tags[]=${tag}`; });
-  console.log(url);
   const response = await axios.get(url);
   const result = response.data;
   return callback(result.success, result.data, result.error);

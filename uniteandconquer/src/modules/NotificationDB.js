@@ -16,7 +16,6 @@ async function getNotificationsForUser(userId, callback) {
   const response = await axios.get(`${rootURL}/getNotificationForUser/${userId}`, {
   });
   const result = response.data;
-  console.log(result, 'notification');
   return callback(result.success, result.data, result.error);
 }
 async function deleteNotifications(userId, callback) {

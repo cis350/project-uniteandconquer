@@ -36,7 +36,6 @@ function CreatePost() {
     }
   }
   useEffect(() => {
-    console.log(allTags);
     allTags.forEach((tag) => { document.getElementById(tag).className = 'tag'; });
     tags.forEach((tag) => { document.getElementById(tag).className = 'tag_selected'; });
   }, [tags]);
@@ -59,7 +58,7 @@ function CreatePost() {
             UserDB.modifyUser(userID, 'posts', id, null);
             navigate(`/post-details/${id}`);
           } else {
-            console.log(err);
+            //
           }
         },
       );
