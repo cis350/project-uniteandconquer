@@ -223,6 +223,24 @@ const modifyUser = async (
       );
       return true;
     }
+    if (fieldToChange === 'firstName') {
+      await db.collection('userDB').updateOne(
+        {
+          _id: ObjectId(userId),
+        },
+        { $set: { firstName: newValue } },
+      );
+      return true;
+    }
+    if (fieldToChange === 'lastName') {
+      await db.collection('userDB').updateOne(
+        {
+          _id: ObjectId(userId),
+        },
+        { $set: { lastName: newValue } },
+      );
+      return true;
+    }
     if (fieldToChange === 'posts') {
       await db.collection('userDB').updateOne(
         {
