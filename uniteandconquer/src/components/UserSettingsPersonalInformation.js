@@ -37,34 +37,47 @@ function UserSettingsPersonalInformation() {
   };
 
   const handleFirstName = async () => {
-    await UserDB.modifyUser(userID, 'firstName', firstName, '', (success, err) => {
-      if (success) {
-        setNote('Successfully updated first name');
-      } else {
-        setNote('Unsuccessfully updated first name');
-      }
-      showModal();
-    });
+    try {
+      await UserDB.modifyUser(userID, 'firstName', firstName, '', (success, err) => {
+        if (success) {
+          setNote('Successfully updated first name');
+        } else {
+          setNote('Unsuccessfully updated first name');
+        }
+        showModal();
+      });
+    } catch (err) {
+      //
+    }
   };
   const handleLastName = async () => {
-    await UserDB.modifyUser(userID, 'lastName', lastName, '', (success, err) => {
-      if (success) {
-        setNote('Successfully updated last name');
-      } else {
-        setNote('Unsuccessfully updated last name');
-      }
-      showModal();
-    });
+    try {
+      await UserDB.modifyUser(userID, 'lastName', lastName, '', (success, err) => {
+        if (success) {
+          setNote('Successfully updated last name');
+        } else {
+          setNote('Unsuccessfully updated last name');
+        }
+        showModal();
+      });
+    } catch (err) {
+      //
+    }
   };
+
   const handleEmail = async () => {
-    await UserDB.modifyUser(userID, 'email', email, '', (success, err) => {
-      if (success) {
-        setNote('Successfully updated email');
-      } else {
-        setNote('Unsuccessfully updated email');
-      }
-      showModal();
-    });
+    try {
+      await UserDB.modifyUser(userID, 'email', email, '', (success, err) => {
+        if (success) {
+          setNote('Successfully updated email');
+        } else {
+          setNote('Unsuccessfully updated email');
+        }
+        showModal();
+      });
+    } catch (err) {
+      //
+    }
   };
 
   return (
